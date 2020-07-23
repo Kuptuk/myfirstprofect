@@ -8,7 +8,7 @@ import random
 import datetime
 
 tt = os.environ.get("TOKEN")
-mm = os.environ.get("Mongo")
+"""mm = os.environ.get("Mongo")
 
 my_client = pymongo.MongoClient(mm)
 
@@ -19,7 +19,7 @@ my_database2 = my_client.Catalog
 my_collection2 = my_database.txtsug
 
 my_db = my_client.Catalog
-my_col = my_db.ibans
+my_col = my_db.ibans"""
 
 client = commands.Bot(command_prefix = "K.")
 client.remove_command("help")
@@ -356,7 +356,7 @@ async def avatar(message,id=None):
     embed.set_author(name=f'Аватар пользователя {member.name}',icon_url=message.guild.icon_url)
     await message.channel.send(embed=embed)
     
-@client.command()
+"""@client.command()
 async def suggest(message):
     if message.channel.id != 678666229661171724:
         await message.channel.send("Канал для предложений => <#678666229661171724>")
@@ -484,6 +484,6 @@ async def ibans(message):
       user = await client.fetch_user(item['id'])
       moderator = await client.fetch_user(item['moderator_id'])
       embed.add_field(name=f"`{k}.` {user} [от {moderator} {item['data']}]",value=f"**{item['reason']}**",inline=False)
-    await message.channel.send(embed=embed)
+    await message.channel.send(embed=embed)"""
         
 client.run(tt)
