@@ -1,0 +1,1 @@
+worker: python Catalog_bot.py
