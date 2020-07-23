@@ -100,15 +100,14 @@ async def help(message):
     embed=discord.Embed(timestamp=datetime.datetime.utcnow())
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed.add_field(name='ᅠᅠᅠᅠᅠᅠᅠМеню **__Каталог__ Серверов **:',value="▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nᅠᅠᅠᅠᅠᅠᅠᅠᅠ**Все __Команды__ **:\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n▻**K.help** — __Помощь __ по __Серверу__ !\n▻**K.avatar** __@user|ID__ — Аватар __Пользователя__ !\n▻**K.suggest** __Текст__ — Предложить свою __Идею__ !\n▻**K.info** __@user|ID__ — Информация о __Пользователе__ !\n▻**K.server** — Информация о __Сервере__ !\n▻**K.ban** __@user|ID__ — Забанить __Пользователя__ !\n▻**K.kick** __@user|ID__ — Кикнуть __Пользователя__ !\n▻**K.stat** — Статистика __Сервера__ !\n▻**K.team** — Состав __Команды Сервера__ !\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n▻**K.developer** — __Административные__ Команды !\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nᅠᅠᅠᅠᅠᅠᅠᅠ**Случайный партнёр **:\nᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠ**[__Клик__](" + msg[random.randint(0,len(msg)-1)]+")**\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬",inline=False)
+    embed.add_field(name='ᅠᅠᅠᅠᅠᅠᅠМеню **__Каталог__ Серверов **:',value="▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nᅠᅠᅠᅠᅠᅠᅠᅠᅠ**Все __Команды__ **:\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n▻**K.help** — __Помощь __ по __Серверу__ !\n▻**K.avatar** __@user|ID__ — Аватар __Пользователя__ !\n▻**K.suggest** __Текст__ — Предложить свою __Идею__ !\n▻**K.info** __@user|ID__ — Информация о __Пользователе__ !\n▻**K.server** — Информация о __Сервере__ !\n▻**K.stat** — Статистика __Сервера__ !\n▻**K.team** — Состав __Команды Сервера__ !\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n▻**K.developer** — __Административные__ Команды !\n▻**K.bp** — Команды для __Бан Панелей__ !\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nᅠᅠᅠᅠᅠᅠᅠᅠ**Случайный партнёр **:\nᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠ**[__Клик__](" + msg[random.randint(0,len(msg)-1)]+")**\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬",inline=False)
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    
     await message.channel.send(embed=embed)
     
 @client.command()
 async def ban(message, id=None, *, reason=None):
     b = [role.id for role in message.author.roles]
-    if 620955813850120192 in b or 677397817966198788 in b or message.author.id == 567025011408240667:
+    if 620955813850120192 in b or 677397817966198788 in b or message.author.id in admins:
       if id is None:
         await message.channel.send('```css\nВы не указали пользователя.```')
       else:
@@ -125,6 +124,29 @@ async def ban(message, id=None, *, reason=None):
             await message.channel.send(embed=embed)
           except:
             await message.channel.send('```css\nЭтого пользователя невозможно забанить.```')
+        except:
+          await message.channel.send('```css\nПользователя не существует.```')
+        
+@client.command()
+async def unban(message, id=None, *, reason=None):
+    b = [role.id for role in message.author.roles]
+    if 620955813850120192 in b or 677397817966198788 in b or message.author.id in admins:
+      if id is None:
+        await message.channel.send('```css\nВы не указали пользователя.```')
+      else:
+        if reason is None:
+          reason = 'Причина не указана.'
+        id = id.replace("!", "").replace("@","").replace("<","").replace(">","")
+        try:
+          a = await client.fetch_user(int(id))
+          try:
+            await message.guild.unban(user=a, reason=f'{message.author.name}: {reason}')
+            embed = discord.Embed(description=f'{a.mention} [{a.id}] был разбанен.\n`Причина:` {reason}',timestamp=datetime.datetime.utcnow())
+            embed.set_footer(text=f'Разбан от {message.author.name}',icon_url=message.author.avatar_url)
+            embed.set_thumbnail(url=a.avatar_url)
+            await message.channel.send(embed=embed)
+          except:
+            await message.channel.send('```css\nПользователь не находится в бане.```')
         except:
           await message.channel.send('```css\nПользователя не существует.```')
 
@@ -281,7 +303,18 @@ async def team(message):
 @client.command()
 async def developer(message):
     if message.author.id in admins:
-        embed=discord.Embed(title="Скрытые команды администрации",description="`K.say #channel|ID текст` — отправить текст определённого содержания в предназначеный канал.\n`K.clear n` — удалить n сообщений в канале.\n`K.disable` — отключить основные каналы (применять только на случай рейда)\n`K.enable` — включить все основные каналы (применять только на случай рейда)\n`K.approve Номер Текст` — принять предложение\n`K.deny Номер Текст` — отклонить предложение\n`K.iban @user|ID Причина` — добавить в чс идей пользователя\n`K.iunban @user|ID` — убрать из чс идей пользователя\n`K.ibans` — посмотреть чс идей")
+        embed=discord.Embed(timestamp=datetime.datetime.utcnow(),description="**Команды для <@&620955813850120192>:**\n\n`K.say #channel|ID текст` — отправить текст определённого содержания в предназначеный канал.\n`K.clear n` — удалить n сообщений в канале.\n`K.disable` — отключить основные каналы (применять только на случай рейда)\n`K.enable` — включить все основные каналы (применять только на случай рейда)\n`K.approve Номер Текст` — принять предложение\n`K.deny Номер Текст` — отклонить предложение\n`K.iban @user|ID Причина` — добавить в чс идей пользователя\n`K.iunban @user|ID` — убрать из чс идей пользователя\n`K.ibans` — посмотреть чс идей")
+        embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+        embed.set_thumbnail(url=message.guild.icon_url)
+        await message.channel.send(embed=embed)
+        
+@client.command()
+async def bp(message):
+    b = [role.id for role in message.author.roles]
+    if 620955813850120192 in b or 677397817966198788 in b or message.author.id in admins:
+        embed=discord.Embed(timestamp=datetime.datetime.utcnow(),description="**Команды для <@&677397817966198788>:**\n\n`K.ban @user|ID причина` — забанить пользователя.\n`K.kick @user|ID причина` — кикнуть пользователя.\n`K.unban @user|ID причина` — разбанить пользователя.")
+        embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+        embed.set_thumbnail(url=message.guild.icon_url)
         await message.channel.send(embed=embed)
         
 @client.command()
