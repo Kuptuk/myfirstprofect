@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from discord.utils import get
 import os
-import pymongo
+#import pymongo
 import inspect
 import random
 import datetime
