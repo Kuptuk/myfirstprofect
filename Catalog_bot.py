@@ -56,6 +56,14 @@ async def ev(message,*command):
       await message.channel.send('```py\n' + str(await res) + '```')
     else:
       await message.channel.send('```py\n' + str(res) + '```')
+
+@client.command()
+async def upd(message):
+  embed = discord.Embed(timestamp=datetime.datetime.utcnow(),title='Обновления бота')
+  embed.set_thumbnail(url=message.guild.icon_url)
+  embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+  embed.add_field(name='25.07.2020',value='🛠️ Создание команды `K.upd` для просмотра обновлений бота.\n🛠️ Создание команды `K.bp` для бан панелей, которая позволяет увидеть отдельные команды.\n🔄 Видоизменение команды `K.stat`: добавление роли <@&734089506713763861>.\n🔄 Видоизменение `K.help`: добавление команды `K.bp`.',inline=False)
+  await message.channel.send(embed=embed)
     
 @client.command()
 async def info(message, id=None):
