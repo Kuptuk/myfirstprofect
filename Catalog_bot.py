@@ -212,7 +212,7 @@ async def stat(message):
             r += 1
         if 'Участник' in str(i.roles):
             z += 1
-        if 'Разработчик' in str(i.roles):
+        if 'Новости' in str(i.roles):
             rr += 1
     embed = discord.Embed(title="Статистика",description=str(len(a))+" пользователей",timestamp=datetime.datetime.utcnow())
     embed.set_thumbnail(url=message.guild.icon_url)
@@ -233,7 +233,7 @@ async def stat(message):
     embed.add_field(name="**"+str(ne)+"**",value="<@&658154672237838347>")
     embed.add_field(name="**"+str(kh)+"**",value="<@&604645403664711680>")
     embed.add_field(name="**"+str(z)+"**",value="<@&678657735218167818>")
-    embed.add_field(name="**"+str(rr)+"**",value="<@&728923691986976828>")
+    embed.add_field(name="**"+str(rr)+"**",value="<@&734089506713763861>")
 
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
