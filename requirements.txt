@@ -13,6 +13,6 @@ yarl
 multidict
 async-timeout
 idna
-pillow
+Pillow
 io
 os
