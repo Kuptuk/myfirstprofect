@@ -88,7 +88,7 @@ async def info2(message, id = None):
 
     #Ник + тег
     idraw = ImageDraw.Draw(response)
-    headline = ImageFont.truetype('arial.ttf', 28)
+    headline = ImageFont.load_default()
     idraw.text((370 , 200), f'{member}', font = headline)
 
     response.save('user_card.png')
