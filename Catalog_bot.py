@@ -88,8 +88,8 @@ async def info2(message, id = None):
 
     #Ник + тег
     idraw = ImageDraw.Draw(response)
-    #headline = ImageFont.truetype('arial.ttf', 28)
-    #idraw.text((370 , 200), f'{member}')
+    headline = ImageFont.truetype('arial.ttf', 28)
+    idraw.text((370 , 200), f'{member}', font = headline)
 
     response.save('user_card.png')
     await message.channel.send(file = discord.File(fp = 'user_card.png'))
