@@ -6,6 +6,9 @@ import pymongo
 import inspect
 import random
 import datetime
+from PIL import Image, ImageFilter, ImageDraw, ImageFont
+import requests
+import io
 
 tt = os.environ.get("TOKEN")
 mm = os.environ.get("Mongo")
@@ -64,6 +67,32 @@ async def upd(message):
   embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
   embed.add_field(name='25.07.2020',value='🛠️ Создание команды `K.upd` для просмотра обновлений бота.\n🛠️ Создание команды `K.bp` для бан панелей, которая позволяет увидеть отдельные команды.\n🔄 Видоизменение команды `K.stat`: добавление роли <@&734089506713763861>.\n🔄 Видоизменение `K.help`: добавление команды `K.bp`.',inline=False)
   await message.channel.send(embed=embed)
+
+@client.command()
+async def info2(message, id = None):
+    if id is None:
+        id = str(message.author.id)
+    member = message.guild.get_member(int(id))
+    #Фон
+    response = requests.get('https://media.discordapp.net/attachments/734396452843028582/736979604803289179/17feacff5f1575d9.png?width=951&height=616', stream = True)
+    response = Image.open(io.BytesIO(response.content))
+        
+    #Аватар
+    url = str(member.avatar_url)[:-10]
+    avatar = requests.get(url, stream = True)
+    
+    avatar = Image.open(io.BytesIO(avatar.content))
+    avatar = avatar.convert('RGBA')
+    avatar = avatar.resize((246, 246), Image.ANTIALIAS)
+    response.paste(avatar, (94, 185, 340, 431))
+
+    #Ник + тег
+    idraw = ImageDraw.Draw(response)
+    headline = ImageFont.truetype('arial.ttf', 28)
+    idraw.text((370 , 200), f'{member}')
+
+    response.save('user_card.png')
+    await message.channel.send(file = discord.File(fp = 'user_card.png'))
 
 @client.command()
 async def info(message, id=None):
