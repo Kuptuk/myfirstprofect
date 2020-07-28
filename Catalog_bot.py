@@ -6,6 +6,7 @@ import pymongo
 import inspect
 import random
 import datetime
+from PIL import Image, ImageFilter, ImageDraw, ImageFont
 
 tt = os.environ.get("TOKEN")
 mm = os.environ.get("Mongo")
