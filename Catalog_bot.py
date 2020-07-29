@@ -70,13 +70,11 @@ async def upd(message):
 
 @client.command()
 async def info2(message, id = None):
-    if id is None:
-        id = str(message.author.id)
-    member = message.guild.get_member(int(id))
+    member = message.author
     #Фон
     response = requests.get('https://media.discordapp.net/attachments/734396452843028582/736979604803289179/17feacff5f1575d9.png?width=951&height=616', stream = True)
     response = Image.open(io.BytesIO(response.content))
-        
+    
     #Аватар
     url = str(member.avatar_url)[:-10]
     avatar = requests.get(url, stream = True)
@@ -88,8 +86,8 @@ async def info2(message, id = None):
 
     #Ник + тег
     idraw = ImageDraw.Draw(response)
-    headline = ImageFont.load_default()
-    idraw.text((370 , 200), f'{member}', font = headline)
+    headline = ImageFont.truetype(r'./arial.ttf', 20)
+    idraw.text((370 , 200), f'{member}', (255, 0, 0), font = headline)
 
     response.save('user_card.png')
     await message.channel.send(file = discord.File(fp = 'user_card.png'))
