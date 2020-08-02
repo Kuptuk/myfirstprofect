@@ -89,7 +89,7 @@ async def info2(message, id = None):
     headline = ImageFont.truetype(r'./Gothic.ttf', 28)
     idraw.text((370 , 200), f'{member}', (0, 0, 0), font = headline)
 
-    headline = ImageFont.truetype(r'./Arial.ttf', 28)
+    headline = ImageFont.truetype(r'./arial.ttf', 28)
     idraw.text((370 , 250), f'{member}', (0, 0, 0), font = headline)
 
     response.save('user_card.png')
