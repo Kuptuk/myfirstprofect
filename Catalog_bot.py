@@ -66,6 +66,7 @@ async def upd(message):
   embed.set_thumbnail(url=message.guild.icon_url)
   embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
   embed.add_field(name='25.07.2020',value='🛠️ Создание команды `K.upd` для просмотра обновлений бота.\n🛠️ Создание команды `K.bp` для бан панелей, которая позволяет увидеть отдельные команды.\n🔄 Видоизменение команды `K.stat`: добавление роли <@&734089506713763861>.\n🔄 Видоизменение `K.help`: добавление команды `K.bp`.',inline=False)
+  embed.add_field(name='25.07.2020',value='🔄 Глобальное изменение `K.info` совместно с <@614830303831261253> ;3',inline=False)
   await message.channel.send(embed=embed)
     
 @client.command()
@@ -512,7 +513,7 @@ async def info(message, id = None):
             response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819514589610064/b139e06844859b87.png?width=950&height=616', stream = True)
             dol, otd, flag = 'Не указана', 'Отдел не указан', False
             if member.id == 567025011408240667:
-              dol = 'Создатель сервера'
+              dol = 'Владелец сервера'
               otd = 'Административный отдел'
               flag = True
             elif 728923691986976828 in b:
