@@ -67,71 +67,6 @@ async def upd(message):
   embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
   embed.add_field(name='25.07.2020',value='🛠️ Создание команды `K.upd` для просмотра обновлений бота.\n🛠️ Создание команды `K.bp` для бан панелей, которая позволяет увидеть отдельные команды.\n🔄 Видоизменение команды `K.stat`: добавление роли <@&734089506713763861>.\n🔄 Видоизменение `K.help`: добавление команды `K.bp`.',inline=False)
   await message.channel.send(embed=embed)
-
-@client.command()
-async def info2(message, id = None):
-    member = message.author
-    #Фон
-    response = requests.get('https://media.discordapp.net/attachments/734396452843028582/736979604803289179/17feacff5f1575d9.png?width=951&height=616', stream = True)
-    response = Image.open(io.BytesIO(response.content))
-    
-    #Аватар
-    url = str(member.avatar_url)[:-10]
-    avatar = requests.get(url, stream = True)
-    
-    avatar = Image.open(io.BytesIO(avatar.content))
-    avatar = avatar.convert('RGBA')
-    avatar = avatar.resize((246, 246), Image.ANTIALIAS)
-    response.paste(avatar, (94, 185, 340, 431))
-
-    #Ник + тег
-    idraw = ImageDraw.Draw(response)
-    headline = ImageFont.truetype(r'./Gothic.ttf', 28)
-    idraw.text((370 , 200), f'{member}', (0, 0, 0), font = headline)
-
-    headline = ImageFont.truetype(r'./arial.ttf', 28)
-    idraw.text((370 , 250), f'{member}', (0, 0, 0), font = headline)
-
-    response.save('user_card.png')
-    await message.channel.send(file = discord.File(fp = 'user_card.png'))
-
-@client.command()
-async def info(message, id=None):
-    if id is None:
-        member = message.guild.get_member(int(message.author.id))
-    else:
-        try:
-            member = message.guild.get_member(int(id))
-        except:
-            member = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
-    embed = discord.Embed(timestamp=datetime.datetime.utcnow())
-    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    embed.set_author(name=f'Информация о пользователе {member.name}',icon_url=message.guild.icon_url)
-    if member.is_on_mobile():
-        embed.add_field(name="Устройство",value="**Телефон**")
-    else:
-        if str(member.status) == "offline":
-            embed.add_field(name="Устройство",value="**Оффлайн**")
-        else:
-            embed.add_field(name="Устройство",value="**ПК**")
-    embed.add_field(name="Вступил", value="**"+str(member.joined_at).split(".")[0]+"**")
-    embed.add_field(name="Высшая роль", value=member.top_role.mention)
-    embed.set_thumbnail(url=member.avatar_url)
-    embed.add_field(name="Дата регистрации",value="**" + str(member.created_at).split(".")[0] + "**")
-    if str(member.status) == "offline":
-        embed.add_field(name="Статус",value="**:black_circle: Не в сети**")
-    elif str(member.status) == "dnd":
-        embed.add_field(name="Статус",value="**:red_circle: Не беспокоить**")
-    elif str(member.status) == "idle":
-        embed.add_field(name="Статус",value="**:yellow_circle: Не активен**")
-    else:
-        embed.add_field(name="Статус",value="**:green_circle: В сети**")
-
-    msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
-    msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed.add_field(name="Случайный партнёр",value="[Ссылка на сервер](" + msg[random.randint(0,len(msg)-1)]+")")
-
-    await message.channel.send(embed=embed)
     
 @client.command()
 async def help(message):
@@ -556,5 +491,182 @@ async def ibans(message):
       moderator = await client.fetch_user(item['moderator_id'])
       embed.add_field(name=f"`{k}.` {user} [от {moderator} {item['data']}]",value=f"**{item['reason']}**",inline=False)
     await message.channel.send(embed=embed)
+                      
+@client.command()
+async def info2(message, id = None):
+    if id is None:
+        id = str(message.author.id)
+    sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+    try:
+        member = client.get_guild(604636579545219072).get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+        
+        #Аватар
+        avatar = requests.get(member.avatar_url, stream = True)
+        avatar = Image.open(io.BytesIO(avatar.content))
+        avatar = avatar.convert('RGBA')
+        
+        #Роли пользователя
+        b = [role.id for role in member.roles]
+
+        if 608994688078184478 in b or member.id == 567025011408240667:
+            response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819514589610064/b139e06844859b87.png?width=950&height=616', stream = True)
+            dol, otd, flag = 'Не указана', 'Отдел не указан', False
+            if member.id == 567025011408240667:
+              dol = 'Создатель сервера'
+              otd = 'Административный отдел'
+              flag = True
+            elif 728923691986976828 in b:
+              dol = 'Разработчик'
+              otd = 'Административный отдел'
+            elif 620955813850120192 in b:
+              dol = 'Администратор'
+              otd = 'Административный отдел'
+            elif 686639786672652363 in b:
+              dol = 'Глава отдела модерации'
+              otd = 'Отдел модерации'
+            elif 686639863390404670 in b:
+              dol = 'Глава отдела оценки'
+              dol = 'Отдел оценки'
+            elif 686639826308825089 in b:
+              dol = 'Глава отдела творчества'
+              otd = 'Отдел творчества'
+            elif 608600358570295307 in b:
+              dol = 'Модератор'
+              otd = 'Отдел модерации'
+            elif 689378345992978434 in b:
+              dol = 'Хелпер'
+              otd = 'Отдел модерации'
+            elif 686642290969935944 in b:
+              dol = 'Критик'
+              otd = 'Отдел оценки'
+            elif 609043489841479700 in b:
+              dol = 'Дизайнер'
+              otd = 'Отдел творчества'
+            elif 686632057191006323 in b:
+              dol = 'Редактор'
+              otd = 'Отдел творчества'
+            response = Image.open(io.BytesIO(response.content))
+            idraw = ImageDraw.Draw(response)
+            avatar = avatar.resize((212, 212), Image.ANTIALIAS)
+            response.paste(avatar, (119, 171, 331, 383))
+            nick = member.name if member.nick is None else member.nick
+            idraw.text((370, 220), f'aka {nick}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((370, 170), f'{member}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+            a = str(member.created_at).split()[0].split('-')
+            idraw.text((370 , 260), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            a = str(member.joined_at).split()[0].split('-')
+            idraw.text((370, 300), f'Дата вступления: {a[2]} {sp[int(a[1])]} {a[0]} года', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            c = 'Оффлайн' if str(member.status) == 'offline' else 'Телефон' if member.is_on_mobile() else 'ПК'
+            idraw.text((370 , 340), f'Устройство: {c}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((370, 420), f'{otd}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((370, 460), f'Должность: {dol}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            
+            if 677397817966198788 in b or 620955813850120192 in b or member.id == 567025011408240667:
+              check = requests.get('https://media.discordapp.net/attachments/737011448441602149/740568726037856368/123.png', stream = True)
+              check = Image.open(io.BytesIO(check.content))
+              check = check.convert('RGBA')
+              check = check.resize((26, 21), Image.ANTIALIAS)
+              response.paste(check, (300, 491, 326, 512))
+            else:
+              check = requests.get('https://media.discordapp.net/attachments/737011448441602149/740570108229058650/1.png', stream = True)
+              check = Image.open(io.BytesIO(check.content))
+              check = check.convert('RGBA')
+              check = check.resize((26, 21), Image.ANTIALIAS)
+              response.paste(check, (300, 492, 326, 513))
+            
+            if str(member.status) == 'offline':
+              idraw.text((145, 425), 'Не в сети', (0, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+              idraw.text((144, 425), 'Не в сети', (54, 57, 63), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+            elif str(member.status) == 'online':
+              idraw.text((169, 425), 'В сети', (0, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+              idraw.text((168, 425), 'В сети', (67, 181, 129), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+            elif str(member.status) == 'dnd':
+              idraw.text((133, 431), 'Не беспокоить', (0, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              idraw.text((132, 431), 'Не беспокоить', (240, 71, 71), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            else:
+              idraw.text((143, 429), 'Не активен', (0, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
+              idraw.text((142, 428), 'Не активен', (250, 166, 26), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
+              
+            if flag:
+              crown = requests.get('https://media.discordapp.net/attachments/737011448441602149/740661534937710612/Screenshot_7.png', stream = True)
+              crown = Image.open(io.BytesIO(crown.content))
+              crown = crown.convert('RGBA')
+              crown = crown.resize((50, 38), Image.ANTIALIAS)
+              response.paste(crown, (825, 170, 875, 208))
+              
+            response.save('user_card.png')
+            await message.channel.send(file = discord.File(fp = 'user_card.png'))
+            
+            
+        else:
+          if 622501691107049502 in b:
+            response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819455584010240/962b3f3b9a98d325.png?width=916&height=594', stream = True)
+            color = (143, 48, 54)
+          elif 622501656591990784 in b:
+            response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819439201058886/7247d56d464f6232.png?width=916&height=594', stream = True)
+            color = (255, 255, 255)
+          elif 688654966675603491 in b:
+            response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819426068561954/fcabdd5a422161b1.png?width=916&height=594', stream = True)
+            color = (255, 255, 255)
+          else:
+            response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819392485031986/94d9b3258f8961be.png?width=916&height=594', stream = True)
+            color = (255, 255, 255)
+            
+          response = Image.open(io.BytesIO(response.content))
+          idraw = ImageDraw.Draw(response)
+          avatar = avatar.resize((203, 203), Image.ANTIALIAS)
+          response.paste(avatar, (115, 165, 318, 368))
+          nick = member.name if member.nick is None else member.nick
+          idraw.text((365, 220), f'aka {nick}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+          idraw.text((365, 165), f'{member}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+          a = str(member.created_at).split()[0].split('-')
+          idraw.text((365, 260), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+          a = str(member.joined_at).split()[0].split('-')
+          idraw.text((365, 300), f'Дата вступления: {a[2]} {sp[int(a[1])]} {a[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+          c = 'Оффлайн' if str(member.status) == 'offline' else 'Телефон' if member.is_on_mobile() else 'ПК'
+          idraw.text((365, 340), f'Устройство: {c}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+
+          if str(member.status) == 'offline':
+            idraw.text((136 , 410), 'Не в сети', (0, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+            idraw.text((135 , 409), 'Не в сети', (54, 57, 63), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+          elif str(member.status) == 'online':
+            idraw.text((164 , 410), 'В сети', (0, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+            idraw.text((163 , 409), 'В сети', (67, 181, 129), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+          elif str(member.status) == 'dnd':
+            idraw.text((131 , 417), 'Не беспокоить', (0, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 23))
+            idraw.text((130 , 416), 'Не беспокоить', (240, 71, 71), font = ImageFont.truetype(r'./Gothic.ttf', size = 23))
+          else:
+            idraw.text((134 , 413), 'Не активен', (0, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
+            idraw.text((133 , 412), 'Не активен', (250, 166, 26), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
+
+          response.save('user_card.png')
+          await message.channel.send(file = discord.File(fp = 'user_card.png'))
+          
+    except:
+        try:
+            member = await client.fetch_user(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+            avatar = requests.get(member.avatar_url, stream = True)
+            avatar = Image.open(io.BytesIO(avatar.content))
+            avatar = avatar.convert('RGBA')
+            response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819392485031986/94d9b3258f8961be.png?width=916&height=594', stream = True)
+            response = Image.open(io.BytesIO(response.content))
+            idraw = ImageDraw.Draw(response)
+            avatar = avatar.resize((203, 203), Image.ANTIALIAS)
+            response.paste(avatar, (115, 165, 318, 368))
+            a = str(member.created_at).split()[0].split('-')
+            idraw.text((365, 165), f'{member}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+            idraw.text((365, 220), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((75 , 480), 'Пользователь отсутствует на сервере. Функции ограничены.', (255, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            
+            try:
+                await client.get_guild(604636579545219072).fetch_ban(member)
+                idraw.text((365 , 260), 'Пользователь в бане.', (255, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            except:
+                idraw.text((365 , 260), 'Пользователь не забанен.', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                
+            response.save('user_card.png')
+            await message.channel.send(file = discord.File(fp = 'user_card.png'))
+        except:
+            await message.channel.send('```css\nПользователя не существует.```')
         
 client.run(tt)
