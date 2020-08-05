@@ -493,7 +493,7 @@ async def ibans(message):
     await message.channel.send(embed=embed)
                       
 @client.command()
-async def info2(message, id = None):
+async def info(message, id = None):
     if id is None:
         id = str(message.author.id)
     sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
