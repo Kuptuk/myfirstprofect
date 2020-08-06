@@ -603,8 +603,8 @@ async def info(message, id = None):
                 if i.id in idd:
                   for j in i.text_channels:
                     if j.id != 690629182933172324:
-                      b = await j.history(limit=100, after=datetime.datetime.utcnow() - datetime.timedelta(hours=48)).flatten()
-                      for k in b:
+                      c = await j.history(limit=100, after=datetime.datetime.utcnow() - datetime.timedelta(hours=48)).flatten()
+                      for k in c:
                         if k.author.id == member.id:
                           kol += 1
               idraw.text((457, 58), f'{kol}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
