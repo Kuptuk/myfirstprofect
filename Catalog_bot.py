@@ -63,11 +63,10 @@ async def ev(message,*command):
 @client.command()
 async def upd(message):
   embed = discord.Embed(timestamp=datetime.datetime.utcnow(),title='Обновления бота')
-  embed.set_thumbnail(url=message.guild.icon_url)
+  embed.set_thumbnail(url='https://cdna.artstation.com/p/assets/images/images/029/180/884/large/bogdan-turbin-artstation.jpg?1596707694')
   embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
   embed.add_field(name='25.07.2020',value='🛠️ Создание команды `K.upd` для просмотра обновлений бота.\n🛠️ Создание команды `K.bp` для бан панелей, которая позволяет увидеть отдельные команды.\n🔄 Видоизменение команды `K.stat`: добавление роли <@&734089506713763861>.\n🔄 Видоизменение `K.help`: добавление команды `K.bp`.',inline=False)
   embed.add_field(name='05.08.2020',value='🔄 Глобальное изменение `K.info` совместно с <@614830303831261253> ;3',inline=False)
-  embed.set_image(url='https://cdna.artstation.com/p/assets/images/images/029/180/884/large/bogdan-turbin-artstation.jpg?1596707694')
   await message.channel.send(embed=embed)
     
 @client.command()
