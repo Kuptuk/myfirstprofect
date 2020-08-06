@@ -594,6 +594,25 @@ async def info(message, id = None):
               crown = crown.convert('RGBA')
               crown = crown.resize((50, 38), Image.ANTIALIAS)
               response.paste(crown, (825, 170, 875, 208))
+                      
+            if 608600358570295307 in b:
+              a = client.get_guild(604636579545219072).categories
+              kol = 0
+              idd = [642085815597400065, 642197796887330827, 642102626070036500, 642104779270782986]
+              for i in a:
+                if i.id in idd:
+                  for j in i.text_channels:
+                    if j.id != 690629182933172324:
+                      b = await j.history(limit=100, after=datetime.datetime.utcnow() - datetime.timedelta(hours=48)).flatten()
+                      for k in b:
+                        if k.author.id == member.id:
+                          kol += 1
+              idraw.text((457, 58), f'{kol}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              part = requests.get('https://media.discordapp.net/attachments/689479689756344328/740856668698574858/unknown.png', stream = True)
+              part = Image.open(io.BytesIO(part.content))
+              part = part.convert('RGBA')
+              part = part.resize((40, 25), Image.ANTIALIAS)
+              response.paste(part, (410, 63, 450, 88))
               
             response.save('user_card.png')
             await message.channel.send(file = discord.File(fp = 'user_card.png'))
