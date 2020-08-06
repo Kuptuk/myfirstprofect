@@ -328,6 +328,31 @@ async def server(message):
     embed.add_field(name="Случайный партнёр",value="[Ссылка на сервер](" + msg[random.randint(0,len(msg)-1)]+")")
 
     await message.channel.send(embed=embed)
+        
+@client.command()
+async def modstats(message):
+  b = [role.id for role in message.author.roles]
+  if 686639786672652363 in b:
+    a = client.get_guild(604636579545219072).categories
+    kol, d = 0, {}
+    idd = [642085815597400065, 642197796887330827, 642102626070036500, 642104779270782986]
+    mm = message.guild.get_role(608600358570295307).members
+    for i in mm:
+      d.update({i.id:0})
+    for i in a:
+      if i.id in idd:
+        for j in i.text_channels:
+          if j.id != 690629182933172324:
+            b = await j.history(limit=100, after=datetime.datetime.utcnow() - datetime.timedelta(hours=48)).flatten()
+            for k in b:
+              d.update({k.author.id:d.setdefault(k.author.id, 0)+1})
+    s = ''
+    for i, j in d.items():
+      s += f'<@{str(i)}> — {j}\n'
+    embed = discord.Embed(title='Статистика отдела модерации',description=s,timestamp=datetime.datetime.utcnow())
+    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+    embed.set_thumbnail(url=message.guild.icon_url)
+    await message.channel.send(embed=embed)
     
 @client.command()
 async def disable(message):
