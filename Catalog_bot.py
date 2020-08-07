@@ -32,7 +32,7 @@ admins = [567025011408240667,704734583718936577,414119169504575509]
 #Активность + перезапуск
 @client.event
 async def on_ready():
-    await client.change_presence(status=discord.Status.dnd,activity=discord.Game(f"K.help | #stayhome :3 | {len(await client.get_guild(604636579545219072).members)}")
+    await client.change_presence(status=discord.Status.dnd,activity=discord.Game(f"K.help | #stayhome :3 | {len(client.get_guild(604636579545219072).members)}"))
     msg = await client.get_channel(642257062746914836).history(limit=200).flatten()
     b = []
     for i in msg:
