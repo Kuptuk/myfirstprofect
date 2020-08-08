@@ -518,7 +518,7 @@ async def ibans(message):
       embed.add_field(name=f"`{k}.` {user} [от {moderator} {item['data']}]",value=f"**{item['reason']}**",inline=False)
     await message.channel.send(embed=embed)
                       
-@client.command()
+"""@client.command()
 async def info(message, id = None):
     if id is None:
         id = str(message.author.id)
@@ -720,6 +720,6 @@ async def info(message, id = None):
             response.save('user_card.png')
             await message.channel.send(file = discord.File(fp = 'user_card.png'))
         except:
-            await message.channel.send('```css\nПользователя не существует.```')
+            await message.channel.send('```css\nПользователя не существует.```')"""
         
 client.run(tt)
