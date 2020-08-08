@@ -541,7 +541,7 @@ async def info(message, id = None):
               dol = 'Владелец сервера'
               otd = 'Административный отдел'
               flag = True
-            elif member.id == 414119169504575509:
+            elif 659805217432403999 in b:
               dol = 'Разработчик'
               otd = 'Административный отдел'
               flag22 = True
