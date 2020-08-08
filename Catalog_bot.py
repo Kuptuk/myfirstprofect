@@ -541,9 +541,10 @@ async def info(message, id = None):
               dol = 'Владелец сервера'
               otd = 'Административный отдел'
               flag = True
-            elif 728923691986976828 in b:
+            elif member.id == 414119169504575509:
               dol = 'Разработчик'
               otd = 'Административный отдел'
+              flag22 = True
             elif 620955813850120192 in b:
               dol = 'Администратор'
               otd = 'Административный отдел'
@@ -619,6 +620,13 @@ async def info(message, id = None):
               crown = crown.convert('RGBA')
               crown = crown.resize((50, 38), Image.ANTIALIAS)
               response.paste(crown, (825, 170, 875, 208))
+              
+            if flag22:
+              crown = requests.get('https://media.discordapp.net/attachments/737011448441602149/741580621528301679/unknown.png', stream = True)
+              crown = Image.open(io.BytesIO(crown.content))
+              crown = crown.convert('RGBA')
+              crown = crown.resize((50, 50), Image.ANTIALIAS)
+              response.paste(crown, (830, 160, 880, 210))
                       
             if 608600358570295307 in b:
               a = client.get_guild(604636579545219072).categories
