@@ -518,7 +518,7 @@ async def ibans(message):
       embed.add_field(name=f"`{k}.` {user} [от {moderator} {item['data']}]",value=f"**{item['reason']}**",inline=False)
     await message.channel.send(embed=embed)
                       
-"""@client.command()
+@client.command()
 async def info(message, id = None):
     if id is None:
         id = str(message.author.id)
@@ -536,12 +536,12 @@ async def info(message, id = None):
 
         if 608994688078184478 in b or member.id == 567025011408240667:
             response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819514589610064/b139e06844859b87.png?width=950&height=616', stream = True)
-            dol, otd, flag = 'Не указана', 'Отдел не указан', False
+            dol, otd, flag, flag22 = 'Не указана', 'Отдел не указан', False, False
             if member.id == 567025011408240667:
               dol = 'Владелец сервера'
               otd = 'Административный отдел'
               flag = True
-            elif 659805217432403999 in b:
+            elif 728923691986976828 in b:
               dol = 'Разработчик'
               otd = 'Административный отдел'
               flag22 = True
@@ -720,6 +720,6 @@ async def info(message, id = None):
             response.save('user_card.png')
             await message.channel.send(file = discord.File(fp = 'user_card.png'))
         except:
-            await message.channel.send('```css\nПользователя не существует.```')"""
+            await message.channel.send('```css\nПользователя не существует.```')
         
 client.run(tt)
