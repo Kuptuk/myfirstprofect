@@ -628,7 +628,7 @@ async def info(message, id = None):
               crown = crown.resize((50, 50), Image.ANTIALIAS)
               response.paste(crown, (830, 160, 880, 210))
                       
-            if 608600358570295307 in b:
+            if 608600358570295307 in b or 620955813850120192 in b:
               a = client.get_guild(604636579545219072).categories
               kol = 0
               idd = [642085815597400065, 642197796887330827, 642102626070036500, 642104779270782986]
