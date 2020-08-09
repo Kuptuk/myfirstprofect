@@ -534,9 +534,15 @@ async def info(message, id = None):
         #Роли пользователя
         b = [role.id for role in member.roles]
 
-        if 608994688078184478 in b or member.id == 567025011408240667:
-            response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819514589610064/b139e06844859b87.png?width=950&height=616', stream = True)
-            dol, otd, flag, flag22 = 'Не указана', 'Отдел не указан', False, False
+        if 608994688078184478 in b or member.id == 567025011408240667 or member.id == 378559963494088707:
+            if member.id == 378559963494088707:
+              response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819483996225576/70d1dd7923ecf552.png?width=950&height=616', stream = True)
+              dol, otd, flag, flag22, flagbust = 'Не указана', 'Отдел не указан', False, False, True
+              color2 = (20, 21, 21)
+            else:
+              response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819514589610064/b139e06844859b87.png?width=950&height=616', stream = True)
+              dol, otd, flag, flag22, flagbust = 'Не указана', 'Отдел не указан', False, False, False
+              color2 = (255, 255, 255)
             if member.id == 567025011408240667:
               dol = 'Владелец сервера'
               otd = 'Административный отдел'
@@ -577,29 +583,30 @@ async def info(message, id = None):
             avatar = avatar.resize((212, 212), Image.ANTIALIAS)
             response.paste(avatar, (119, 171, 331, 383))
             nick = member.name if member.nick is None else member.nick
-            idraw.text((370, 220), f'aka {nick}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            idraw.text((370, 170), f'{member}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+            idraw.text((370, 220), f'aka {nick}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((370, 170), f'{member}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
             a = str(member.created_at).split()[0].split('-')
-            idraw.text((370 , 260), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((370 , 260), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             a = str(member.joined_at).split()[0].split('-')
-            idraw.text((370, 300), f'Дата вступления: {a[2]} {sp[int(a[1])]} {a[0]} года', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((370, 300), f'Дата вступления: {a[2]} {sp[int(a[1])]} {a[0]} года', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             c = 'Оффлайн' if str(member.status) == 'offline' else 'Телефон' if member.is_on_mobile() else 'ПК'
-            idraw.text((370 , 340), f'Устройство: {c}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            idraw.text((370, 420), f'{otd}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            idraw.text((370, 460), f'Должность: {dol}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((370 , 340), f'Устройство: {c}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((370, 420), f'{otd}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((370, 460), f'Должность: {dol}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             
-            if 677397817966198788 in b or 620955813850120192 in b or member.id == 567025011408240667:
-              check = requests.get('https://media.discordapp.net/attachments/737011448441602149/740568726037856368/123.png', stream = True)
-              check = Image.open(io.BytesIO(check.content))
-              check = check.convert('RGBA')
-              check = check.resize((26, 21), Image.ANTIALIAS)
-              response.paste(check, (300, 491, 326, 512))
-            else:
-              check = requests.get('https://media.discordapp.net/attachments/737011448441602149/740570108229058650/1.png', stream = True)
-              check = Image.open(io.BytesIO(check.content))
-              check = check.convert('RGBA')
-              check = check.resize((26, 21), Image.ANTIALIAS)
-              response.paste(check, (300, 492, 326, 513))
+            if not flagbust:
+              if 677397817966198788 in b or 620955813850120192 in b or member.id == 567025011408240667:
+                check = requests.get('https://media.discordapp.net/attachments/737011448441602149/740568726037856368/123.png', stream = True)
+                check = Image.open(io.BytesIO(check.content))
+                check = check.convert('RGBA')
+                check = check.resize((26, 21), Image.ANTIALIAS)
+                response.paste(check, (300, 491, 326, 512))
+              else:
+                check = requests.get('https://media.discordapp.net/attachments/737011448441602149/740570108229058650/1.png', stream = True)
+                check = Image.open(io.BytesIO(check.content))
+                check = check.convert('RGBA')
+                check = check.resize((26, 21), Image.ANTIALIAS)
+                response.paste(check, (300, 492, 326, 513))
             
             if str(member.status) == 'offline':
               idraw.text((145, 425), 'Не в сети', (0, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
@@ -627,7 +634,14 @@ async def info(message, id = None):
               crown = crown.convert('RGBA')
               crown = crown.resize((50, 50), Image.ANTIALIAS)
               response.paste(crown, (830, 160, 880, 210))
-                      
+              
+            if flagbust:
+              crown = requests.get('https://media.discordapp.net/attachments/689479689756344328/742033614455308388/unknown.png', stream = True)
+              crown = Image.open(io.BytesIO(crown.content))
+              crown = crown.convert('RGBA')
+              crown = crown.resize((40, 60), Image.ANTIALIAS)
+              response.paste(crown, (830, 150, 870, 210))
+              
             if 608600358570295307 in b or 620955813850120192 in b:
               a = client.get_guild(604636579545219072).categories
               kol = 0
@@ -640,17 +654,22 @@ async def info(message, id = None):
                       for k in c:
                         if k.author.id == member.id:
                           kol += 1
-              idraw.text((457, 58), f'{kol}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-              part = requests.get('https://media.discordapp.net/attachments/689479689756344328/740856668698574858/unknown.png', stream = True)
+              if flagbust:
+                part = requests.get('https://media.discordapp.net/attachments/689479689756344328/742032554135126077/unknown.png', stream = True)
+              else:
+                part = requests.get('https://media.discordapp.net/attachments/689479689756344328/740856668698574858/unknown.png', stream = True)
               part = Image.open(io.BytesIO(part.content))
               part = part.convert('RGBA')
               part = part.resize((40, 25), Image.ANTIALIAS)
-              response.paste(part, (410, 63, 450, 88))
+              if flagbust:
+                idraw.text((497, 58), f'{kol}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                response.paste(part, (452, 63, 492, 88))
+              else:
+                idraw.text((457, 58), f'{kol}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                response.paste(part, (410, 63, 450, 88))
               
             response.save('user_card.png')
             await message.channel.send(file = discord.File(fp = 'user_card.png'))
-            
-            
         else:
           if 622501691107049502 in b:
             response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819455584010240/962b3f3b9a98d325.png?width=916&height=594', stream = True)
