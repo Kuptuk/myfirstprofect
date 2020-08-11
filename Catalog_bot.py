@@ -332,7 +332,7 @@ async def server(message):
 @client.command()
 async def modstats(message):
   b = [role.id for role in message.author.roles]
-  if 686639786672652363 in b:
+  if 686639786672652363 in b or 620955813850120192 in b:
     a = client.get_guild(604636579545219072).categories
     kol, d = 0, {}
     idd = [642085815597400065, 642197796887330827, 642102626070036500, 642104779270782986]
