@@ -304,30 +304,34 @@ async def clear(message,kol):
     if 567025011408240667 == message.author.id or 414119169504575509 == message.author.id:
         await message.channel.purge(limit=int(kol)+1)
       
-#server
 @client.command()
 async def server(message):
-    embed=discord.Embed(timestamp=datetime.datetime.utcnow())
-    embed.set_author(name=f'Информация о сервере {message.guild.name}')
-    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    embed.set_thumbnail(url=message.guild.icon_url)
-    embed.add_field(name="Эмодзи",value="**:kissing_closed_eyes: " + str(len(message.guild.emojis)) + "**")
-    embed.add_field(name="Регион",value="** :flag_ru: " + str(message.guild.region)[0].upper() + str(message.guild.region)[1::] + "**")
-    embed.add_field(name="Владелец",value=message.guild.owner.mention)
-    embed.add_field(name="Уровень верификации",value="** :smiling_imp: " + str(message.guild.verification_level) + "**")
-    embed.add_field(name="Пользователей",value="**👤 " + str(len(message.guild.members)) + "**")
-    embed.add_field(name="Ролей",value="**:jigsaw: " + str(len(message.guild.roles)) + "**")
-    embed.add_field(name="Текстовых каналов",value="**:page_with_curl: " + str(len(message.guild.text_channels)) + "**")
-    embed.add_field(name="Категорий",value="**:pencil: " + str(len(message.guild.categories)) + "**")
-    embed.add_field(name="Голосовых каналов",value="**:microphone2: " + str(len(message.guild.voice_channels)) + "**")
-    embed.add_field(name="Создан",value="**:clock1: " + str(str(message.guild.created_at).split(".")[0]) + "**")
-    embed.add_field(name="Банов",value="**:bangbang: " + str(len(await message.guild.bans())) + "**")
-    
-    msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
-    msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed.add_field(name="Случайный партнёр",value="[Ссылка на сервер](" + msg[random.randint(0,len(msg)-1)]+")")
+  response = requests.get('https://media.discordapp.net/attachments/734396452843028582/743047501426327653/f4809d0c27843f31.png?width=951&height=616', stream = True)
+  response = Image.open(io.BytesIO(response.content))
+  idraw = ImageDraw.Draw(response)
+  gg = client.get_guild(604636579545219072)
+  a, k = gg.members, 0
+  for i in a:
+    if 'Партнёр [Ур. 1]' in str(i.roles) or 'Партнёр [Ур. 2]' in str(i.roles) or 'Партнёр [Ур. 3]' in str(i.roles):
+      k += 1
+  
+  idraw.text((375, 115), str(len(gg.emojis)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
+  idraw.text((299, 167), str(len(gg.roles)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
+  idraw.text((230, 243), str(gg.verification_level), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+  idraw.text((95, 345), str(gg.owner), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+  idraw.text((90, 425), '27 июля 2019 года', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+  idraw.text((540, 87), str(len(gg.voice_channels)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
+  idraw.text((570, 142), str(len(gg.categories)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
+  idraw.text((619, 215), str(len(gg.text_channels)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
+  idraw.text((655, 290), str(gg.premium_subscription_count), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
+  idraw.text((665, 350), str(k), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 27))
+  idraw.text((570, 410), str(len(gg.members)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 27))
+  idraw.text((503, 470), str(len(await gg.bans())), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 27))
+  idraw.text((620, 559), str(message.author), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 15))
+  idraw.text((621, 559), str(message.author), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 15))
 
-    await message.channel.send(embed=embed)
+  response.save('server_card.png')
+  await message.channel.send(file = discord.File(fp = 'server_card.png'))
         
 @client.command()
 async def modstats(message):
