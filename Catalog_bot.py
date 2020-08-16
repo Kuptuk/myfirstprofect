@@ -79,7 +79,7 @@ async def upd(message):
 async def help(message):
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed=discord.Embed(title='Меню Каталог Серверов:', description=f"`K.help` — помощь\n`K.avatar @user|ID` — аватар пользователя\n`K.suggest текст` — предложить свою идею\n`K.info @user|ID` — информация о пользователе\n`K.server` — информация о сервере\n`K.stat` — статистика сервера\n`K.team` — состав Команды сервера\n`K.upd` — обновления бота\n\n`K.developer` — Административные команды\n`K.bp` — команды для Бан Панелей\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed=discord.Embed(title='Меню Каталог Серверов', description=f"`K.help` — помощь\n`K.avatar @user|ID` — аватар пользователя\n`K.suggest текст` — предложить свою идею\n`K.info @user|ID` — информация о пользователе\n`K.server` — информация о сервере\n`K.stat` — статистика сервера\n`K.team` — состав Команды сервера\n`K.problem` — задать вопрос администрации сервера\n`K.upd` — обновления бота\n\n`K.developer` — Административные команды\n`K.bp` — команды для Бан Панелей\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
