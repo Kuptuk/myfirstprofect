@@ -77,11 +77,11 @@ async def upd(message):
     
 @client.command()
 async def help(message):
-    embed=discord.Embed(timestamp=datetime.datetime.utcnow())
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed.add_field(name='ᅠᅠᅠᅠᅠᅠᅠМеню **__Каталог__ Серверов **:',value="▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nᅠᅠᅠᅠᅠᅠᅠᅠᅠ**Все __Команды__ **:\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n▻**K.help** — __Помощь __ по __Серверу__ !\n▻**K.avatar** __@user|ID__ — Аватар __Пользователя__ !\n▻**K.suggest** __Текст__ — Предложить свою __Идею__ !\n▻**K.info** __@user|ID__ — Информация о __Пользователе__ !\n▻**K.server** — Информация о __Сервере__ !\n▻**K.stat** — Статистика __Сервера__ !\n▻**K.team** — Состав __Команды Сервера__ !\n▻**K.upd** — __Обновления__ Бота !\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n▻**K.developer** — __Административные__ Команды !\n▻**K.bp** — Команды для __Бан Панелей__ !\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\nᅠᅠᅠᅠᅠᅠᅠᅠ**Случайный партнёр **:\nᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠ**[__Клик__](" + msg[random.randint(0,len(msg)-1)]+")**\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬",inline=False)
+    embed=discord.Embed(title='Меню Каталог Серверов:', description=f"`K.help` — помощь\n`K.avatar @user|ID` — аватар пользователя\n`K.suggest текст` — предложить свою идею\n`K.info @user|ID` — информация о пользователе\n`K.server` — информация о сервере\n`K.stat` — статистика сервера\n`K.team` — состав Команды сервера\n`K.upd` — обновления бота\n\n`K.developer` — Административные команды\n`K.bp` — команды для Бан Панелей\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+    embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
     
 @client.command()
