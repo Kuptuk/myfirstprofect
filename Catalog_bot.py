@@ -24,6 +24,12 @@ my_collection2 = my_database.txtsug
 my_db = my_client.Catalog
 my_col = my_db.ibans
 
+my_dp = my_client.Catalog
+my_cp = my_dp.numberproblem
+
+my_dp2 = my_client.Catalog
+my_cp2 = my_dp2.txtproblem
+
 client = commands.Bot(command_prefix = "K.")
 client.remove_command("help")
         
@@ -470,6 +476,38 @@ async def deny(message,num,*msg):
             if str(aidi) in str(i):
                 await i.edit(embed=embed)
                 break
+                
+@client.command()
+async def problem(message, *, quest=None):
+    if message.channel.id != 740651083533254717:
+      embed = discord.Embed(description='**[Канал для вопросов](https://discord.com/channels/604636579545219072/740651083533254717)**')
+      await message.channel.send(embed=embed)
+    elif quest is None:
+      await message.message.delete()
+    else:
+        await message.message.delete()
+        embed=discord.Embed(title=f'Вопрос №{str(my_cp.find()[0]["Number"])}',description=quest)
+        embed.set_author(name=message.author, icon_url=message.author.avatar_url)
+        a = await message.channel.send(embed=embed)
+        my_cp2.insert_one({"id":message.author.id, "Num":my_cp.find()[0]["Number"], "text":quest, "msg_id":a.id})
+        my_cp.update_one({"Number":my_cp.find()[0]["Number"]},{"$set":{"Number":my_cp.find()[0]["Number"] + 1}})
+        
+@client.command()
+async def answer(message, num=None, *, txt=None):
+  if message.author.id in admins:
+    await message.message.delete()
+    my_cursor = my_cp2.find()
+    for item in my_cursor:
+      if item["Num"] == int(num):
+        user = await client.fetch_user(item['id'])
+        who = 'разработчика' if message.author.id == 414119169504575509 else 'администратора'
+        embed = discord.Embed(colour=discord.Colour.green(),title=f'Вопрос №{num} решён',description=item["text"])
+        embed.set_author(name=user, icon_url=user.avatar_url)
+        embed.add_field(name=f'Ответ от {who} {message.author.name}', value=txt)
+        embed.set_footer(text=f'Вопрос решён {str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(".")[0])}',icon_url=message.author.avatar_url)
+        msg = await client.get_channel(740651083533254717).fetch_message(item['msg_id'])
+        await msg.edit(embed=embed)
+        break
                 
 @client.command()
 async def iban(message,id=None,*reason):
