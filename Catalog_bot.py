@@ -578,8 +578,8 @@ async def info(message, id = None):
         #Роли пользователя
         b = [role.id for role in member.roles]
 
-        if 608994688078184478 in b or member.id == 567025011408240667 or member.id == 378559963494088707:
-            if member.id == 378559963494088707:
+        if 608994688078184478 in b or member.id == 567025011408240667 or member.id == 378559963494088707 or member.id == 565197969326866433:
+            if member.id == 378559963494088707 or member.id == 565197969326866433:
               response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819483996225576/70d1dd7923ecf552.png?width=950&height=616', stream = True)
               dol, otd, flag, flag22, flagbust = 'Не указана', 'Отдел не указан', False, False, True
               color2 = (20, 21, 21)
@@ -635,8 +635,9 @@ async def info(message, id = None):
             idraw.text((370, 300), f'Дата вступления: {a[2]} {sp[int(a[1])]} {a[0]} года', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             c = 'Оффлайн' if str(member.status) == 'offline' else 'Телефон' if member.is_on_mobile() else 'ПК'
             idraw.text((370 , 340), f'Устройство: {c}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            idraw.text((370, 420), f'{otd}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            idraw.text((370, 460), f'Должность: {dol}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            if member.id != 565197969326866433:
+              idraw.text((370, 420), f'{otd}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              idraw.text((370, 460), f'Должность: {dol}', color2, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             
             if not flagbust:
               if 677397817966198788 in b or 620955813850120192 in b or member.id == 567025011408240667:
