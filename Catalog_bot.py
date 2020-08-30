@@ -88,26 +88,33 @@ async def help(message):
     
 @client.command()
 async def ban(message, id=None, *, reason=None):
+    a, staff = message.guild.members, []
+    for i in a:
+      if '608994688078184478' in str(i.roles):
+        staff.append(str(i.id))
     b = [role.id for role in message.author.roles]
     if 620955813850120192 in b or 677397817966198788 in b or message.author.id in admins:
       if id is None:
         await message.channel.send('```css\nВы не указали пользователя.```')
       else:
-        if reason is None:
-          reason = 'Причина не указана.'
         id = id.replace("!", "").replace("@","").replace("<","").replace(">","")
-        try:
-          a = await client.fetch_user(int(id))
+        if id in staff:
+          await message.channel.send('```css\nНельзя забанить представителя команды каталога.```')
+        else:
           try:
-            await message.guild.ban(user=a, reason=f'{message.author.name}: {reason}')
-            embed = discord.Embed(description=f'{a.mention} [{a.id}] был забанен.\n`Причина:` {reason}',timestamp=datetime.datetime.utcnow())
-            embed.set_image(url="https://i.gifer.com/7Ork.gif")
-            embed.set_footer(text=f'Бан от {message.author.name}',icon_url=message.author.avatar_url)
-            await message.channel.send(embed=embed)
+            a = await client.fetch_user(int(id))
+            try:
+              if reason is None:
+                reason = 'Причина не указана.'
+              await message.guild.ban(user=a, reason=f'{message.author.name}: {reason}')
+              embed = discord.Embed(description=f'{a.mention} [{a.id}] был забанен.\n`Причина:` {reason}',timestamp=datetime.datetime.utcnow())
+              embed.set_image(url="https://i.gifer.com/7Ork.gif")
+              embed.set_footer(text=f'Бан от {message.author.name}',icon_url=message.author.avatar_url)
+              await message.channel.send(embed=embed)
+            except:
+              await message.channel.send('```css\nЭтого пользователя невозможно забанить.```')
           except:
-            await message.channel.send('```css\nЭтого пользователя невозможно забанить.```')
-        except:
-          await message.channel.send('```css\nПользователя не существует.```')
+            await message.channel.send('```css\nПользователя не существует.```')
         
 @client.command()
 async def unban(message, id=None, *, reason=None):
