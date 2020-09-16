@@ -368,7 +368,7 @@ async def modstats(message):
     s = ''
     for i, j in d.items():
       s += f'<@{str(i)}> — {j}\n'
-    embed = discord.Embed(title='Статистика отдела модерации',description=s,timestamp=datetime.datetime.utcnow())
+    embed = discord.Embed(title='Статистика отдела модерации',description='Реставрируется.',timestamp=datetime.datetime.utcnow()) #s
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
