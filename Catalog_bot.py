@@ -212,12 +212,12 @@ async def stat(message):
     embed.add_field(name="**"+str(kk)+"**",value="<@&608994688078184478>")
     embed.add_field(name="**"+str(ka)+"**",value="<@&619013112531517501>")
     embed.add_field(name="**"+str(kb)+"**",value="<@&657636549772705833>")
-    embed.add_field(name="**"+str(km)+"**",value="<@&686621891230040077>")
+    embed.add_field(name='Реставрируется.',value="<@&686621891230040077>")#km
     embed.add_field(name="**"+str(oo)+"**",value="<@&686621580620595296>")
     embed.add_field(name="**"+str(ot)+"**",value="<@&686618397668147220>")
     embed.add_field(name="**"+str(nq)+"**",value="<@&685079147017535493>")
     embed.add_field(name="**"+str(r)+"**",value="<@&686256550951649317>")
-    embed.add_field(name="**"+str(nw)+"**",value="<@&677397817966198788>")
+    embed.add_field(name='Реставрируется.',value="<@&677397817966198788>")#nw
     embed.add_field(name="**"+str(ks)+"**",value="<@&620955813850120192>")
     embed.add_field(name="**"+str(ne)+"**",value="<@&658154672237838347>")
     embed.add_field(name="**"+str(kh)+"**",value="<@&604645403664711680>")
@@ -281,12 +281,12 @@ async def team(message):
     embed.add_field(name="Глава отдела модерации:",value=t)
     embed.add_field(name="Глава отдела оценки:",value=y)
     embed.add_field(name="Глава отдела творчества:",value=u)
-    embed.add_field(name="Отдел модерации:",value=s)
+    embed.add_field(name="Отдел модерации:",value='Реставрируется.')#s
     embed.add_field(name="Отдел контроля и оценки:",value=r)
     embed.add_field(name="Отдел творчества:",value=w)
     embed.add_field(name="Наставники:",value=ns)
     embed.add_field(name="Рекрутеры:",value=q)
-    embed.add_field(name="Бан панель:",value=sb)
+    embed.add_field(name="Бан панель:",value='Реставрируется.')#sb
     await message.channel.send(embed=embed)
     
 @client.command()
