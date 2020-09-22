@@ -167,7 +167,7 @@ async def kick(message,id,reason=None):
 @client.command()
 async def stat(message):
     k1,k2,k3,ka,km,ks,kh,kk,kb,nq,nw,ne,oo,ot,r,z,rr = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-    a = message.guild.members
+    a = client.get_guild(604636579545219072).members
     for i in a:
         if 'Партнёр [Ур. 1]' in str(i.roles):
             k1 += 1
@@ -189,7 +189,7 @@ async def stat(message):
             kk += 1
         if 'Наставник' in str(i.roles):
             nq += 1
-        if 'Бан панель' in str(i.roles):
+        if 'Модератор' in str(i.roles):
             nw += 1
         if 'Медиа' in str(i.roles):
             ne += 1
@@ -212,12 +212,12 @@ async def stat(message):
     embed.add_field(name="**"+str(kk)+"**",value="<@&608994688078184478>")
     embed.add_field(name="**"+str(ka)+"**",value="<@&619013112531517501>")
     embed.add_field(name="**"+str(kb)+"**",value="<@&657636549772705833>")
-    embed.add_field(name='Реставрируется.',value="<@&686621891230040077>")#km
+    embed.add_field(name=f'**{km}**',value="<@&686621891230040077>")
     embed.add_field(name="**"+str(oo)+"**",value="<@&686621580620595296>")
     embed.add_field(name="**"+str(ot)+"**",value="<@&686618397668147220>")
     embed.add_field(name="**"+str(nq)+"**",value="<@&685079147017535493>")
     embed.add_field(name="**"+str(r)+"**",value="<@&686256550951649317>")
-    embed.add_field(name='Реставрируется.',value="<@&677397817966198788>")#nw
+    embed.add_field(name=f'**{nw}**',value="<@&677397817966198788>")
     embed.add_field(name="**"+str(ks)+"**",value="<@&620955813850120192>")
     embed.add_field(name="**"+str(ne)+"**",value="<@&658154672237838347>")
     embed.add_field(name="**"+str(kh)+"**",value="<@&604645403664711680>")
@@ -236,7 +236,7 @@ async def team(message):
     s,sb,ns,q,w,e,r,t,y,u = "","","","","","",'','','',''
     oo = 0
     for i in a:
-        if "Бан панель" in str(i.roles):
+        if "Модератор" in str(i.roles):
             sb += "<@" + str(i.id) + ">\n"
         if 'Отдел модерации' in str(i.roles):
             s += "<@" + str(i.id) + ">\n"
@@ -281,12 +281,12 @@ async def team(message):
     embed.add_field(name="Глава отдела модерации:",value=t)
     embed.add_field(name="Глава отдела оценки:",value=y)
     embed.add_field(name="Глава отдела творчества:",value=u)
-    embed.add_field(name="Отдел модерации:",value='Реставрируется.')#s
+    embed.add_field(name="Отдел модерации:",value=s)
     embed.add_field(name="Отдел контроля и оценки:",value=r)
     embed.add_field(name="Отдел творчества:",value=w)
     embed.add_field(name="Наставники:",value=ns)
     embed.add_field(name="Рекрутеры:",value=q)
-    embed.add_field(name="Бан панель:",value='Реставрируется.')#sb
+    embed.add_field(name="Модераторы:",value=sb)
     await message.channel.send(embed=embed)
     
 @client.command()
@@ -368,7 +368,7 @@ async def modstats(message):
     s = ''
     for i, j in d.items():
       s += f'<@{str(i)}> — {j}\n'
-    embed = discord.Embed(title='Статистика отдела модерации',description='Реставрируется.',timestamp=datetime.datetime.utcnow()) #s
+    embed = discord.Embed(title='Статистика отдела модерации',description=s,timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
