@@ -129,6 +129,10 @@ async def unban(message, id=None, *, reason=None):
           await message.channel.send('```css\nПользователя не существует.```')
 
 @client.command()
+async def stat(message):
+    await message.channel.send('Такой команды не существует. Возможно, вы имели в виду **`K.stats`**.')
+        
+@client.command()
 async def kick(message,id,reason=None):
     try:
         if 677397817966198788 in [role.id for role in message.author.roles] or 620955813850120192 in [role.id for role in message.author.roles]:
