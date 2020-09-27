@@ -398,9 +398,9 @@ async def enable(message):
 @client.command()
 async def avatar(message,id=None):
     if id is None:
-        member = message.guild.get_member(int(message.author.id))
+        member = await client.fetch_user(int(message.author.id))
     else:
-        member = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+        member = await client.fetch_user(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
     embed=discord.Embed(timestamp=datetime.datetime.utcnow())
     embed.set_image(url=member.avatar_url)
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
