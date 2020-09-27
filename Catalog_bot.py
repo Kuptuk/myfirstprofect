@@ -397,6 +397,7 @@ async def enable(message):
         
 @client.command()
 async def avatar(message,id=None):
+  try:
     if id is None:
         member = await client.fetch_user(int(message.author.id))
     else:
@@ -406,6 +407,8 @@ async def avatar(message,id=None):
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_author(name=f'Аватар пользователя {member.name}',icon_url=message.guild.icon_url)
     await message.channel.send(embed=embed)
+  except:
+    await message.channel.send('```css\nПользователя не существует.```')
     
 @client.command()
 async def suggest(message):
