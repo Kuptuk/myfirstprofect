@@ -155,7 +155,7 @@ async def kick(message,id,reason=None):
     
 @client.command()
 async def stat(message):
-    k1,k2,k3,ka,km,ks,kh,kk,kb,nq,nw,ne,oo,ot,r,z,rr = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    k1,k2,k3,ka,kh,kb,ne,z,rr,kk1,kk2,kk3,kk4,kk5,kk6,kk7 = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     a = client.get_guild(604636579545219072).members
     for i in a:
         if 'Партнёр [Ур. 1]' in str(i.roles):
@@ -166,53 +166,50 @@ async def stat(message):
             k3 += 1
         if 'Активный' in str(i.roles):
             ka += 1
-        if 'Отдел модерации' in str(i.roles):
-            km += 1
-        if 'Администратор' in str(i.roles):
-            ks += 1
         if 'Боты' in str(i.roles):
             kh += 1
         if 'Бустер сервера' in str(i.roles):
             kb += 1
-        if 'Команда каталога' in str(i.roles):
-            kk += 1
-        if 'Наставник' in str(i.roles):
-            nq += 1
-        if 'Модератор' in str(i.roles):
-            nw += 1
         if 'Медиа' in str(i.roles):
             ne += 1
-        if 'Отдел контроля и оценки' in str(i.roles):
-            oo += 1
-        if 'Отдел творчества' in str(i.roles):
-            ot += 1
-        if 'Рекрутер' in str(i.roles):
-            r += 1
         if 'Участник' in str(i.roles):
             z += 1
         if 'Новости' in str(i.roles):
             rr += 1
+        if '|К|ВсеКатегории' in str(i.roles):
+            kk1 += 1
+        if '|К|Проверенные' in str(i.roles):
+            kk2 += 1
+        if '|К|Игровые' in str(i.roles):
+            kk3 += 1
+        if '|К|RolePlay' in str(i.roles):
+            kk4 += 1
+        if '|К|Общение' in str(i.roles):
+            kk5 += 1
+        if '|К|Другие' in str(i.roles):
+            kk6 += 1
+        if '|К|НеБеспокоить' in str(i.roles):
+            kk7 += 1
     embed = discord.Embed(title="Статистика",description=str(len(a))+" пользователей",timestamp=datetime.datetime.utcnow())
     embed.set_thumbnail(url=message.guild.icon_url)
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.add_field(name="**"+str(k1)+"**",value="<@&688654966675603491>")
     embed.add_field(name="**"+str(k2)+"**",value="<@&622501656591990784>")
     embed.add_field(name="**"+str(k3)+"**",value="<@&622501691107049502>")
-    embed.add_field(name="**"+str(kk)+"**",value="<@&608994688078184478>")
     embed.add_field(name="**"+str(ka)+"**",value="<@&619013112531517501>")
     embed.add_field(name="**"+str(kb)+"**",value="<@&657636549772705833>")
-    embed.add_field(name=f'**{km}**',value="<@&686621891230040077>")
-    embed.add_field(name="**"+str(oo)+"**",value="<@&686621580620595296>")
-    embed.add_field(name="**"+str(ot)+"**",value="<@&686618397668147220>")
-    embed.add_field(name="**"+str(nq)+"**",value="<@&685079147017535493>")
-    embed.add_field(name="**"+str(r)+"**",value="<@&686256550951649317>")
-    embed.add_field(name=f'**{nw}**',value="<@&677397817966198788>")
-    embed.add_field(name="**"+str(ks)+"**",value="<@&620955813850120192>")
     embed.add_field(name="**"+str(ne)+"**",value="<@&658154672237838347>")
-    embed.add_field(name="**"+str(kh)+"**",value="<@&604645403664711680>")
     embed.add_field(name="**"+str(z)+"**",value="<@&678657735218167818>")
     embed.add_field(name="**"+str(rr)+"**",value="<@&734089506713763861>")
-
+    embed.add_field(name=f'{str(kk1)}',value='<@&747815808767361034>')
+    embed.add_field(name=f'{str(kk2)}',value='<@&747815810432762057>')
+    embed.add_field(name=f'{str(kk3)}',value='<@&747815812273930262>')
+    embed.add_field(name=f'{str(kk4)}',value='<@&747815814773604412>')
+    embed.add_field(name=f'{str(kk5)}',value='<@&747815816426422394>')
+    embed.add_field(name=f'{str(kk6)}',value='<@&747815962866352278>')
+    embed.add_field(name=f'{str(kk7)}',value='<@&748838722740420639>')
+    embed.add_field(name="**"+str(kh)+"**",value="<@&604645403664711680>")
+    
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
     embed.add_field(name="Случайный партнёр",value="[Ссылка на сервер](" + msg[random.randint(0,len(msg)-1)]+")")
@@ -229,7 +226,7 @@ async def team(message):
             sb += "<@" + str(i.id) + ">\n"
         if 'Отдел модерации' in str(i.roles):
             s += "<@" + str(i.id) + ">\n"
-        if "Наставник" in str(i.roles):
+        if "Администратор" in str(i.roles):
             ns += "<@" + str(i.id) + ">\n"
         if "Команда каталога" in str(i.roles):
             oo += 1
@@ -270,12 +267,12 @@ async def team(message):
     embed.add_field(name="Глава отдела модерации:",value=t)
     embed.add_field(name="Глава отдела оценки:",value=y)
     embed.add_field(name="Глава отдела творчества:",value=u)
-    embed.add_field(name="Отдел модерации:",value=s)
-    embed.add_field(name="Отдел контроля и оценки:",value=r)
-    embed.add_field(name="Отдел творчества:",value=w)
-    embed.add_field(name="Наставники:",value=ns)
-    embed.add_field(name="Рекрутеры:",value=q)
-    embed.add_field(name="Модераторы:",value=sb)
+    embed.add_field(name=f"Отдел модерации: ({len(s.split())})",value=s)
+    embed.add_field(name=f"Отдел контроля и оценки: ({len(r.split())})",value=r)
+    embed.add_field(name=f"Отдел творчества: ({len(w.split())})",value=w)
+    embed.add_field(name=f"Администраторы: ({len(ns.split())})",value=ns)
+    embed.add_field(name=f"Рекрутеры: ({len(q.split())})",value=q)
+    embed.add_field(name=f"Модераторы: ({len(sb.split())})",value=sb)
     await message.channel.send(embed=embed)
     
 @client.command()
