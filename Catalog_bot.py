@@ -88,7 +88,10 @@ async def ban(message, id=None, *, reason=None):
       else:
         id = id.replace("!", "").replace("@","").replace("<","").replace(">","")
         if id in staff:
-          await message.channel.send('```css\nНельзя забанить представителя команды каталога.```')
+          if id == 562561140786331650:
+            await message.channel.send('```<:nevozmutimo:751482937492504606>css\nНельзя забанить Императора.```')
+          else:
+            await message.channel.send('```css\nНельзя забанить представителя команды каталога.```')
         else:
           try:
             a = await client.fetch_user(int(id))
