@@ -231,7 +231,7 @@ async def team(message):
     for i in a:
         if "Модератор" in str(i.roles):
             sb += "<@" + str(i.id) + ">\n"
-        if 'Отдел модерации' in str(i.roles):
+        if 'Отдел партнерства' in str(i.roles):
             s += "<@" + str(i.id) + ">\n"
         if "Администратор" in str(i.roles):
             ns += "<@" + str(i.id) + ">\n"
@@ -245,7 +245,7 @@ async def team(message):
             e += "<@" + str(i.id) + ">\n"
         if "Отдел контроля и оценки" in str(i.roles):
             r += "<@" + str(i.id) + ">\n"
-        if "Глава отдела модерации" in str(i.roles):
+        if "Глава отдела партнерства" in str(i.roles):
             t += "<@" + str(i.id) + ">\n"
         if "Глава отдела оценки" in str(i.roles):
             y += "<@" + str(i.id) + ">\n"
