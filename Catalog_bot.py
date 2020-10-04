@@ -271,10 +271,10 @@ async def team(message):
         sb = "Отсутствует."
     embed = discord.Embed(title="Команда Каталога",description=f"Людей в команде: `{str(oo)}`",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    embed.add_field(name="Глава отдела модерации:",value=t)
+    embed.add_field(name="Глава отдела партнерства:",value=t)
     embed.add_field(name="Глава отдела оценки:",value=y)
     embed.add_field(name="Глава отдела творчества:",value=u)
-    embed.add_field(name=f"Отдел модерации: ({len(s.split())})",value=s)
+    embed.add_field(name=f"Отдел партнерства: ({len(s.split())})",value=s)
     embed.add_field(name=f"Отдел контроля и оценки: ({len(r.split())})",value=r)
     embed.add_field(name=f"Отдел творчества: ({len(w.split())})",value=w)
     embed.add_field(name=f"Администраторы: ({len(ns.split())})",value=ns)
@@ -695,7 +695,7 @@ async def info(message, id = None):
             if 608600358570295307 in b or 620955813850120192 in b:
               a = client.get_guild(604636579545219072).categories
               kol = 0
-              idd = [642085815597400065, 642197796887330827, 642102626070036500, 642104779270782986]
+              idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
               for i in a:
                 if i.id in idd:
                   for j in i.text_channels:
