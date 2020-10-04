@@ -339,6 +339,23 @@ async def server(message):
   await message.channel.send(file = discord.File(fp = 'server_card.png'))
         
 @client.command()
+async def deldouble(message,*,urls=None):
+  if message.author.id == 414119169504575509:
+    if urls is None:
+      await message.channel.send('```css\nВы не указали ссылки на сообщения для удаления.```')
+    else:
+      urls = urls.split()
+      for i in urls:
+        try:
+          channel_id = int(i.split('/')[-2])
+          msg_id = int(i.split('/')[-1])
+          a = await client.get_channel(channel_id).fetch_message(msg_id)
+          await message.channel.send(f'```{a.content}```')
+          await a.delete()
+        except:
+          await message.channel.send(f'```css\nВозникла ошибка в ссылке:\n{i}```')
+        
+@client.command()
 async def modstats(message):
   b = [role.id for role in message.author.roles]
   if 686639786672652363 in b or 620955813850120192 in b:
