@@ -89,7 +89,7 @@ async def ban(message, id=None, *, reason=None):
         id = id.replace("!", "").replace("@","").replace("<","").replace(">","")
         if id in staff:
           if id == '562561140786331650':
-            await message.channel.send('```<:nevozmutimo:751482937492504606>css\nНельзя забанить Императора.```')
+            await message.channel.send('<:nevozmutimo:751482937492504606>```css\nНельзя забанить Императора.```')
           else:
             await message.channel.send('```css\nНельзя забанить представителя команды каталога.```')
         else:
