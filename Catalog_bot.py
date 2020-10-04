@@ -162,6 +162,7 @@ async def kick(message,id,reason=None):
     
 @client.command()
 async def stats(message):
+    mmsg = await message.channel.send(embed=discord.Embed(description='**Пожалуйста, подождите... Идёт подсчёт... <a:just_another_anime_sip:758212768704364564>**'))
     k1,k2,k3,ka,kh,kb,ne,z,rr,kk1,kk2,kk3,kk4,kk5,kk6,kk7 = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     a = client.get_guild(604636579545219072).members
     for i in a:
@@ -221,10 +222,11 @@ async def stats(message):
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
     embed.add_field(name="Случайный партнёр",value="[Ссылка на сервер](" + msg[random.randint(0,len(msg)-1)]+")")
 
-    await message.channel.send(embed=embed)
-    
+    await mmsg.edit(embed=embed)
+          
 @client.command()
 async def team(message):
+    mmsg = await message.channel.send(embed=discord.Embed(description='**Пожалуйста, подождите... Идёт подсчёт... <a:just_another_anime_sip:758212768704364564>**'))
     a = client.get_guild(604636579545219072).members
     s,sb,ns,q,w,e,r,t,y,u = "","","","","","",'','','',''
     oo = 0
@@ -280,7 +282,7 @@ async def team(message):
     embed.add_field(name=f"Администраторы: ({len(ns.split())})",value=ns)
     embed.add_field(name=f"Рекрутеры: ({len(q.split())})",value=q)
     embed.add_field(name=f"Модераторы: ({len(sb.split())})",value=sb)
-    await message.channel.send(embed=embed)
+    await mmsg.edit(embed=embed)
     
 @client.command()
 async def developer(message):
