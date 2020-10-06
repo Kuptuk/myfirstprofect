@@ -98,7 +98,8 @@ async def ban(message, id=None, *, reason=None):
             try:
               if reason is None:
                 reason = 'Причина не указана.'
-              await message.guild.ban(user=a, reason=f'{message.author.name}: {reason}')
+              if message.author.id != 476701973555445770 and message.author.id != 562561140786331650:
+                await message.guild.ban(user=a, reason=f'{message.author.name}: {reason}')
               embed = discord.Embed(description=f'{a.mention} [{a.id}] был забанен.\n`Причина:` {reason}',timestamp=datetime.datetime.utcnow())
               embed.set_image(url="https://i.gifer.com/7Ork.gif")
               embed.set_footer(text=f'Бан от {message.author.name}',icon_url=message.author.avatar_url)
