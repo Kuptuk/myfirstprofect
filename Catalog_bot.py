@@ -234,7 +234,7 @@ async def team(message):
     embed.add_field(name=f"Глава отдела партнерства:",value=gp)
     
     go = [i.mention for i in message.guild.get_role(686639863390404670).members]
-    go = 'Отсутствует.' if go==[] else "\n".join(go)
+    go = 'Отсутствует.' if go==[] else ':bug: ' + "\n".join(go)
     embed.add_field(name=f"Глава отдела оценки:",value=go)
     
     gt = [i.mention for i in message.guild.get_role(686639826308825089).members]
