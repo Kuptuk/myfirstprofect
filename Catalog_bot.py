@@ -227,63 +227,33 @@ async def stats(message):
           
 @client.command()
 async def team(message):
-    mmsg = await message.channel.send(embed=discord.Embed(description='**Пожалуйста, подождите... Идёт подсчёт... <a:just_another_anime_sip:758212768704364564>**'))
-    a = client.get_guild(604636579545219072).members
-    s,sb,ns,q,w,e,r,t,y,u = "","","","","","",'','','',''
-    oo = 0
-    for i in a:
-        if "Модератор" in str(i.roles):
-            sb += "<@" + str(i.id) + ">\n"
-        if 'Отдел партнерства' in str(i.roles):
-            s += "<@" + str(i.id) + ">\n"
-        if "Администратор" in str(i.roles):
-            ns += "<@" + str(i.id) + ">\n"
-        if "Команда каталога" in str(i.roles):
-            oo += 1
-        if "Рекрутер" in str(i.roles):
-            q += "<@" + str(i.id) + ">\n"
-        if "Отдел творчества" in str(i.roles):
-            w += "<@" + str(i.id) + ">\n"
-        if "Редактор" in str(i.roles):
-            e += "<@" + str(i.id) + ">\n"
-        if "Отдел контроля и оценки" in str(i.roles):
-            r += "<@" + str(i.id) + ">\n"
-        if "Глава отдела партнерства" in str(i.roles):
-            t += "<@" + str(i.id) + ">\n"
-        if "Глава отдела оценки" in str(i.roles):
-            y += "<@" + str(i.id) + ">\n"
-        if "Глава отдела творчества" in str(i.roles):
-            u += "<@" + str(i.id) + ">\n"
-    if t == '':
-        t = "Отсутствует."
-    if y == '':
-        y = "Отсутствует."
-    if u == '':
-        u = "Отсутствует."
-    if s == '':
-        s = "Отсутствует."
-    if r == '':
-        r = "Отсутствует."
-    if w == '':
-        w = "Отсутствует."
-    if ns == '':
-        ns = "Отсутствует."
-    if q == '':
-        q = "Отсутствует."
-    if sb == '':
-        sb = "Отсутствует."
-    embed = discord.Embed(title="Команда Каталога",description=f"Людей в команде: `{str(oo)}`",timestamp=datetime.datetime.utcnow())
+    embed = discord.Embed(colour=discord.Colour(0x310000),title="Команда Каталога",description=f"Людей в команде: `{len([i.mention for i in message.guild.get_role(608994688078184478).members])}`",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    embed.add_field(name="Глава отдела партнерства:",value=t)
-    embed.add_field(name="Глава отдела оценки:",value=y)
-    embed.add_field(name="Глава отдела творчества:",value=u)
-    embed.add_field(name=f"Отдел партнерства: ({len(s.split())})",value=s)
-    embed.add_field(name=f"Отдел контроля и оценки: ({len(r.split())})",value=r)
-    embed.add_field(name=f"Отдел творчества: ({len(w.split())})",value=w)
-    embed.add_field(name=f"Администраторы: ({len(ns.split())})",value=ns)
-    embed.add_field(name=f"Рекрутеры: ({len(q.split())})",value=q)
-    embed.add_field(name=f"Модераторы: ({len(sb.split())})",value=sb)
-    await mmsg.edit(embed=embed)
+    gp = [i.mention for i in message.guild.get_role(686639786672652363).members]
+    gp = 'Отсутствует.' if gp==[] else ':crown: ' + "\n".join(gp)
+    embed.add_field(name=f"Глава отдела партнерства:",value=gp)
+    
+    go = [i.mention for i in message.guild.get_role(686639863390404670).members]
+    go = 'Отсутствует.' if go==[] else "\n".join(go)
+    embed.add_field(name=f"Глава отдела оценки:",value=go)
+    
+    gt = [i.mention for i in message.guild.get_role(686639826308825089).members]
+    gt = 'Отсутствует.' if gt==[] else '<a:black_fire:763424597369815042> ' + "\n".join(gt)
+    embed.add_field(name=f"Глава отдела творчества:",value=gt)
+    
+    a = [i.mention for i in message.guild.get_role(686621891230040077).members]
+    embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=("\n".join(a)))
+    b = [i.mention for i in message.guild.get_role(686621580620595296).members]
+    embed.add_field(name=f"Отдел оценки: [{len(b)}]",value=("\n".join(b)))
+    c = [i.mention for i in message.guild.get_role(686618397668147220).members]
+    embed.add_field(name=f"Отдел творчества: [{len(c)}]",value=("\n".join(c)))
+    d = [i.mention for i in message.guild.get_role(620955813850120192).members]
+    embed.add_field(name=f"Администраторы: [{len(d)}]",value="<:crown:763415131622998046> <@567025011408240667>\n:shield: <@704734583718936577>\n:tools: <@414119169504575509>")
+    e = [i.mention for i in message.guild.get_role(686256550951649317).members]
+    embed.add_field(name=f"Рекрутеры: [{len(e)}]",value=("\n".join(e)))
+    f = [i.mention for i in message.guild.get_role(677397817966198788).members]
+    embed.add_field(name=f"Модераторы: [{len(f)}]",value=("\n".join(f)))
+    await message.channel.send(embed=embed)
     
 @client.command()
 async def developer(message):
