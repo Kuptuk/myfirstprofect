@@ -615,7 +615,7 @@ async def info(message, id = None):
               for i in msgs.content.split('\n'):
                 a = i.split('|')
                 if a[0] == str(member.id):
-                  idraw.text((370, 500), f'На должности с {a[1]}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                  idraw.text((370, 500), f'В команде с {a[1]}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
                   break
                 
             
