@@ -402,6 +402,7 @@ async def suggest(message):
         for item in my_cursor:
             if item['id'] == message.author.id:
                 await message.channel.purge(limit=1)
+                await message.author.send(embed=discord.Embed(colour=discord.Colour.red(),title='Вы не можете оставлять идеи, так как находитесь в чёрном списке.'))
                 break
         else:
             a = await message.channel.history(limit=50).flatten()
