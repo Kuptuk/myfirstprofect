@@ -163,67 +163,32 @@ async def kick(message,id,reason=None):
     
 @client.command()
 async def stats(message):
-    mmsg = await message.channel.send(embed=discord.Embed(description='**Пожалуйста, подождите... Идёт подсчёт... <a:just_another_anime_sip:758212768704364564>**'))
-    k1,k2,k3,ka,kh,kb,ne,z,rr,kk1,kk2,kk3,kk4,kk5,kk6,kk7 = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-    a = client.get_guild(604636579545219072).members
-    for i in a:
-        if 'Партнёр [Ур. 1]' in str(i.roles):
-            k1 += 1
-        if 'Партнёр [Ур. 2]' in str(i.roles):
-            k2 += 1
-        if 'Партнёр [Ур. 3]' in str(i.roles):
-            k3 += 1
-        if 'Активный' in str(i.roles):
-            ka += 1
-        if 'Боты' in str(i.roles):
-            kh += 1
-        if 'Бустер сервера' in str(i.roles):
-            kb += 1
-        if 'Медиа' in str(i.roles):
-            ne += 1
-        if 'Участник' in str(i.roles):
-            z += 1
-        if 'Новости' in str(i.roles):
-            rr += 1
-        if '|К|ВсеКатегории' in str(i.roles):
-            kk1 += 1
-        if '|К|Проверенные' in str(i.roles):
-            kk2 += 1
-        if '|К|Игровые' in str(i.roles):
-            kk3 += 1
-        if '|К|RolePlay' in str(i.roles):
-            kk4 += 1
-        if '|К|Общение' in str(i.roles):
-            kk5 += 1
-        if '|К|Другие' in str(i.roles):
-            kk6 += 1
-        if '|К|НеБеспокоить' in str(i.roles):
-            kk7 += 1
-    embed = discord.Embed(title="Статистика",description=str(len(a))+" пользователей",timestamp=datetime.datetime.utcnow())
+    gg = client.get_guild(604636579545219072)
+    embed = discord.Embed(colour=discord.Colour(0x310000),title="Статистика",description=f'{len(gg.members)} пользователей.',timestamp=datetime.datetime.utcnow())
     embed.set_thumbnail(url=message.guild.icon_url)
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    embed.add_field(name="**"+str(k1)+"**",value="<@&688654966675603491>")
-    embed.add_field(name="**"+str(k2)+"**",value="<@&622501656591990784>")
-    embed.add_field(name="**"+str(k3)+"**",value="<@&622501691107049502>")
-    embed.add_field(name="**"+str(ka)+"**",value="<@&619013112531517501>")
-    embed.add_field(name="**"+str(kb)+"**",value="<@&657636549772705833>")
-    embed.add_field(name="**"+str(ne)+"**",value="<@&658154672237838347>")
-    embed.add_field(name="**"+str(z)+"**",value="<@&678657735218167818>")
-    embed.add_field(name="**"+str(rr)+"**",value="<@&734089506713763861>")
-    embed.add_field(name=f'{str(kk1)}',value='<@&747815808767361034>')
-    embed.add_field(name=f'{str(kk2)}',value='<@&747815810432762057>')
-    embed.add_field(name=f'{str(kk3)}',value='<@&747815812273930262>')
-    embed.add_field(name=f'{str(kk4)}',value='<@&747815814773604412>')
-    embed.add_field(name=f'{str(kk5)}',value='<@&747815816426422394>')
-    embed.add_field(name=f'{str(kk6)}',value='<@&747815962866352278>')
-    embed.add_field(name=f'{str(kk7)}',value='<@&748838722740420639>')
-    embed.add_field(name="**"+str(kh)+"**",value="<@&604645403664711680>")
+    embed.add_field(name=len(gg.get_role(688654966675603491).members),value="<@&688654966675603491>")
+    embed.add_field(name=len(gg.get_role(622501656591990784).members),value="<@&622501656591990784>")
+    embed.add_field(name=len(gg.get_role(622501691107049502).members),value="<@&622501691107049502>")
+    embed.add_field(name=len(gg.get_role(619013112531517501).members),value="<@&619013112531517501>")
+    embed.add_field(name=len(gg.get_role(657636549772705833).members),value="<@&657636549772705833>")
+    embed.add_field(name=len(gg.get_role(658154672237838347).members),value="<@&658154672237838347>")
+    embed.add_field(name=len(gg.get_role(678657735218167818).members),value="<@&678657735218167818>")
+    embed.add_field(name=len(gg.get_role(734089506713763861).members),value="<@&734089506713763861>")
+    embed.add_field(name=len(gg.get_role(747815808767361034).members),value='<@&747815808767361034>')
+    embed.add_field(name=len(gg.get_role(747815810432762057).members),value='<@&747815810432762057>')
+    embed.add_field(name=len(gg.get_role(747815812273930262).members),value='<@&747815812273930262>')
+    embed.add_field(name=len(gg.get_role(747815814773604412).members),value='<@&747815814773604412>')
+    embed.add_field(name=len(gg.get_role(747815816426422394).members),value='<@&747815816426422394>')
+    embed.add_field(name=len(gg.get_role(747815962866352278).members),value='<@&747815962866352278>')
+    embed.add_field(name=len(gg.get_role(748838722740420639).members),value='<@&748838722740420639>')
+    embed.add_field(name=len(gg.get_role(604645403664711680).members),value="<@&604645403664711680>")
     
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
     embed.add_field(name="Случайный партнёр",value="[Ссылка на сервер](" + msg[random.randint(0,len(msg)-1)]+")")
 
-    await mmsg.edit(embed=embed)
+    await message.channel.send(embed=embed)
           
 @client.command()
 async def team(message):
