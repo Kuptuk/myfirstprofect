@@ -320,6 +320,25 @@ async def modstats(message):
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
+
+@client.command()
+async def np(message, id=None):
+  b = [role.id for role in message.author.roles]
+  if message.author.id in admins or 686621891230040077 in b:
+    if id is None:
+      await message.channel.send('```css\nВы не указали id пользователя.```')
+    else:
+      try:
+        member = client.get_guild(604636579545219072).get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+        if member == message.author:
+          await message.channel.send('```css\nВы не можете выдать роль самому себе.```')
+        elif 688654966675603491 in [role.id for role in member.roles]:
+          await message.channel.send(f'```css\nРоли пользователя {member} НЕ были изменены.```')
+        else:
+          await member.add_roles(message.guild.get_role(688654966675603491),reason=f'{message.author.name}: Новый партнёр.')
+          await message.channel.send(f'```css\nРоли пользователя {member} были изменены.```')
+      except:
+        await message.channel.send('```css\nПользователя не существует.```')
     
 @client.command()
 async def disable(message):
