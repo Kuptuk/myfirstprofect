@@ -610,6 +610,15 @@ async def info(message, id = None):
             idraw.text((370, 420), f'{otd}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             idraw.text((370, 460), f'Должность: {dol}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             
+            msgs = await client.get_channel(764191031318937674).fetch_message(764191228933046361)
+            if str(member.id) in msgs.content:
+              for i in msgs.content.split('\n'):
+                a = i.split('|')
+                if a[0] == str(member.id):
+                  idraw.text((370, 500), f'На должности с {a[1]}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                  break
+                
+            
             if 677397817966198788 in b or 620955813850120192 in b or member.id == 567025011408240667:
               check = requests.get('https://media.discordapp.net/attachments/737011448441602149/740568726037856368/123.png', stream = True)
               check = Image.open(io.BytesIO(check.content))
@@ -671,7 +680,6 @@ async def info(message, id = None):
               
             response.save('user_card.png')
             await message.channel.send(file = discord.File(fp = 'user_card.png'))
-            
             
         else:
           if 622501691107049502 in b:
