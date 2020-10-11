@@ -305,7 +305,10 @@ async def modstats(message):
     idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
     mm = message.guild.get_role(608600358570295307).members
     for i in mm:
-      d.update({i.id:0})
+      if i.id == 529044574660853761:
+        d.update({i.id:10})
+      else:
+        d.update({i.id:0})
     for i in a:
       if i.id in idd:
         for j in i.text_channels:
@@ -661,7 +664,10 @@ async def info(message, id = None):
                       
             if 608600358570295307 in b or 620955813850120192 in b:
               a = client.get_guild(604636579545219072).categories
-              kol = 0
+              if member.id == 529044574660853761:
+                kol = 10
+              else:
+                kol = 0
               idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
               for i in a:
                 if i.id in idd:
