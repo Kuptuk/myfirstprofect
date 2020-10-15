@@ -400,7 +400,7 @@ async def pm(message,id=None,key=None):
     else:
       try:
         member = client.get_guild(604636579545219072).get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
-        if key is None:
+        if key is None or key == '+':
           await member.add_roles(*[message.guild.get_role(608600358570295307),message.guild.get_role(686621891230040077),message.guild.get_role(608994688078184478)],reason=f'{message.author.name}: Новый пиар-менеджер.')
           await message.channel.send(f'```css\nРоли пиар-менеджера для {member} успешно добавлены.```')
         elif key == '-':
