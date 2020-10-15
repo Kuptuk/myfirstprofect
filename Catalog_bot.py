@@ -390,6 +390,24 @@ async def avatar(message,id=None):
     await message.channel.send(embed=embed)
   except:
     await message.channel.send('```css\nПользователя не существует.```')
+
+@client.command()
+async def pm(message,id=None,key=None):
+  b = [role.id for role in message.author.roles]
+  if 686639786672652363 in b or 620955813850120192 in b:
+    if id is None:
+      await message.channel.send('```\nВы не указали id пользователя.```')
+    else:
+      try:
+        member = client.get_guild(604636579545219072).get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+        if key is None:
+          await member.add_roles(*[message.guild.get_role(608600358570295307),message.guild.get_role(686621891230040077),message.guild.get_role(608994688078184478)],reason=f'{message.author.name}: Новый пиар-менеджер.')
+          await message.channel.send(f'```css\nРоли пиар-менеджера для {member} успешно добавлены.```')
+        elif key == '-':
+          await member.remove_roles(*[message.guild.get_role(608600358570295307),message.guild.get_role(686621891230040077),message.guild.get_role(608994688078184478)],reason=f'{message.author.name}: Снят(а) с должности.')
+          await message.channel.send(f'```css\nРоли пиар-менеджера у {member} успешно сняты.```')
+      except:
+        await message.channel.send('```css\n[Возникла ошибка.]```')
     
 @client.command()
 async def suggest(message):
