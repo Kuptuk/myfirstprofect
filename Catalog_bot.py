@@ -297,32 +297,43 @@ async def deldouble(message,*,urls=None):
           await message.channel.send(f'```css\nВозникла ошибка в ссылке:\n{i}```')
         
 @client.command()
-async def modstats(message):
+async def modstats(message,data1=None,data2=None):
   b = [role.id for role in message.author.roles]
   if 686639786672652363 in b or 620955813850120192 in b:
-    a = client.get_guild(604636579545219072).categories
-    kol, d = 0, {}
-    idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
-    mm = message.guild.get_role(608600358570295307).members
-    for i in mm:
-      if i.id == 529044574660853761:
-        d.update({i.id:10})
-      else:
-        d.update({i.id:0})
-    for i in a:
-      if i.id in idd:
-        for j in i.text_channels:
-          if j.id != 690629182933172324:
-            b = await j.history(limit=100, after=datetime.datetime.utcnow() - datetime.timedelta(hours=48)).flatten()
-            for k in b:
-              d.update({k.author.id:d.setdefault(k.author.id, 0)+1})
-    s = ''
-    for i, j in d.items():
-      s += f'<@{str(i)}> — {j}\n'
-    embed = discord.Embed(title='Статистика отдела модерации',description=s,timestamp=datetime.datetime.utcnow())
-    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    embed.set_thumbnail(url=message.guild.icon_url)
-    await message.channel.send(embed=embed)
+    if data1 is None:
+      await message.channel.send('```\nНачальная дата не задана.```')
+    elif data2 is None:
+      await message.channel.send('```\nКонечная дата не задана.```')
+    else:
+      a = client.get_guild(604636579545219072).categories
+      kol, d = 0, {}
+      idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
+      mm = message.guild.get_role(608600358570295307).members
+      for i in mm:
+        if i.id == 529044574660853761:
+          d.update({i.id:10})
+        else:
+          d.update({i.id:0})
+      for i in a:
+        if i.id in idd:
+          for j in i.text_channels:
+            if j.id != 764911620111204383:
+              b = await j.history(limit=100, after=datetime.datetime.strptime(data1, '%d.%m.%Y'), before=datetime.datetime.strptime(data2, '%d.%m.%Y')+datetime.timedelta(hours=24)).flatten()
+              for k in b:
+                d.update({k.author.id:d.setdefault(k.author.id, 0)+1})
+      s = ''
+      d1 = dict(sorted(d.items(), key = lambda x:x[1],reverse=True))
+      key = 'neok'
+      for i, j in d1.items():
+        if j<8 and key == 'neok':
+          s += '**----------Выговоры----------**\n'
+          key = 'ok'
+        s += f'<@{str(i)}> — {j}\n'
+      s += f'\n**В период с `{data1}` по `{data2}`.**'
+      embed = discord.Embed(title='Статистика отдела модерации',description=s,timestamp=datetime.datetime.utcnow())
+      embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+      embed.set_thumbnail(url=message.guild.icon_url)
+      await message.channel.send(embed=embed)
 
 @client.command()
 async def np(message, id=None):
