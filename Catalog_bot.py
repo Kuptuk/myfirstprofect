@@ -626,6 +626,9 @@ async def info(message, id = None):
             elif 686632057191006323 in b:
               dol = 'Редактор'
               otd = 'Отдел творчества'
+            elif 677397817966198788 in b:
+              dol = 'аперативник'
+              otd = 'Отдел ОБТ "Модер"'
             response = Image.open(io.BytesIO(response.content))
             idraw = ImageDraw.Draw(response)
             avatar = avatar.resize((212, 212), Image.ANTIALIAS)
