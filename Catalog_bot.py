@@ -588,10 +588,10 @@ async def info(message, id = None):
         #Роли пользователя
         b = [role.id for role in member.roles]
 
-        if 608994688078184478 in b or member.id == 567025011408240667:
+        if 608994688078184478 in b or member.id == 414119169504575509:
             response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819514589610064/b139e06844859b87.png?width=950&height=616', stream = True)
             dol, otd, flag, flag22 = 'Не указана', 'Отдел не указан', False, False
-            if member.id == 567025011408240667:
+            if member.id == 414119169504575509:
               dol = 'Владелец сервера'
               otd = 'Административный отдел'
               flag = True
