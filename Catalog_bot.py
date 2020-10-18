@@ -213,7 +213,7 @@ async def team(message):
     c = [i.mention for i in message.guild.get_role(686618397668147220).members]
     embed.add_field(name=f"Отдел творчества: [{len(c)}]",value=("\n".join(c)))
     d = [i.mention for i in message.guild.get_role(620955813850120192).members]
-    embed.add_field(name=f"Администраторы: [{len(d)}]",value="<:crown:763415131622998046> <@567025011408240667>\n:shield: <@704734583718936577>\n:tools: <@414119169504575509>")
+    embed.add_field(name=f"Администраторы: [{len(d)}]",value="<:crown:763415131622998046> <@414119169504575509>\n:shield: <@704734583718936577>")
     e = [i.mention for i in message.guild.get_role(686256550951649317).members]
     embed.add_field(name=f"Рекрутеры: [{len(e)}]",value=("\n".join(e)))
     f = [i.mention for i in message.guild.get_role(677397817966198788).members]
