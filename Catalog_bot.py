@@ -198,23 +198,17 @@ async def team(message):
     gp = 'Отсутствует.' if gp==[] else ':crown: ' + "\n".join(gp)
     embed.add_field(name=f"Глава отдела партнерства:",value=gp)
     
-    go = [i.mention for i in message.guild.get_role(686639863390404670).members]
-    go = 'Отсутствует.' if go==[] else ':bug: ' + "\n".join(go)
-    embed.add_field(name=f"Глава отдела оценки:",value=go)
-    
     gt = [i.mention for i in message.guild.get_role(686639826308825089).members]
     gt = 'Отсутствует.' if gt==[] else '<a:black_fire:763424597369815042> ' + "\n".join(gt)
     embed.add_field(name=f"Глава отдела творчества:",value=gt)
-    
+
+    embed.add_field(name=f"Администраторы: [{len(d)}]",value="<:crown:763415131622998046> <@414119169504575509>\n:shield: <@704734583718936577>")
+    e = [i.mention for i in message.guild.get_role(686256550951649317).members]
     a = [i.mention for i in message.guild.get_role(686621891230040077).members]
     embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=("\n".join(a)))
-    b = [i.mention for i in message.guild.get_role(686621580620595296).members]
-    embed.add_field(name=f"Отдел оценки: [{len(b)}]",value=("\n".join(b)))
     c = [i.mention for i in message.guild.get_role(686618397668147220).members]
     embed.add_field(name=f"Отдел творчества: [{len(c)}]",value=("\n".join(c)))
     d = [i.mention for i in message.guild.get_role(620955813850120192).members]
-    embed.add_field(name=f"Администраторы: [{len(d)}]",value="<:crown:763415131622998046> <@414119169504575509>\n:shield: <@704734583718936577>")
-    e = [i.mention for i in message.guild.get_role(686256550951649317).members]
     embed.add_field(name=f"Рекрутеры: [{len(e)}]",value=("\n".join(e)))
     f = [i.mention for i in message.guild.get_role(677397817966198788).members]
     embed.add_field(name=f"Модераторы: [{len(f)}]",value=("\n".join(f)))
