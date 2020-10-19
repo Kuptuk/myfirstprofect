@@ -194,6 +194,13 @@ async def stats(message):
 async def team(message):
     embed = discord.Embed(colour=discord.Colour(0x310000),title="Команда Каталога",description=f"Людей в команде: `{len([i.mention for i in message.guild.get_role(608994688078184478).members])}`",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+    d = [i.mention for i in message.guild.get_role(620955813850120192).members]
+    embed.add_field(name=f"Администраторы: [{len(d)}]",value="<:crown:763415131622998046> <@414119169504575509>\n:shield: <@704734583718936577>")
+    e = [i.mention for i in message.guild.get_role(686256550951649317).members]
+    embed.add_field(name=f"Рекрутеры: [{len(e)}]",value=("\n".join(e)))
+    f = [i.mention for i in message.guild.get_role(677397817966198788).members]
+    embed.add_field(name=f"Модераторы: [{len(f)}]",value=("\n".join(f)))
+    
     gp = [i.mention for i in message.guild.get_role(686639786672652363).members]
     gp = 'Отсутствует.' if gp==[] else ':crown: ' + "\n".join(gp)
     embed.add_field(name=f"Глава отдела партнерства:",value=gp)
@@ -201,17 +208,13 @@ async def team(message):
     gt = [i.mention for i in message.guild.get_role(686639826308825089).members]
     gt = 'Отсутствует.' if gt==[] else '<a:black_fire:763424597369815042> ' + "\n".join(gt)
     embed.add_field(name=f"Глава отдела творчества:",value=gt)
-
-    embed.add_field(name=f"Администраторы: [{len(d)}]",value="<:crown:763415131622998046> <@414119169504575509>\n:shield: <@704734583718936577>")
-    e = [i.mention for i in message.guild.get_role(686256550951649317).members]
+    
+    l = [i.mention for i in message.guild.get_role(765212719380037663).members]
+    embed.add_field(name=f"Лента: [{len(l)}]",value=("\n".join(l)))
     a = [i.mention for i in message.guild.get_role(686621891230040077).members]
     embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=("\n".join(a)))
     c = [i.mention for i in message.guild.get_role(686618397668147220).members]
     embed.add_field(name=f"Отдел творчества: [{len(c)}]",value=("\n".join(c)))
-    d = [i.mention for i in message.guild.get_role(620955813850120192).members]
-    embed.add_field(name=f"Рекрутеры: [{len(e)}]",value=("\n".join(e)))
-    f = [i.mention for i in message.guild.get_role(677397817966198788).members]
-    embed.add_field(name=f"Модераторы: [{len(f)}]",value=("\n".join(f)))
     await message.channel.send(embed=embed)
     
 @client.command()
