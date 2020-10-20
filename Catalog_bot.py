@@ -10,7 +10,10 @@ from PIL import Image, ImageFilter, ImageDraw, ImageFont
 import requests
 import io
 
-my_client = pymongo.MongoClient('')
+mm = os.environ.get("Mongo")
+tt= os.environ.get("TOKEN")
+
+my_client = pymongo.MongoClient(mm)
 
 my_database = my_client.Catalog
 my_collection = my_database.Number
@@ -838,4 +841,4 @@ async def info(message, id = None):
         except:
             await message.channel.send('```css\nПользователя не существует.```')
         
-client.run('NjU2MDI5MjI5NzQ5NzY0MTI2.Xfcs1A.JthMgyqa4q586OOgE3BbFef4jGE')
+client.run(tt)
