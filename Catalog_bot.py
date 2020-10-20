@@ -30,6 +30,9 @@ my_cp = my_dp.numberproblem
 my_dp2 = my_client.Catalog
 my_cp2 = my_dp2.txtproblem
 
+my_warn = my_client.Catalog.warns
+my_warn_kol = my_client.Catalog.warn_kol
+
 client = commands.Bot(command_prefix = "K.")
 client.remove_command("help")
         
