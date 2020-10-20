@@ -10,7 +10,7 @@ from PIL import Image, ImageFilter, ImageDraw, ImageFont
 import requests
 import io
 
-my_client = pymongo.MongoClient('mongodb+srv://Kuptuk:str38171str@cluster0-qxkw1.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority')
+my_client = pymongo.MongoClient('')
 
 my_database = my_client.Catalog
 my_collection = my_database.Number
