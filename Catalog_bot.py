@@ -10,10 +10,7 @@ from PIL import Image, ImageFilter, ImageDraw, ImageFont
 import requests
 import io
 
-tt = os.environ.get("TOKEN")
-mm = os.environ.get("Mongo")
-
-my_client = pymongo.MongoClient(mm)
+my_client = pymongo.MongoClient('mongodb+srv://Kuptuk:str38171str@cluster0-qxkw1.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority')
 
 my_database = my_client.Catalog
 my_collection = my_database.Number
@@ -456,7 +453,8 @@ async def warns(message, id=None):
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     for item in my_warn.find():
       if item['id'] == member.id:
-        embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{await client.fetch_user(item["mod_id"])}`',value=f'{item["reason"]}',inline=False)
+        namember = await client.fetch_user(item["mod_id"])
+        embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{namember}`',value=f'{item["reason"]}',inline=False)
     await message.channel.send(embed=embed)
     
 @client.command()
@@ -840,4 +838,4 @@ async def info(message, id = None):
         except:
             await message.channel.send('```css\nПользователя не существует.```')
         
-client.run(tt)
+client.run('NjU2MDI5MjI5NzQ5NzY0MTI2.Xfcs1A.JthMgyqa4q586OOgE3BbFef4jGE')
