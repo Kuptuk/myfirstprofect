@@ -11,7 +11,7 @@ import requests
 import io
 
 mm = os.environ.get("Mongo")
-tt= os.environ.get("TOKEN")
+tt = os.environ.get("TOKEN")
 
 my_client = pymongo.MongoClient(mm)
 
@@ -38,7 +38,6 @@ client.remove_command("help")
 
 admins = [562561140786331650,704734583718936577,414119169504575509]
 
-#Активность и перезапуск
 @client.event
 async def on_ready():
     await client.change_presence(status=discord.Status.dnd,activity=discord.Game(f"K.help | #stayhome :3 | {len(client.get_guild(604636579545219072).members)}"))
