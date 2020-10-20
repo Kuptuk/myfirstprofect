@@ -405,6 +405,56 @@ async def pm(message,id=None,key=None):
           await message.channel.send(f'```css\nРоли пиар-менеджера у {member} успешно сняты.```')
       except:
         await message.channel.send('```css\n[Возникла ошибка.]```')
+        
+@client.command()
+async def warn(message, id = None, *, reason=None):
+  b = [role.id for role in message.author.roles]
+  if 677397817966198788 in b or message.author.id in admins:
+    if id is None:
+      await message.channel.send('```\nВы не указали пользователя.```')
+    elif reason is None:
+      await message.channel.send('```\nВы не указали причину.```')
+    else:
+      try:
+        member = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+        flag = True
+      except:
+        await message.channel.send('```\nПользователя не существует.```')
+        flag = False
+      if flag:
+        all = my_warn_kol.find()[0]["all"]+1
+        count = 0
+        for item in my_warn.find():
+          if item['id'] == member.id:
+            for j in my_warn.find():
+              if j['id'] == member.id:
+                count += 1
+            my_warn.insert_one({"id":member.id, "number_warn":count+1, "mod_id":message.author.id, "reason":reason, "all": all, "data":str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0])})
+            break
+        else:
+          my_warn.insert_one({"id":member.id, "number_warn":1, "mod_id":message.author.id, "reason":reason, "all":all, "data":str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0])})
+        embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Пользователь `{member}` получил предупреждение `№{count+1}` (случай `№{all}`) по причине: `{reason}`',timestamp=datetime.datetime.utcnow())
+        embed.set_footer(text=f'Предупреждение от {message.author.name}',icon_url=message.author.avatar_url)
+        await message.channel.send(embed=embed)
+        embed=discord.Embed(colour=discord.Colour.red(), description = f'Вы получили предупреждение `№{count+1}` по причине: `{reason}`',timestamp=datetime.datetime.utcnow())
+        embed.set_footer(text=f'Предупреждение от {message.author.name}',icon_url=message.author.avatar_url)
+        await member.send(embed=embed)
+        my_warn_kol.update_one({"id":1},{"$set":{"all":all}})
+        
+@client.command()
+async def warns(message, id=None):
+  b = [role.id for role in message.author.roles]
+  if 677397817966198788 in b or message.author.id in admins:
+    if id is None:
+      member = message.author
+    else:
+      member = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+    embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Предупреждения пользователя `{member}`:',timestamp=datetime.datetime.utcnow())
+    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+    for item in my_warn.find():
+      if item['id'] == member.id:
+        embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{await client.fetch_user(item["mod_id"])}`',value=f'{item["reason"]}',inline=False)
+    await message.channel.send(embed=embed)
     
 @client.command()
 async def suggest(message):
