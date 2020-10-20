@@ -35,7 +35,7 @@ my_warn_kol = my_client.Catalog.warn_kol
 
 client = commands.Bot(command_prefix = "K.")
 client.remove_command("help")
-        
+
 admins = [562561140786331650,704734583718936577,414119169504575509]
 
 #Активность + перезапуск
