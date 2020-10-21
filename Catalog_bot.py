@@ -72,7 +72,7 @@ async def ev(message,*command):
 async def help(message):
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed=discord.Embed(title='Меню Каталог Серверов', description=f"`K.help` — помощь\n`K.avatar @user|ID` — аватар пользователя\n`K.suggest текст` — предложить свою идею\n`K.info @user|ID` — информация о пользователе\n`K.server` — информация о сервере\n`K.stats` — статистика сервера\n`K.team` — состав Команды сервера\n`K.problem` — задать вопрос администрации сервера\n\n`K.developer` — Административные команды\n`K.bp` — команды для Бан Панелей\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed=discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера.\n`K.problem` — задать вопрос администрации сервера.\n\n`K.developer` — административные команды.\n`K.moder` — команды для модераторов.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
@@ -228,10 +228,10 @@ async def developer(message):
         await message.channel.send(embed=embed)
         
 @client.command()
-async def bp(message):
+async def moder(message):
     b = [role.id for role in message.author.roles]
     if 620955813850120192 in b or 677397817966198788 in b or message.author.id in admins:
-        embed=discord.Embed(timestamp=datetime.datetime.utcnow(),description="**Команды для <@&677397817966198788>:**\n\n`K.ban @user|ID причина` — забанить пользователя.\n`K.kick @user|ID причина` — кикнуть пользователя.\n`K.unban @user|ID причина` — разбанить пользователя.")
+        embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&677397817966198788>:**\n\n`K.ban @user|ID причина` — забанить пользователя.\n`K.unban @user|ID причина` — разбанить пользователя.\n\n`K.warn @user|ID причина` — выдать предупреждение пользователю.\n`K.warns @user|ID` — просмотреть предупреждения пользователя.\n`K.unwarn <Номер_случая>` — снять предупреждение по номеру случая.")
         embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
         embed.set_thumbnail(url=message.guild.icon_url)
         await message.channel.send(embed=embed)
