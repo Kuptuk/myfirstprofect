@@ -444,6 +444,26 @@ async def warn(message, id = None, *, reason=None):
         my_warn_kol.update_one({"id":1},{"$set":{"all":all}})
         
 @client.command()
+async def unwarn(message, number=None):
+  b = [role.id for role in message.author.roles]
+  if 677397817966198788 in b or message.author.id in admins:
+    if number is None:
+      await message.channel.send('```\nВы не указали номер случая.```')
+    else:
+      try:
+        for item in my_warn.find():
+          if item['all'] == int(number):
+            a = await client.fetch_user(item['id'])
+            embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Случай `№{number}` благополучно был снят у пользователя `{a}`')
+            await message.channel.send(embed=embed)
+            my_warn.delete_one({'all':int(number)})
+            break
+        else:
+          await message.channel.send('```Указанного случая нет в базе предупреждений.```')
+      except:
+        await message.channel.send('```Указанного случая нет в базе предупреждений.```')
+        
+@client.command()
 async def warns(message, id=None):
   b = [role.id for role in message.author.roles]
   if 677397817966198788 in b or message.author.id in admins:
@@ -455,6 +475,14 @@ async def warns(message, id=None):
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     for item in my_warn.find():
       if item['id'] == member.id:
+        namember = await client.fetch_user(item["mod_id"])
+        embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{namember}`',value=f'{item["reason"]}',inline=False)
+    await message.channel.send(embed=embed)
+  else:
+    embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Предупреждения пользователя `{message.author}`:',timestamp=datetime.datetime.utcnow())
+    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+    for item in my_warn.find():
+      if item['id'] == message.author.id:
         namember = await client.fetch_user(item["mod_id"])
         embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{namember}`',value=f'{item["reason"]}',inline=False)
     await message.channel.send(embed=embed)
