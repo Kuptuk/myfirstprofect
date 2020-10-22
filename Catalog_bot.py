@@ -438,10 +438,10 @@ async def warn(message, id = None, *, reason=None):
         embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Пользователь `{member}` получил предупреждение `№{count+1}` (случай `№{all}`) по причине: `{reason}`',timestamp=datetime.datetime.utcnow())
         embed.set_footer(text=f'Предупреждение от {message.author.name}',icon_url=message.author.avatar_url)
         await message.channel.send(embed=embed)
+        my_warn_kol.update_one({"id":1},{"$set":{"all":all}})
         embed=discord.Embed(colour=discord.Colour.red(), description = f'Вы получили предупреждение `№{count+1}` по причине: `{reason}`',timestamp=datetime.datetime.utcnow())
         embed.set_footer(text=f'Предупреждение от {message.author.name}',icon_url=message.author.avatar_url)
         await member.send(embed=embed)
-        my_warn_kol.update_one({"id":1},{"$set":{"all":all}})
         
 @client.command()
 async def unwarn(message, number=None):
