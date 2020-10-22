@@ -33,6 +33,8 @@ my_cp2 = my_dp2.txtproblem
 my_warn = my_client.Catalog.warns
 my_warn_kol = my_client.Catalog.warn_kol
 
+my_mute = my_client.Catalog.mute
+
 client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
 client.remove_command("help")
 
@@ -51,8 +53,19 @@ async def on_ready():
     await client.get_channel(728932829026844672).send('Произошёл перезапуск')
     
 @client.event
+async def on_message(message):
+  for item in my_mute.find():
+    if item['data'] <= datetime.datetime.utcnow():
+      await client.get_guild(604636579545219072).get_member(item['id']).remove_roles(client.get_guild(604636579545219072).get_role(648271372585533441),reason=f'Время мута истекло.')
+      my_mute.delete_one({'id':item['id']})      
+  await client.process_commands(message)
+
+@client.event
 async def on_member_join(member):
     await client.get_channel(691142273269760101).send("**+** <@" + str(member.id) + "> (" + str(member) + ")" + " [" + str(client.get_guild(604636579545219072).member_count) + "]")
+    for item in my_mute.find():
+      if item['id'] == member.id:
+        await client.get_guild(604636579545219072).get_member(member.id).add_roles(client.get_guild(604636579545219072).get_role(648271372585533441),reason=f'Попытка обхода мута.')
 
 @client.event
 async def on_member_remove(member):
@@ -231,7 +244,7 @@ async def developer(message):
 async def moder(message):
     b = [role.id for role in message.author.roles]
     if 620955813850120192 in b or 677397817966198788 in b or message.author.id in admins:
-        embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&677397817966198788>:**\n\n`K.ban @user|ID причина` — забанить пользователя.\n`K.unban @user|ID причина` — разбанить пользователя.\n\n`K.warn @user|ID причина` — выдать предупреждение пользователю.\n`K.warns @user|ID` — просмотреть предупреждения пользователя.\n`K.unwarn <Номер_случая>` — снять предупреждение по номеру случая.")
+        embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&677397817966198788>:**\n\n`K.ban @user|ID причина` — забанить пользователя.\n`K.unban @user|ID причина` — разбанить пользователя.\n\n`K.warn @user|ID причина` — выдать предупреждение пользователю.\n`K.warns @user|ID` — просмотреть предупреждения пользователя.\n`K.unwarn <Номер_случая>` — снять предупреждение по номеру случая.\n\n`K.mute @user|ID time причина` — замутить человека на time часов.\n`K.unmute @user|ID` — размутить человека.")
         embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
         embed.set_thumbnail(url=message.guild.icon_url)
         await message.channel.send(embed=embed)
@@ -486,6 +499,58 @@ async def warns(message, id=None):
         namember = await client.fetch_user(item["mod_id"])
         embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{namember}`',value=f'{item["reason"]}',inline=False)
     await message.channel.send(embed=embed)
+                        
+@client.command()
+async def mute(message, id=None, time=None, *, reason=None):
+  b = [role.id for role in message.author.roles]
+  if 677397817966198788 in b or message.author.id in admins:
+    if id is None:
+      await message.channel.send('```css\nВы не указали id нарушителя.```')
+    elif time is None:
+      await message.channel.send('```css\nВы не указали время мута.```')
+    else:
+      reason = 'Причина не указана' if reason is None else reason
+      try:
+        member = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+        flag = True
+      except:
+        await message.channel.send('```css\nУказанный пользователь отсутствует на сервере.```')
+        flag = False
+      if flag:
+        try:
+          time = int(time.replace('h',''))
+          flag2 = True
+        except:
+          await message.channel.send('```css\nВозникла ошибка в формате времени.```')
+          flag2 = False
+        if flag2:
+          my_mute.delete_one({'id':member.id})
+          my_mute.insert_one({"id":member.id, "data":datetime.datetime.utcnow() + datetime.timedelta(hours=time)})
+          embed = discord.Embed(colour=discord.Colour(0x310000), description=f'Пользователь `{member}` был заткнут на `{time}ч.` по причине: `{reason}`', timestamp=datetime.datetime.utcnow())
+          embed.set_footer(text=f'Мут от {message.author.name}',icon_url=message.author.avatar_url)
+          await message.channel.send(embed=embed)
+          await member.remove_roles(message.guild.get_role(648271372585533441),reason=f'{message.author.name}: Время мута истекло.')
+          await member.add_roles(message.guild.get_role(648271372585533441),reason=f'{message.author.name}: Был заткнут на {time}ч. ({reason})')
+          
+@client.command()
+async def unmute(message,id=None):
+  b = [role.id for role in message.author.roles]
+  if 677397817966198788 in b or message.author.id in admins:
+    if id is None:
+      await message.channel.send('```css\nВы не указали id нарушителя.```')
+    else:
+      try:
+        member = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+        flag = True
+      except:
+        await message.channel.send('```css\nУказанный пользователь отсутствует на сервере.```')
+        flag = False
+      if flag:
+        await member.remove_roles(message.guild.get_role(648271372585533441),reason=f'Мут снят модератором {message.author}.')
+        my_mute.delete_one({'id':member.id})
+        embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Пользователь `{member}` успешно размучен.',timestamp=datetime.datetime.utcnow())
+        embed.set_footer(text=f'Размут от {message.author.name}',icon_url=message.author.avatar_url)
+        await message.channel.send(embed=embed)
     
 @client.command()
 async def suggest(message):
