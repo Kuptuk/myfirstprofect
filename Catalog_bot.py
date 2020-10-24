@@ -271,6 +271,7 @@ async def server(message):
   for i in a:
     if 'Партнёр [Ур. 1]' in str(i.roles) or 'Партнёр [Ур. 2]' in str(i.roles) or 'Партнёр [Ур. 3]' in str(i.roles):
       k += 1
+    
   idraw.text((375, 115), str(len(gg.emojis)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
   idraw.text((299, 167), str(len(gg.roles)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
   idraw.text((230, 243), str(gg.verification_level), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
