@@ -317,7 +317,7 @@ async def modstats(message,data1=None,data2=None):
       await message.channel.send('```\nКонечная дата не задана.```')
     else:
       a = client.get_guild(604636579545219072).categories
-      kol, d = 0, {}
+      d = {}
       idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
       mm = message.guild.get_role(608600358570295307).members
       for i in mm:
