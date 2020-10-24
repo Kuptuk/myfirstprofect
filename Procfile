@@ -1,1 +1,1 @@
-worker: python Catalog_bot.py
+worker: python KB_bot.py
