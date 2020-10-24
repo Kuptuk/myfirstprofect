@@ -2,9 +2,9 @@ requests
 six
 pymongo
 dnspython
-discord.py
+discord.py==1.5.1
 websockets
-aiohttp
+aiohttp==3.6.2
 typing-extensions
 idna
 chardet
