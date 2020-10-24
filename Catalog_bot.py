@@ -8,7 +8,6 @@ import random
 import datetime
 from PIL import Image, ImageFilter, ImageDraw, ImageFont
 import requests
-import io
 
 mm = os.environ.get("Mongo")
 tt = os.environ.get("TOKEN")
