@@ -185,8 +185,8 @@ async def stats(message):
     embed.add_field(name=len(gg.get_role(622501656591990784).members),value="<@&622501656591990784>")
     embed.add_field(name=len(gg.get_role(622501691107049502).members),value="<@&622501691107049502>")
     embed.add_field(name=len(gg.get_role(619013112531517501).members),value="<@&619013112531517501>")
+    embed.add_field(name=len(gg.get_role(769916590686732319).members),value="<@&769916590686732319>")
     embed.add_field(name=len(gg.get_role(657636549772705833).members),value="<@&657636549772705833>")
-    embed.add_field(name=len(gg.get_role(658154672237838347).members),value="<@&658154672237838347>")
     embed.add_field(name=len(gg.get_role(678657735218167818).members),value="<@&678657735218167818>")
     embed.add_field(name=len(gg.get_role(734089506713763861).members),value="<@&734089506713763861>")
     embed.add_field(name=len(gg.get_role(747815808767361034).members),value='<@&747815808767361034>')
@@ -197,6 +197,7 @@ async def stats(message):
     embed.add_field(name=len(gg.get_role(747815962866352278).members),value='<@&747815962866352278>')
     embed.add_field(name=len(gg.get_role(748838722740420639).members),value='<@&748838722740420639>')
     embed.add_field(name=len(gg.get_role(604645403664711680).members),value="<@&604645403664711680>")
+    embed.add_field(name=len(gg.get_role(658154672237838347).members),value="<@&658154672237838347>")
     
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
