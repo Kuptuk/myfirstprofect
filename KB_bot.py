@@ -338,7 +338,7 @@ async def modstats(message,data1=None,data2=None):
       key = 'neok'
       for i, j in d1.items():
         if j<8 and key == 'neok':
-          s += '**----------Выговоры----------**\n'
+          s += '**-------Не выполнили установленную норму-------**\n'
           key = 'ok'
         s += f'<@{str(i)}> — {j}\n'
       s += f'\n**В период с `{data1}` по `{data2}`.**'
