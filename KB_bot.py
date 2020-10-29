@@ -84,7 +84,10 @@ async def on_message(message):
     men = message.mentions
     if men != []:
       d.update({men[0].id:str(message.created_at + datetime.timedelta(hours=3))})
-      dk.update({men[0].id:dk.get(men[0].id)+1})
+      if dk.get(men[0].id) is None:
+        dk.update({men[0].id:1})
+      else:
+        dk.update({men[0].id:dk.get(men[0].id)+1})
   await client.process_commands(message)
 
 @client.event
