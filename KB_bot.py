@@ -920,15 +920,16 @@ async def info(message, id = None):
           c = 'Оффлайн' if str(member.status) == 'offline' else 'Телефон' if member.is_on_mobile() else 'ПК'
           idraw.text((365, 340), f'Устройство: {c}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
           
-          idraw.text((365, 400), f'Дата последнего обновления:', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-          if d.get(member.id) is not None:
-            datet = d.get(member.id).split('.')[0].split()[0].split('-')
-            datet2 = d.get(member.id).split('.')[0].split()[1]
-            idraw.text((365, 440), f'{datet[2]} {sp[int(datet[1])]} {datet[0]} года в {datet2}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-          else:
-            idraw.text((365, 440), f'Неизвестна', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-          kolvo = dk.get(member.id) if dk.get(member.id) is not None else 0
-          idraw.text((365, 480), f'Всего публикаций с упоминанием: {kolvo}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+          if 769916590686732319 in b or 622501691107049502 in b or 622501656591990784 in b or 688654966675603491 in b:
+            idraw.text((365, 400), f'Дата последнего обновления:', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            if d.get(member.id) is not None:
+              datet = d.get(member.id).split('.')[0].split()[0].split('-')
+              datet2 = d.get(member.id).split('.')[0].split()[1]
+              idraw.text((365, 440), f'{datet[2]} {sp[int(datet[1])]} {datet[0]} года в {datet2}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            else:
+              idraw.text((365, 440), f'Неизвестна', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            kolvo = dk.get(member.id) if dk.get(member.id) is not None else 0
+            idraw.text((365, 480), f'Всего публикаций с упоминанием: {kolvo}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
           warnow = 0
           for item in my_warn.find():
             if item['id'] == member.id:
