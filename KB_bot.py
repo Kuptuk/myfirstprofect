@@ -42,15 +42,36 @@ admins = [562561140786331650,704734583718936577,414119169504575509]
 
 @client.event
 async def on_ready():
-    await client.change_presence(status=discord.Status.dnd,activity=discord.Game(f"K.help | #stayhome :3 | {len(client.get_guild(604636579545219072).members)}"))
-    msg = await client.get_channel(642257062746914836).history(limit=200).flatten()
-    b = []
-    for i in msg:
-        a = i.content.split('https://discord.gg')
-        b.append('https://discord.gg' + a[-1])
-    await client.get_channel(690827050033872937).purge(limit=10)
-    await client.get_channel(690827050033872937).send('https://discord.gg/nKPdC9V')
-    await client.get_channel(728932829026844672).send('Произошёл перезапуск')
+  await client.change_presence(status=discord.Status.dnd,activity=discord.Game(f"K.help | #stayhome :3 | {len(client.get_guild(604636579545219072).members)}"))
+  msg = await client.get_channel(642257062746914836).history(limit=200).flatten()
+  b = []
+  for i in msg:
+      a = i.content.split('https://discord.gg')
+      b.append('https://discord.gg' + a[-1])
+  await client.get_channel(690827050033872937).purge(limit=10)
+  await client.get_channel(690827050033872937).send('https://discord.gg/nKPdC9V')
+  global d
+  global dk
+  a = client.get_guild(604636579545219072).categories
+  idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
+  c, k, d, dk = [], [], {}, {}
+  for i in a:
+    if i.id in idd:
+      for j in i.text_channels:
+        if j.id != 764911620111204383:
+          c = await j.history(limit=None).flatten()
+          for kk in c:
+            men = kk.mentions
+            if men != []:
+              if d.get(men[0].id) is None:
+                d.update({men[0].id:str(kk.created_at + datetime.timedelta(hours=3))})
+                dk.update({men[0].id:1})
+              elif d.get(men[0].id)<str(kk.created_at + datetime.timedelta(hours=3)):
+                d.update({men[0].id:str(kk.created_at + datetime.timedelta(hours=3))})
+                dk.update({men[0].id:dk.get(men[0].id)+1})
+              else:
+                dk.update({men[0].id:dk.get(men[0].id)+1})
+  await client.get_channel(728932829026844672).send('Данные обновлены, бот перезапущен.')
     
 @client.event
 async def on_message(message):
@@ -58,6 +79,12 @@ async def on_message(message):
     if item['data'] <= datetime.datetime.utcnow():
       await client.get_guild(604636579545219072).get_member(item['id']).remove_roles(client.get_guild(604636579545219072).get_role(648271372585533441),reason=f'Время мута истекло.')
       my_mute.delete_one({'id':item['id']})      
+  idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
+  if message.channel.category_id in idd:
+    men = message.mentions
+    if men != []:
+      d.update({men[0].id:str(message.created_at + datetime.timedelta(hours=3))})
+      dk.update({men[0].id:dk.get(men[0].id)+1})
   await client.process_commands(message)
 
 @client.event
@@ -852,7 +879,7 @@ async def info(message, id = None):
                       for k in c:
                         if k.author.id == member.id:
                           kol += 1
-              idraw.text((457, 58), f'{kol}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              idraw.text((457, 58), f'Партнёрств за 48 часов: {kol}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
               part = requests.get('https://media.discordapp.net/attachments/689479689756344328/740856668698574858/unknown.png', stream = True)
               part = Image.open(io.BytesIO(part.content))
               part = part.convert('RGBA')
@@ -863,7 +890,10 @@ async def info(message, id = None):
             await message.channel.send(file = discord.File(fp = 'user_card.png'))
             
         else:
-          if 622501691107049502 in b:
+          if 769916590686732319 in b:
+            response = requests.get('https://media.discordapp.net/attachments/767656142285176843/771005666999271445/full_mb.png', stream = True)
+            color = (0, 0, 0)
+          elif 622501691107049502 in b:
             response = requests.get('https://media.discordapp.net/attachments/734396452843028582/739819455584010240/962b3f3b9a98d325.png?width=916&height=594', stream = True)
             color = (143, 48, 54)
           elif 622501656591990784 in b:
@@ -889,7 +919,22 @@ async def info(message, id = None):
           idraw.text((365, 300), f'Дата вступления: {a[2]} {sp[int(a[1])]} {a[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
           c = 'Оффлайн' if str(member.status) == 'offline' else 'Телефон' if member.is_on_mobile() else 'ПК'
           idraw.text((365, 340), f'Устройство: {c}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-
+          
+          idraw.text((365, 400), f'Дата последнего обновления:', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+          if d.get(member.id) is not None:
+            datet = d.get(member.id).split('.')[0].split()[0].split('-')
+            datet2 = d.get(member.id).split('.')[0].split()[1]
+            idraw.text((365, 440), f'{datet[2]} {sp[int(datet[1])]} {datet[0]} года в {datet2}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+          else:
+            idraw.text((365, 440), f'Неизвестна', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+          kolvo = dk.get(member.id) if dk.get(member.id) is not None else 0
+          idraw.text((365, 480), f'Всего публикаций с упоминанием: {kolvo}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+          warnow = 0
+          for item in my_warn.find():
+            if item['id'] == member.id:
+              warnow += 1
+          idraw.text((100 , 460), f'Предупреждений: {warnow}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 23))
+          
           if str(member.status) == 'offline':
             idraw.text((136 , 410), 'Не в сети', (0, 0, 0), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
             idraw.text((135 , 409), 'Не в сети', (54, 57, 63), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
