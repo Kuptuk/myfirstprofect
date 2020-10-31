@@ -360,7 +360,7 @@ async def modstats(message,data1=None,data2=None):
         if i.id in idd:
           for j in i.text_channels:
             if j.id != 764911620111204383:
-              b = await j.history(limit=200, after=datetime.datetime.strptime(data1, '%d.%m.%Y')+datetime.timedelta(hours=3), before=datetime.datetime.strptime(data2, '%d.%m.%Y')+datetime.timedelta(hours=24)).flatten()
+              b = await j.history(limit=200, after=datetime.datetime.strptime(data1, '%d.%m.%Y')+datetime.timedelta(hours=3), before=datetime.datetime.strptime(data2, '%d.%m.%Y')+datetime.timedelta(hours=27)).flatten()
               for k in b:
                 d.update({k.author.id:d.setdefault(k.author.id, 0)+1})
       s = ''
