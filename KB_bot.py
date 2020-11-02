@@ -77,7 +77,10 @@ async def on_ready():
 async def on_message(message):
   for item in my_mute.find():
     if item['data'] <= datetime.datetime.utcnow():
-      await client.get_guild(604636579545219072).get_member(item['id']).remove_roles(client.get_guild(604636579545219072).get_role(648271372585533441),reason=f'Время мута истекло.')
+      try:
+        await client.get_guild(604636579545219072).get_member(item['id']).remove_roles(client.get_guild(604636579545219072).get_role(648271372585533441),reason=f'Время мута истекло.')
+      except:
+        pass
       my_mute.delete_one({'id':item['id']})      
   idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
   if message.channel.category_id in idd:
