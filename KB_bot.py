@@ -99,7 +99,8 @@ async def on_member_join(member):
     for item in my_mute.find():
       if item['id'] == member.id:
         await client.get_guild(604636579545219072).get_member(member.id).add_roles(client.get_guild(604636579545219072).get_role(648271372585533441),reason=f'Попытка обхода мута.')
-
+    await member.add_roles(client.get_guild(604636579545219072).get_role(747815808767361034))
+        
 @client.event
 async def on_member_remove(member):
     await client.get_channel(691142326101344258).send("**-** <@" + str(member.id) + "> (" + str(member) + ")" + " [" + str(client.get_guild(604636579545219072).member_count) + "]")
