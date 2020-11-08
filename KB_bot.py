@@ -402,25 +402,37 @@ async def np(message, id=None):
     
 @client.command()
 async def disable(message):
-    if message.author.id == 414119169504575509 or message.author.id == 567025011408240667:
-        everyone = message.guild.get_role(604636579545219072)
-        mem = message.guild.get_role(678657735218167818)
-        await client.get_channel(678657683246809152).set_permissions(mem, read_messages=False)
-        await client.get_channel(685455297614970896).set_permissions(everyone, read_messages=False)
-        await client.get_channel(678666229661171724).set_permissions(mem, read_messages=False)
-        await client.get_channel(686460961275510786).set_permissions(mem, read_messages=False)
-        await message.channel.send('Каналы скрыты.')
-
+    if message.author.id in admins:
+      everyone = message.guild.get_role(604636579545219072)
+      mem = message.guild.get_role(678657735218167818)
+      await client.get_channel(678657683246809152).set_permissions(mem, read_messages=False)
+      await client.get_channel(703615708323643482).set_permissions(everyone, read_messages=False)
+      await client.get_channel(740651083533254717).set_permissions(everyone, read_messages=False)
+      await client.get_channel(712638398132650095).set_permissions(mem, read_messages=False)
+      await client.get_channel(758278272193658902).set_permissions(mem, read_messages=False)
+      await client.get_channel(714914939487256677).set_permissions(mem, read_messages=False)
+      await client.get_channel(678666229661171724).set_permissions(everyone, read_messages=False)
+      await client.get_channel(704677995956404324).set_permissions(mem, read_messages=False)
+      await client.get_channel(718027096475041852).set_permissions(mem, read_messages=False)
+      await client.get_channel(749242448370204796).set_permissions(mem, read_messages=False)
+      await message.channel.send('Каналы скрыты.')
+  
 @client.command()
 async def enable(message):
-    if message.author.id == 414119169504575509 or message.author.id == 567025011408240667:
-        everyone = message.guild.get_role(604636579545219072)
-        mem = message.guild.get_role(678657735218167818)
-        await client.get_channel(678657683246809152).set_permissions(mem, read_messages=True)
-        await client.get_channel(685455297614970896).set_permissions(everyone, read_messages=True, add_reactions=False)
-        await client.get_channel(678666229661171724).set_permissions(mem, read_messages=True, send_messages=None, add_reactions=False)
-        await client.get_channel(686460961275510786).set_permissions(mem, read_messages=True, send_messages=None)
-        await message.channel.send('Каналы открыты.')
+    if message.author.id in admins:
+      everyone = message.guild.get_role(604636579545219072)
+      mem = message.guild.get_role(678657735218167818)
+      await client.get_channel(678657683246809152).set_permissions(mem, read_messages=True)
+      await client.get_channel(703615708323643482).set_permissions(everyone, read_messages=None, embed_links=True, attach_files=True, add_reactions=False)
+      await client.get_channel(740651083533254717).set_permissions(everyone, read_messages=None, add_reactions=False)
+      await client.get_channel(712638398132650095).set_permissions(mem, read_messages=True)
+      await client.get_channel(758278272193658902).set_permissions(mem, read_messages=True)
+      await client.get_channel(714914939487256677).set_permissions(mem, read_messages=True)
+      await client.get_channel(678666229661171724).set_permissions(everyone, read_messages=None)
+      await client.get_channel(704677995956404324).set_permissions(mem, read_messages=True)
+      await client.get_channel(718027096475041852).set_permissions(mem, read_messages=True)
+      await client.get_channel(749242448370204796).set_permissions(mem, read_messages=True)
+      await message.channel.send('Каналы открыты.')
         
 @client.command()
 async def avatar(message,id=None):
