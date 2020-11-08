@@ -38,7 +38,7 @@ my_mute = my_client.Catalog.mute
 client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
 client.remove_command("help")
 
-admins = [562561140786331650,704734583718936577,414119169504575509]
+admins = [562561140786331650,414119169504575509]
 
 @client.event
 async def on_ready():
