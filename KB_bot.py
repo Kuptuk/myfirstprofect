@@ -107,6 +107,7 @@ async def on_member_remove(member):
     
 @client.event
 async def on_raw_reaction_add(payload):
+async def on_raw_reaction_add(payload):
   if payload.user_id == 414119169504575509:
     gg = client.get_guild(604636579545219072)
     if payload.message_id == 749327767061135502 and payload.emoji.name == '🔓':
@@ -133,7 +134,7 @@ async def on_raw_reaction_add(payload):
       await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034),reason='Нажал на реакцию.')
     if payload.message_id == 749327767061135502 and payload.emoji.name == '💤':
       await gg.get_member(payload.user_id).add_roles(gg.get_role(748838722740420639),reason='Нажал на реакцию.')
-      await gg.get_member(payload.user_id).remove_roles(*[gg.get_role(747815810432762057),gg.get_role(747815812273930262),gg.get_role(747815814773604412),gg.get_role(747815816426422394),gg.get_role(747815962866352278),gg.get_role(748838722740420639),gg.get_role(747815808767361034)],reason='Нажал на реакцию.')
+      await gg.get_member(payload.user_id).remove_roles(*[gg.get_role(747815810432762057),gg.get_role(747815812273930262),gg.get_role(747815814773604412),gg.get_role(747815816426422394),gg.get_role(747815962866352278),gg.get_role(747815808767361034)],reason='Нажал на реакцию.')
   
 @client.event
 async def on_raw_reaction_remove(payload):
