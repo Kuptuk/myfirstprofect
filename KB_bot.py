@@ -107,7 +107,6 @@ async def on_member_remove(member):
     
 @client.event
 async def on_raw_reaction_add(payload):
-async def on_raw_reaction_add(payload):
   if payload.user_id == 414119169504575509:
     gg = client.get_guild(604636579545219072)
     if payload.message_id == 749327767061135502 and payload.emoji.name == '🔓':
