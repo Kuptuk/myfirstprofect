@@ -297,7 +297,7 @@ async def team(message):
     embed = discord.Embed(colour=discord.Colour(0x310000),title="Команда Каталога",description=f"Людей в команде: `{len([i.mention for i in message.guild.get_role(608994688078184478).members])}`",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     d = [i.mention for i in message.guild.get_role(620955813850120192).members]
-    embed.add_field(name=f"Администраторы: [{len(d)}]",value="<:crown:763415131622998046> <@414119169504575509>\n:crossed_swords: <@562561140786331650>")
+    embed.add_field(name=f"Администраторы: [{len(d)}]",value="<:crown:763415131622998046> <@414119169504575509>\n:crossed_swords: <@562561140786331650>\n<:PandeMiaa:775425060130652242> <@529044574660853761>")
     e = [i.mention for i in message.guild.get_role(686256550951649317).members]
     embed.add_field(name=f"Рекрутеры: [{len(e)}]",value=("\n".join(e)))
     f = [i.mention for i in message.guild.get_role(677397817966198788).members]
