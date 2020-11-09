@@ -141,8 +141,6 @@ async def on_raw_reaction_remove(payload):
     await gg.get_member(payload.user_id).remove_roles(gg.get_role(678657735218167818),reason='Убрал реакцию.')
   if payload.message_id == 749327767061135502 and payload.emoji.name == '📰':
     await gg.get_member(payload.user_id).remove_roles(gg.get_role(734089506713763861),reason='Убрал реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '📚':
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034),reason='Убрал реакцию.')
   if payload.message_id == 749327767061135502 and payload.emoji.name == '💎':
     await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815810432762057),reason='Убрал реакцию.')
   if payload.message_id == 749327767061135502 and payload.emoji.name == '🎮':
