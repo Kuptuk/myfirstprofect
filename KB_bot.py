@@ -691,7 +691,7 @@ async def approve(message,num,*msg):
         my_cursor = my_collection2.find()
         text = " ".join(msg)
         if message.author.id == 414119169504575509:
-            who = 'разработчика '
+            who = 'владельца сервера '
         else:
             who = 'администратора '
         for item in my_cursor:
@@ -715,7 +715,7 @@ async def deny(message,num,*msg):
         my_cursor = my_collection2.find()
         text = " ".join(msg)
         if message.author.id == 414119169504575509:
-            who = 'разработчика '
+            who = 'владельца сервера '
         else:
             who = 'администратора '
         for item in my_cursor:
@@ -754,7 +754,7 @@ async def answer(message, num=None, *, txt=None):
     for item in my_cursor:
       if item["Num"] == int(num):
         user = await client.fetch_user(item['id'])
-        who = 'разработчика' if message.author.id == 414119169504575509 else 'администратора'
+        who = 'владельца сервера' if message.author.id == 414119169504575509 else 'администратора'
         embed = discord.Embed(colour=discord.Colour.green(),title=f'Вопрос №{num} решён',description=item["text"])
         embed.set_author(name=user, icon_url=user.avatar_url)
         embed.add_field(name=f'Ответ от {who} {message.author.name}', value=txt)
