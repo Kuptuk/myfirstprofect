@@ -176,7 +176,31 @@ async def ev(message,*command):
 async def help(message):
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed=discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера.\n`K.problem` — задать вопрос администрации сервера.\n\n`K.developer` — административные команды.\n`K.moder` — команды для модераторов.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed=discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера.\n`K.problem` — задать вопрос администрации сервера.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+    embed.set_thumbnail(url=message.guild.icon_url)
+    
+    embed2=discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"**Страница 2. Команды для состава:**\n\n`K.developer` — административные команды.\n`K.moder` — команды для модераторов.\n`K.op` — команды для главы отдела партнёрства.\n`K.pm` — команды для пиар-менеджера.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed2.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+    embed2.set_thumbnail(url=message.guild.icon_url)
+    
+    embeds = [embed,embed2]
+    msg = await message.channel.send(embed=embeds[0])
+    page = Paginator(client, msg, only=message.author, use_more=False, embeds=embeds)
+    await page.start()
+    
+@client.command()
+async def op(message):
+  if 686639786672652363 in [role.id for role in message.author.roles] or message.author.id in admins:
+    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&686639786672652363>:**\n\n`K.modstats date1 date2` — показать статистику отдела партнёрства с date1 по date2.\n`K.apm @user|+/-` — выдать или забрать роли пиар-менеджера соответственно.\n`K.removebl <№случая>` — исключить сервер из чёрного списка по номеру случая.")
+    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+    embed.set_thumbnail(url=message.guild.icon_url)
+    await message.channel.send(embed=embed)
+    
+@client.command()
+async def pm(message):
+  if 608600358570295307 in [role.id for role in message.author.roles] or message.author.id in admins:
+    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&608600358570295307>:**\n\n`K.addbl <URL> <причина>` — добавить сервер в чёрный список. Вложение обязательно!\n`K.bl` — просмотреть чёрный список серверов каталога.\n`K.np @user|ID` — выдать пользователю роль партнёра первого уровня.")
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
@@ -507,7 +531,7 @@ async def avatar(message,id=None):
     await message.channel.send('```css\nПользователя не существует.```')
 
 @client.command()
-async def pm(message,id=None,key=None):
+async def apm(message,id=None,key=None):
   b = [role.id for role in message.author.roles]
   if 686639786672652363 in b or 620955813850120192 in b:
     if id is None:
@@ -657,7 +681,7 @@ async def unmute(message,id=None):
     
 @client.command()
 async def addbl(message,url:discord.Invite=None,*,reason=None):
-  if message.author.id in admins or 686639786672652363 in [role.id for role in message.author.roles]:
+  if message.author.id in admins or 608600358570295307 in [role.id for role in message.author.roles]:
     reason = 'Причина не указана.' if reason is None else reason
     flag = False
     try:
