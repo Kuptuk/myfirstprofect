@@ -14,3 +14,4 @@ multidict
 async-timeout
 idna
 pillow
+Cybernator
