@@ -9,6 +9,7 @@ import datetime
 from PIL import Image, ImageFilter, ImageDraw, ImageFont
 import requests
 import io
+from Cybernator import Paginator
 
 mm = os.environ.get("Mongo")
 tt = os.environ.get("TOKEN")
@@ -34,6 +35,9 @@ my_warn = my_client.Catalog.warns
 my_warn_kol = my_client.Catalog.warn_kol
 
 my_mute = my_client.Catalog.mute
+
+my_bl = my_client.Catalog.bl
+my_bl_kol = my_client.Catalog.bl_kol
 
 client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
 client.remove_command("help")
@@ -651,6 +655,71 @@ async def unmute(message,id=None):
         embed.set_footer(text=f'Размут от {message.author.name}',icon_url=message.author.avatar_url)
         await message.channel.send(embed=embed)
     
+@client.command()
+async def addbl(message,url:discord.Invite=None,*,reason=None):
+  if message.author.id in admins or 686639786672652363 in [role.id for role in message.author.roles]:
+    reason = 'Причина не указана.' if reason is None else reason
+    flag = False
+    try:
+      a = message.message.attachments[0].url
+      flag = True
+    except:
+      await message.channel.send('```scss\nОтсутствует доказательство-вложение.```')
+    if flag:
+      embed=discord.Embed(colour=discord.Colour(0x310000),description=f'Сервер `{url.guild}` был добавлен в чёрный список `[Случай №{my_bl_kol.find()[0]["number"]}]` по причине: `{reason}`',timestamp=datetime.datetime.utcnow())
+      embed.set_thumbnail(url=url.guild.icon_url)
+      embed.set_footer(text=f'Добавил {message.author.name}',icon_url=message.author.avatar_url)
+      embed.set_image(url=a)
+      await message.channel.send(embed=embed)
+      my_bl.insert_one({"id_guild":url.guild.id, "mod_id":message.author.id, "avatar":str(url.guild.icon_url), "name_guild":url.guild.name,"reason":reason, "all": my_bl_kol.find()[0]["number"], "dokz":a, "url":str(url), "data":str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0])})
+      my_bl_kol.update_one({"idd":1}, {"$inc": {"number": 1}})
+      
+@client.command()
+async def removebl(message,num=None):
+  if message.author.id in admins or 686639786672652363 in [role.id for role in message.author.roles]:
+    if num is None:
+      await message.channel.send('```scss\nВы не указали номер случая.```')
+    else:
+      try:
+        for item in my_bl.find():
+          if item['all'] == int(num):
+            embed = discord.Embed(colour=discord.Colour(0x310000),description=f'{item["name_guild"]} `[Случай №{num}]` удалён из чёрного списка.',timestamp=datetime.datetime.utcnow())
+            embed.set_footer(text=f'Удалил {message.author.name}',icon_url=message.author.avatar_url)
+            await message.channel.send(embed=embed)
+            my_bl.delete_one({'all':int(num)})
+            break
+        else:
+          await message.channel.send('```Указанного случая нет в базе чёрного списка.```')
+      except:
+        await message.channel.send('```Указанного случая нет в базе чёрного списка.```')
+      
+@client.command()
+async def bl(message):
+  if message.author.id in admins or 608600358570295307 in [role.id for role in message.author.roles]:
+    ss = await message.channel.send(embed=discord.Embed(colour=discord.Colour(0x310000),description='**Пожалуйста, подождите, собираем информацию...** <a:just_another_anime_sip:758212768704364564>'))
+    embed = discord.Embed(colour=discord.Colour(0x310000),title='Чёрный список серверов каталога')
+    embeds,k = [],1
+    for item in my_bl.find():
+      if k % 6 == 0:
+        embeds.append(embed)
+        embed = discord.Embed(colour=discord.Colour(0x310000),title='Чёрный список серверов каталога')
+        k = 1
+      try:
+        a = await client.fetch_invite(item['url'])
+        namemember = await client.fetch_user(item['mod_id'])
+        embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{namemember}`',value=f'**[Аватар]({a.guild.icon_url})** | {a.guild} | **[Вложение]({item["dokz"]})**\n`ID:` {a.guild.id} <:Check_from_Helen22:760820919265656842>\n`Причина:` {item["reason"]}',inline=False)
+        k += 1
+      except:
+        namemember = await client.fetch_user(item['mod_id'])
+        embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{namemember}`',value=f'**[Аватар]({item["avatar"]})** | {item["name_guild"]} | **[Вложение]({item["dokz"]})**\n`ID:` {item["id_guild"]} :x:\n`Причина:` {item["reason"]}',inline=False)
+        k += 1
+    if k % 6 != 0:
+      embeds.append(embed)
+    await ss.delete()
+    msg = await message.channel.send(embed=embeds[0])
+    page = Paginator(client, msg, only=message.author, use_more=False, embeds=embeds)
+    await page.start()
+                        
 @client.command()
 async def suggest(message):
     if message.channel.id != 678666229661171724:
