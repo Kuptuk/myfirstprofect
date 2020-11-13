@@ -345,6 +345,8 @@ async def team(message):
     embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=("\n".join(a)))
     c = [i.mention for i in message.guild.get_role(686618397668147220).members]
     embed.add_field(name=f"Отдел творчества: [{len(c)}]",value=("\n".join(c)))
+    c = [i.mention for i in message.guild.get_role(757890413838467133).members]
+    embed.add_field(name=f"В отставке: [{len(c)}]",value=("\n".join(c)))
     await message.channel.send(embed=embed)
     
 @client.command()
