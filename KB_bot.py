@@ -172,19 +172,34 @@ async def on_raw_reaction_remove(payload):
       await gg.get_member(payload.user_id).remove_roles(gg.get_role(734089506713763861))
     if payload.emoji.name == '💎':
       await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815810432762057))
+      b = [role.id for role in gg.get_member(payload.user_id).roles]
+      if 747815808767361034 not in b and 747815810432762057 not in b and 747815812273930262 not in b and 747815814773604412 not in b and 747815816426422394 not in b and 747815962866352278 not in b and 748838722740420639 not in b:
+        await gg.get_member(payload.user_id).add_roles(gg.get_role(747815808767361034),reason='Убрал все категории.')
     if payload.emoji.name == '🎮':
       await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815812273930262))
+      b = [role.id for role in gg.get_member(payload.user_id).roles]
+      if 747815808767361034 not in b and 747815810432762057 not in b and 747815812273930262 not in b and 747815814773604412 not in b and 747815816426422394 not in b and 747815962866352278 not in b and 748838722740420639 not in b:
+        await gg.get_member(payload.user_id).add_roles(gg.get_role(747815808767361034),reason='Убрал все категории.')
     if payload.emoji.name == '🎲':
       await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815814773604412))
+      b = [role.id for role in gg.get_member(payload.user_id).roles]
+      if 747815808767361034 not in b and 747815810432762057 not in b and 747815812273930262 not in b and 747815814773604412 not in b and 747815816426422394 not in b and 747815962866352278 not in b and 748838722740420639 not in b:
+        await gg.get_member(payload.user_id).add_roles(gg.get_role(747815808767361034),reason='Убрал все категории.')
     if payload.emoji.name == '🏕️':
       await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815816426422394))
+      b = [role.id for role in gg.get_member(payload.user_id).roles]
+      if 747815808767361034 not in b and 747815810432762057 not in b and 747815812273930262 not in b and 747815814773604412 not in b and 747815816426422394 not in b and 747815962866352278 not in b and 748838722740420639 not in b:
+        await gg.get_member(payload.user_id).add_roles(gg.get_role(747815808767361034),reason='Убрал все категории.')
     if payload.emoji.name == '🧩':
       await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815962866352278))
+      b = [role.id for role in gg.get_member(payload.user_id).roles]
+      if 747815808767361034 not in b and 747815810432762057 not in b and 747815812273930262 not in b and 747815814773604412 not in b and 747815816426422394 not in b and 747815962866352278 not in b and 748838722740420639 not in b:
+        await gg.get_member(payload.user_id).add_roles(gg.get_role(747815808767361034),reason='Убрал все категории.')
     if payload.emoji.name == '💤':
       await gg.get_member(payload.user_id).remove_roles(gg.get_role(748838722740420639))
-    b = [role.id for role in gg.get_member(payload.user_id).roles]
-    if 747815808767361034 not in b and 747815810432762057 not in b and 747815812273930262 not in b and 747815814773604412 not in b and 747815816426422394 not in b and 747815962866352278 not in b and 748838722740420639 not in b:
-      await gg.get_member(payload.user_id).add_roles(gg.get_role(747815808767361034),reason='Убрал все категории.')
+      b = [role.id for role in gg.get_member(payload.user_id).roles]
+      if 747815808767361034 not in b and 747815810432762057 not in b and 747815812273930262 not in b and 747815814773604412 not in b and 747815816426422394 not in b and 747815962866352278 not in b and 748838722740420639 not in b:
+        await gg.get_member(payload.user_id).add_roles(gg.get_role(747815808767361034),reason='Убрал все категории.')
     
 @client.command() 
 async def ev(message,*command):
