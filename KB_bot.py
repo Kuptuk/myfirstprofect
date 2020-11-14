@@ -112,52 +112,76 @@ async def on_member_remove(member):
 @client.event
 async def on_raw_reaction_add(payload):
   gg = client.get_guild(604636579545219072)
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '🔓':
-    await gg.get_member(payload.user_id).add_roles(gg.get_role(678657735218167818),reason='Нажал на реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '📰':
-    await gg.get_member(payload.user_id).add_roles(gg.get_role(734089506713763861),reason='Нажал на реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '📚':
-    await gg.get_member(payload.user_id).add_roles(gg.get_role(747815808767361034),reason='Нажал на реакцию.')
-    await gg.get_member(payload.user_id).remove_roles(*[gg.get_role(747815810432762057),gg.get_role(747815812273930262),gg.get_role(747815814773604412),gg.get_role(747815816426422394),gg.get_role(747815962866352278),gg.get_role(748838722740420639)],reason='Нажал на реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '💎':
-    await gg.get_member(payload.user_id).add_roles(gg.get_role(747815810432762057),reason='Нажал на реакцию.')
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034),reason='Нажал на реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '🎮':
-    await gg.get_member(payload.user_id).add_roles(gg.get_role(747815812273930262),reason='Нажал на реакцию.')
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034),reason='Нажал на реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '🎲':
-    await gg.get_member(payload.user_id).add_roles(gg.get_role(747815814773604412),reason='Нажал на реакцию.')
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034),reason='Нажал на реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '🏕️':
-    await gg.get_member(payload.user_id).add_roles(gg.get_role(747815816426422394),reason='Нажал на реакцию.')
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034),reason='Нажал на реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '🧩':
-    await gg.get_member(payload.user_id).add_roles(gg.get_role(747815962866352278),reason='Нажал на реакцию.')
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034),reason='Нажал на реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '💤':
-    await gg.get_member(payload.user_id).add_roles(gg.get_role(748838722740420639),reason='Нажал на реакцию.')
-    await gg.get_member(payload.user_id).remove_roles(*[gg.get_role(747815810432762057),gg.get_role(747815812273930262),gg.get_role(747815814773604412),gg.get_role(747815816426422394),gg.get_role(747815962866352278),gg.get_role(747815808767361034)],reason='Нажал на реакцию.')
+  mes = await client.get_channel(642171728273080330).fetch_message(749327767061135502)
+  if payload.message_id == 749327767061135502:
+    if payload.emoji.name == '🔓':
+      await gg.get_member(payload.user_id).add_roles(gg.get_role(678657735218167818))
+    if payload.emoji.name == '📰':
+      await gg.get_member(payload.user_id).add_roles(gg.get_role(734089506713763861))
+    if payload.emoji.name == '📚':
+      await gg.get_member(payload.user_id).add_roles(gg.get_role(747815808767361034))
+      await mes.remove_reaction('💎',payload.member)
+      await mes.remove_reaction('🎮',payload.member)
+      await mes.remove_reaction('🎲',payload.member)
+      await mes.remove_reaction('🏕️',payload.member)
+      await mes.remove_reaction('🧩',payload.member)
+      await mes.remove_reaction('💤',payload.member)
+    if payload.emoji.name == '💎':
+      await gg.get_member(payload.user_id).add_roles(gg.get_role(747815810432762057))
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034))
+      await mes.remove_reaction('📚',payload.member)
+      await mes.remove_reaction('💤',payload.member)
+    if payload.emoji.name == '🎮':
+      await gg.get_member(payload.user_id).add_roles(gg.get_role(747815812273930262))
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034))
+      await mes.remove_reaction('📚',payload.member)
+      await mes.remove_reaction('💤',payload.member)
+    if payload.emoji.name == '🎲':
+      await gg.get_member(payload.user_id).add_roles(gg.get_role(747815814773604412))
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034))
+      await mes.remove_reaction('📚',payload.member)
+      await mes.remove_reaction('💤',payload.member)
+    if payload.emoji.name == '🏕️':
+      await gg.get_member(payload.user_id).add_roles(gg.get_role(747815816426422394))
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034))
+      await mes.remove_reaction('📚',payload.member)
+      await mes.remove_reaction('💤',payload.member)
+    if payload.emoji.name == '🧩':
+      await gg.get_member(payload.user_id).add_roles(gg.get_role(747815962866352278))
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034))
+      await mes.remove_reaction('📚',payload.member)
+      await mes.remove_reaction('💤',payload.member)
+    if payload.emoji.name == '💤':
+      await gg.get_member(payload.user_id).add_roles(gg.get_role(748838722740420639))
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815808767361034))
+      await mes.remove_reaction('📚',payload.member)
+      await mes.remove_reaction('💎',payload.member)
+      await mes.remove_reaction('🎮',payload.member)
+      await mes.remove_reaction('🎲',payload.member)
+      await mes.remove_reaction('🏕️',payload.member)
+      await mes.remove_reaction('🧩',payload.member)
   
 @client.event
 async def on_raw_reaction_remove(payload):
   gg = client.get_guild(604636579545219072)
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '🔓':
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(678657735218167818),reason='Убрал реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '📰':
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(734089506713763861),reason='Убрал реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '💎':
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815810432762057),reason='Убрал реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '🎮':
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815812273930262),reason='Убрал реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '🎲':
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815814773604412),reason='Убрал реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '🏕️':
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815816426422394),reason='Убрал реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '🧩':
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815962866352278),reason='Убрал реакцию.')
-  if payload.message_id == 749327767061135502 and payload.emoji.name == '💤':
-    await gg.get_member(payload.user_id).remove_roles(gg.get_role(748838722740420639),reason='Убрал реакцию.')
+  mes = await client.get_channel(642171728273080330).fetch_message(749327767061135502)
   if payload.message_id == 749327767061135502:
+    if payload.emoji.name == '🔓':
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(678657735218167818))
+    if payload.emoji.name == '📰':
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(734089506713763861))
+    if payload.emoji.name == '💎':
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815810432762057))
+    if payload.emoji.name == '🎮':
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815812273930262))
+    if payload.emoji.name == '🎲':
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815814773604412))
+    if payload.emoji.name == '🏕️':
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815816426422394))
+    if payload.emoji.name == '🧩':
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(747815962866352278))
+    if payload.emoji.name == '💤':
+      await gg.get_member(payload.user_id).remove_roles(gg.get_role(748838722740420639))
     b = [role.id for role in gg.get_member(payload.user_id).roles]
     if 747815808767361034 not in b and 747815810432762057 not in b and 747815812273930262 not in b and 747815814773604412 not in b and 747815816426422394 not in b and 747815962866352278 not in b and 748838722740420639 not in b:
       await gg.get_member(payload.user_id).add_roles(gg.get_role(747815808767361034),reason='Убрал все категории.')
