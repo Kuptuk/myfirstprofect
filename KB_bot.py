@@ -246,6 +246,7 @@ async def pm(message):
     
 @client.command()
 async def ban(message, id=None, *, reason=None):
+    await message.delete()
     a, staff = message.guild.members, []
     for i in a:
       if '608994688078184478' in str(i.roles):
@@ -279,6 +280,7 @@ async def ban(message, id=None, *, reason=None):
         
 @client.command()
 async def unban(message, id=None, *, reason=None):
+    await message.delete()
     b = [role.id for role in message.author.roles]
     if 620955813850120192 in b or 677397817966198788 in b or message.author.id in admins:
       if id is None:
@@ -591,6 +593,7 @@ async def apm(message,id=None,key=None):
         
 @client.command()
 async def warn(message, id = None, *, reason=None):
+  await message.delete()
   b = [role.id for role in message.author.roles]
   if 677397817966198788 in b or message.author.id in admins:
     if id is None:
@@ -626,6 +629,7 @@ async def warn(message, id = None, *, reason=None):
         
 @client.command()
 async def unwarn(message, number=None):
+  await message.delete()
   b = [role.id for role in message.author.roles]
   if 677397817966198788 in b or message.author.id in admins:
     if number is None:
@@ -670,6 +674,7 @@ async def warns(message, id=None):
                         
 @client.command()
 async def mute(message, id=None, time=None, *, reason=None):
+  await message.delete()
   b = [role.id for role in message.author.roles]
   if 677397817966198788 in b or message.author.id in admins:
     if id is None:
@@ -702,6 +707,7 @@ async def mute(message, id=None, time=None, *, reason=None):
           
 @client.command()
 async def unmute(message,id=None):
+  await message.delete()
   b = [role.id for role in message.author.roles]
   if 677397817966198788 in b or message.author.id in admins:
     if id is None:
