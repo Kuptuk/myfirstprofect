@@ -639,7 +639,8 @@ async def unwarn(message, number=None):
         for item in my_warn.find():
           if item['all'] == int(number):
             a = await client.fetch_user(item['id'])
-            embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Случай `№{number}` благополучно был снят у пользователя `{a}`')
+            embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Случай `№{number}` благополучно был снят у пользователя `{a}`',timestamp=datetime.datetime.utcnow())
+            embed.set_footer(text=f'Предупреждение снял(а) {message.author.name}',icon_url=message.author.avatar_url)
             await message.channel.send(embed=embed)
             my_warn.delete_one({'all':int(number)})
             break
