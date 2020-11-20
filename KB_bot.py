@@ -16,11 +16,8 @@ tt = os.environ.get("TOKEN")
 
 my_client = pymongo.MongoClient(mm)
 
-my_database = my_client.Catalog
-my_collection = my_database.Number
-
-my_database2 = my_client.Catalog
-my_collection2 = my_database.txtsug
+my_collection = my_client.Catalog.Number
+my_collection2 = my_client.Catalog.txtsug
 
 my_db = my_client.Catalog
 my_col = my_db.ibans
@@ -79,6 +76,18 @@ async def on_ready():
     
 @client.event
 async def on_message(message):
+  if message.channel.id == 740651083533254717:
+    if "K.problem" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins:
+      await message.delete()
+      embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=discord.Colour(0x310000),description=f'Ваше сообщение в канале <#740651083533254717> следующего содержания: `{message.content}` было удалено по причине оффтопа.\nПросьба ознакомиться с **[закреплённым информационным сообщением](https://discord.com/channels/604636579545219072/740651083533254717/744485922258681896).**')
+      embed.set_footer(text='С уважением, Команда Каталога!',icon_url=message.guild.icon_url)
+      await message.author.send(embed=embed)
+  if message.channel.id == 678666229661171724:
+    if "K.suggest" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins:
+      await message.delete()
+      embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=discord.Colour(0x310000),description=f'Ваше сообщение в канале <#678666229661171724> следующего содержания: `{message.content}` было удалено по причине оффтопа.\nПросьба ознакомиться с **[закреплённым информационным сообщением](https://discord.com/channels/604636579545219072/678666229661171724/732206889110339655).**')
+      embed.set_footer(text='С уважением, Команда Каталога!',icon_url=message.guild.icon_url)
+      await message.author.send(embed=embed)
   for item in my_mute.find():
     if item['data'] <= datetime.datetime.utcnow():
       try:
@@ -393,7 +402,7 @@ async def team(message):
 @client.command()
 async def developer(message):
     if message.author.id in admins:
-        embed=discord.Embed(timestamp=datetime.datetime.utcnow(),description="**Команды для <@&620955813850120192>:**\n\n`K.say #channel|ID текст` — отправить текст определённого содержания в предназначеный канал.\n`K.clear n` — удалить n сообщений в канале.\n`K.disable` — отключить основные каналы (применять только на случай рейда)\n`K.enable` — включить все основные каналы (применять только на случай рейда)\n`K.approve Номер Текст` — принять предложение\n`K.deny Номер Текст` — отклонить предложение\n`K.iban @user|ID Причина` — добавить в чс идей пользователя\n`K.iunban @user|ID` — убрать из чс идей пользователя\n`K.ibans` — посмотреть чс идей\n`K.answer номер|текст` — ответить на вопрос пользователя")
+        embed=discord.Embed(timestamp=datetime.datetime.utcnow(),description="**Команды для <@&620955813850120192>:**\n\n`K.say #channel|ID текст` — отправить текст определённого содержания в предназначеный канал.\n`K.clear n` — удалить n сообщений в канале.\n`K.disable` — отключить основные каналы (применять только на случай рейда)\n`K.enable` — включить все основные каналы (применять только на случай рейда)\n`K.approve Номер (+/-) Текст` — принять/отклонить предложение\n`K.iban @user|ID Причина` — добавить в чс идей пользователя\n`K.iunban @user|ID` — убрать из чс идей пользователя\n`K.ibans` — посмотреть чс идей\n`K.answer номер|текст` — ответить на вопрос пользователя")
         embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
         embed.set_thumbnail(url=message.guild.icon_url)
         await message.channel.send(embed=embed)
@@ -793,84 +802,47 @@ async def bl(message):
     await page.start()
                         
 @client.command()
-async def suggest(message):
+async def suggest(message, *, txt=None):
     if message.channel.id != 678666229661171724:
-        await message.channel.send("Канал для предложений => <#678666229661171724>")
+      embed = discord.Embed(description='**[Канал для предложений](https://discord.com/channels/604636579545219072/678666229661171724)**')
+      await message.channel.send(embed=embed)
+    elif txt is None:
+      await message.message.delete()
     else:
-        my_cursor = my_col.find()
-        for item in my_cursor:
-            if item['id'] == message.author.id:
-                await message.channel.purge(limit=1)
-                await message.author.send(embed=discord.Embed(colour=discord.Colour.red(),title='Вы не можете оставлять идеи, так как находитесь в чёрном списке.'))
-                break
-        else:
-            a = await message.channel.history(limit=50).flatten()
-            for i in a:
-                if i.author.id == message.author.id:
-                    a = i
-                    break
-            await message.channel.purge(limit=1)
-            my_cursor = my_collection.find()
-            msg = " ".join(a.content.split()[1::])
-            for item in my_cursor:
-                embed=discord.Embed(colour=discord.Colour.blue(),title="Предложение №" + str(item["Nomer"]),description=msg)
-                embed.set_author(name=message.author, icon_url=message.author.avatar_url)
-                await message.channel.send(embed=embed)
-                b = await message.channel.history(limit=1000).flatten()
-                for i in b:
-                    if i.author.id == 656029229749764126:
-                        a = i
-                        break
-                my_collection.update_one({"Nomer":item["Nomer"]},{"$set":{"Nomer":item["Nomer"] + 1}})
-                my_collection2.insert_one({"id":a.id, "Num":item["Nomer"], "user":str(message.author), "avatar_url":str(message.author.avatar_url), "text":msg})
-
+      my_cursor = my_col.find()
+      for item in my_cursor:
+          if item['id'] == message.author.id:
+            await message.message.delete()
+            embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=discord.Colour(0x310000),description=f'Ваше сообщение в канале <#678666229661171724> следующего содержания: `{message.message.content}` было удалено, т.к. вы были занесены в чёрный список предложений.')
+            embed.set_footer(text='С уважением, Команда Каталога!',icon_url=message.guild.icon_url)
+            await message.author.send(embed=embed)
+            break
+      else:
+        await message.message.delete()
+        embed=discord.Embed(title=f'Предложение №{str(my_collection.find()[0]["Number"])}',description=txt)
+        embed.set_author(name=message.author, icon_url=message.author.avatar_url)
+        a = await message.channel.send(embed=embed)
+        my_collection2.insert_one({"id":message.author.id, "Num":my_collection.find()[0]["Number"], "text":txt, "msg_id":a.id})
+        my_collection.update_one({"idd":1}, {"$inc": {"Number": 1}})
+      
 @client.command()
-async def approve(message,num,*msg):
-    if message.author.id in admins:
-        await message.channel.purge(limit=1)
-        a = await client.get_channel(678666229661171724).history(limit=1000).flatten()
-        my_cursor = my_collection2.find()
-        text = " ".join(msg)
-        if message.author.id == 414119169504575509:
-            who = 'владельца сервера '
-        else:
-            who = 'администратора '
-        for item in my_cursor:
-            if item["Num"] == int(num):
-                aidi = item["id"]
-                embed = discord.Embed(colour=discord.Colour.green(),title="Предложение №" + str(num) + " (Принято)",description=item["text"])
-                embed.set_author(name=item["user"],icon_url=item["avatar_url"])
-                embed.add_field(name="Ответ от " + who + str(message.author.name),value=text)
-                embed.set_footer(text='Ответ дан ' + str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0]),icon_url=message.author.avatar_url)
-                break
-        for i in a:
-            if str(aidi) in str(i):
-                await i.edit(embed=embed)
-                break
-
-@client.command()
-async def deny(message,num,*msg):
-    if message.author.id in admins:
-        await message.channel.purge(limit=1)
-        a = await client.get_channel(678666229661171724).history(limit=1000).flatten()
-        my_cursor = my_collection2.find()
-        text = " ".join(msg)
-        if message.author.id == 414119169504575509:
-            who = 'владельца сервера '
-        else:
-            who = 'администратора '
-        for item in my_cursor:
-            if item["Num"] == int(num):
-                aidi = item["id"]
-                embed = discord.Embed(colour=discord.Colour.red(),title="Предложение №" + str(num) + " (Отклонено)",description=item["text"])
-                embed.set_author(name=item["user"],icon_url=item["avatar_url"])
-                embed.add_field(name="Ответ от " + who + str(message.author.name),value=text)
-                embed.set_footer(text='Ответ дан ' + str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0]),icon_url=message.author.avatar_url)
-                break
-        for i in a:
-            if str(aidi) in str(i):
-                await i.edit(embed=embed)
-                break
+async def approve(message, num=None, arg=None, *, txt=None):
+  if message.author.id in admins:
+    await message.message.delete()
+    my_cursor = my_collection2.find()
+    color = discord.Colour.red() if arg == '-' else discord.Colour.green()
+    mb = '[Отклонено]' if arg == '-' else '[Принято]'
+    for item in my_cursor:
+      if item["Num"] == int(num):
+        user = await client.fetch_user(item['id'])
+        who = 'владельца сервера' if message.author.id == 414119169504575509 else 'администратора'
+        embed = discord.Embed(colour=color,title=f'Предложение №{num} {mb}',description=item["text"])
+        embed.set_author(name=user, icon_url=user.avatar_url)
+        embed.add_field(name=f'Ответ от {who} {message.author.name}', value=txt)
+        embed.set_footer(text=f'Ответ дан {str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(".")[0])}',icon_url=message.author.avatar_url)
+        msg = await client.get_channel(678666229661171724).fetch_message(item['msg_id'])
+        await msg.edit(embed=embed)
+        break
                 
 @client.command()
 async def problem(message, *, quest=None):
