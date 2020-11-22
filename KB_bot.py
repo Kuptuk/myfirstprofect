@@ -794,8 +794,7 @@ async def bl(message):
         namemember = await client.fetch_user(item['mod_id'])
         embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{namemember}`',value=f'**[Аватар]({item["avatar"]})** | {item["name_guild"]} | **[Вложение]({item["dokz"]})**\n`ID:` {item["id_guild"]} :x:\n`Причина:` {item["reason"]}',inline=False)
         k += 1
-    if k % 6 != 0:
-      embeds.append(embed)
+    embeds.append(embed)
     await ss.delete()
     msg = await message.channel.send(embed=embeds[0])
     page = Paginator(client, msg, only=message.author, use_more=False, embeds=embeds)
