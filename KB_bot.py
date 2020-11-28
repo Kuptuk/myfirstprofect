@@ -1006,7 +1006,14 @@ async def info(message, id = None):
                 if a[0] == str(member.id):
                   idraw.text((370, 500), f'В команде с {a[1]}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
                   break
-                
+                  
+            msgotz = await client.get_channel(764191031318937674).fetch_message(782330900746076202)
+            if str(member.id) in msgotz.content:
+              cotz = requests.get('https://media.discordapp.net/attachments/689800301468713106/782330294581461002/Screenshot_1.png', stream = True)
+              cotz = Image.open(io.BytesIO(cotz.content))
+              cotz = cotz.convert('RGBA')
+              cotz = cotz.resize((37, 43), Image.ANTIALIAS)
+              response.paste(cotz, (800, 50, 837, 93))
             
             if 677397817966198788 in b or 620955813850120192 in b or member.id == 567025011408240667:
               check = requests.get('https://media.discordapp.net/attachments/737011448441602149/740568726037856368/123.png', stream = True)
