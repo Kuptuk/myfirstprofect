@@ -43,7 +43,7 @@ admins = [562561140786331650,414119169504575509,529044574660853761]
 
 @client.event
 async def on_ready():
-  await client.change_presence(status=discord.Status.dnd,activity=discord.Game(f"K.help | #stayhome :3 | {len(client.get_guild(604636579545219072).members)}"))
+  await client.change_presence(status=discord.Status.dnd,activity=discord.Streaming(f"K.help | #stayhome :3 | {len(client.get_guild(604636579545219072).members)}"))
   msg = await client.get_channel(742757799645413378).history(limit=200).flatten()
   b = []
   for i in msg:
