@@ -39,7 +39,7 @@ my_bl_kol = my_client.Catalog.bl_kol
 my_warn_md = my_client.Catalog.warns_md
 my_warn_kol_md = my_client.Catalog.warn_kol_md
 
-client = commands.Bot(command_prefix = "Koll.", intents = discord.Intents.all())
+client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
 client.remove_command("help")
 
 admins = [562561140786331650,414119169504575509,529044574660853761]
