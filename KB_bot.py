@@ -227,7 +227,7 @@ async def ev(message,*command):
 async def help(message):
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed=discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера.\n`K.problem` — задать вопрос администрации сервера.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed=discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.info badges` — обозначение значков.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера.\n`K.problem` — задать вопрос администрации сервера.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     
@@ -1009,6 +1009,15 @@ async def ibans(message):
       moderator = await client.fetch_user(item['moderator_id'])
       embed.add_field(name=f"`{k}.` {user} [от {moderator} {item['data']}]",value=f"**{item['reason']}**",inline=False)
     await message.channel.send(embed=embed)
+     
+@client.command()
+async def set_rm(message,id=None):
+  if 686639786672652363 in [role.id for role in message.author.roles] or message.author.id in admins:
+    if id is None:
+      await message.channel.send('```css\nВы не указали id лучшего работника.```')
+    else:
+      await client.get_channel(784815029118828548).send(id)
+      await message.channel.send(f'```css\n{id} признан лучшим работником.```')
                       
 @client.command()
 async def info(message, id = None):
