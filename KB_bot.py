@@ -1022,7 +1022,7 @@ async def set_rm(message,id=None):
 @client.command()
 async def info(message, id = None):
     if id == 'badges':
-      embed = discord.Embed(timestamp=datetime.datetime.utcnow(),title=':clipboard: Обозначение значков',description='<:owner:784812161959854120> Владельцу сервера.\n<:developer:785191301321719828> Людям, принявшим участие в разработке/улучшении персонального бота.\n<:moderator:785197651716866121> Уполномоченным на выдачу наказаний.\n🔰 Рекрутерам.\n🤝 Лучшему работнику на данный момент.\n💡 Предложившим большое количество дельных идей.\n‼️ Подавшему большое количество жалоб.\n📝 Оставившему рецензию серверу на 3-х мониторингах.\n<:activ:784808269667237910> Активному пользователю нашего сервера.\n<:bot:784833842002657301> Ботам сервера.\n\nЗначков всего с учётом кастомных: `11`.\n`Примечания:`\n• Кастомный значок возможен в случае больших заслуг перед Каталогом.\n• Значки выдаются автоматизированной системой. Это значит, что нет необходимости выпрашивать их у администрации сервера.')
+      embed = discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),title=':clipboard: Обозначение значков',description='<:owner:784812161959854120> Владельцу сервера.\n<:developer:785191301321719828> Людям, принявшим участие в разработке/улучшении персонального бота.\n<:moderator:785197651716866121> Уполномоченным на выдачу наказаний.\n🔰 Рекрутерам.\n🤝 Лучшему работнику на данный момент.\n<:secret:787360058328481812> Секретный значок.\n💡 Предложившим большое количество дельных идей.\n‼️ Подавшему большое количество жалоб.\n📝 Оставившему рецензию серверу на 3-х мониторингах.\n<:activ:784808269667237910> Активному пользователю нашего сервера.\n<:bot:784833842002657301> Ботам сервера.\n\nЗначков всего с учётом кастомных: `12`.\n`Примечания:`\n• Кастомный значок возможен в случае больших заслуг перед Каталогом.\n• Значки выдаются автоматизированной системой. Это значит, что нет необходимости выпрашивать их у администрации сервера.')
       embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
       embed.set_thumbnail(url=message.guild.icon_url)
       await message.channel.send(embed=embed)
@@ -1147,7 +1147,7 @@ async def info(message, id = None):
             idraw.text((365, 420), f'Voice за 24 часа: {aktiv.split("|")[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
               
           prioritet = -1
-          ppz = [365, 405, 445, 485, 525, 565, 605, 645, 685, 725, 765, 805] 
+          ppz = [365, 405, 445, 485, 525, 565, 605, 645, 685, 725, 765, 805, 845, 885] 
           avatar = avatar.resize((212, 212), Image.ANTIALIAS)
           response.paste(avatar, (119, 171, 331, 383))
           idraw.text((400, 170), f'{member}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
@@ -1211,18 +1211,24 @@ async def info(message, id = None):
           except:
             pass
           
-          bang = await client.get_channel(764191031318937674).fetch_message(786738663433437244)
-          if str(member.id) in bang.content:
+          ngl = await client.get_channel(764191031318937674).fetch_message(787339282951569420)
+          if str(member.id) in ngl.content:
             prioritet += 1
-            bg22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786749834748624896/29e29adc6b930ca0.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-            response.paste(bg22, (ppz[prioritet], 225, ppz[prioritet]+37, 262), bg22)
+            ngl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/787359332891230238/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+            response.paste(ngl, (ppz[prioritet], 225, ppz[prioritet]+37, 262), ngl)
           
           ideas = await client.get_channel(764191031318937674).fetch_message(785203816785903667)
           if str(member.id) in ideas.content:
             prioritet += 1
             id22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785183175613743164/ideas.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(id22, (ppz[prioritet], 225, ppz[prioritet]+37, 262), id22)
-
+            
+          bang = await client.get_channel(764191031318937674).fetch_message(786738663433437244)
+          if str(member.id) in bang.content:
+            prioritet += 1
+            bg22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786749834748624896/29e29adc6b930ca0.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+            response.paste(bg22, (ppz[prioritet], 225, ppz[prioritet]+37, 262), bg22)
+            
           msgotz = await client.get_channel(764191031318937674).fetch_message(782330900746076202)
           if str(member.id) in msgotz.content:
             prioritet += 1
