@@ -212,10 +212,15 @@ async def on_raw_reaction_remove(payload):
       b = [role.id for role in gg.get_member(payload.user_id).roles]
       if 747815808767361034 not in b and 747815810432762057 not in b and 747815812273930262 not in b and 747815814773604412 not in b and 747815816426422394 not in b and 747815962866352278 not in b and 748838722740420639 not in b:
         await gg.get_member(payload.user_id).add_roles(gg.get_role(747815808767361034),reason='Убрал все категории.')
-    
+  
+@client.command()
+async def ping(message):
+  if message.author.id in admins:
+    await message.send(f'Pong! `{round(client.latency * 1000)}ms`')
+  
 @client.command() 
 async def ev(message,*command):
-  if message.author.id == 414119169504575509:
+  if message.author.id == 414119169504575509 or message.author.id == 529044574660853761:
     command = " ".join(command)
     res = eval(command)
     if inspect.isawaitable(res): 
