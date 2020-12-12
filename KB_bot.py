@@ -369,8 +369,8 @@ async def stats(message):
     embed.add_field(name=len(gg.get_role(747815816426422394).members),value='<@&747815816426422394>')
     embed.add_field(name=len(gg.get_role(747815962866352278).members),value='<@&747815962866352278>')
     embed.add_field(name=len(gg.get_role(748838722740420639).members),value='<@&748838722740420639>')
+    embed.add_field(name=len(gg.get_role(781877699286925312).members),value="<@&781877699286925312>")
     embed.add_field(name=len(gg.get_role(604645403664711680).members),value="<@&604645403664711680>")
-    embed.add_field(name=len(gg.get_role(658154672237838347).members),value="<@&658154672237838347>")
     
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
