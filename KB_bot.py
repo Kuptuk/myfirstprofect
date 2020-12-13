@@ -56,15 +56,18 @@ async def on_ready():
   await client.get_channel(690827050033872937).send('https://discord.gg/nKPdC9V')
   global d
   global dk
+  global kolpub
   a = client.get_guild(604636579545219072).categories
   idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
   c, k, d, dk = [], [], {}, {}
+  kolpub = 0
   for i in a:
     if i.id in idd:
       for j in i.text_channels:
         if j.id != 764911620111204383:
           c = await j.history(limit=None).flatten()
           for kk in c:
+            kolpub += 1
             men = kk.mentions
             if men != []:
               if d.get(men[0].id) is None:
@@ -75,7 +78,7 @@ async def on_ready():
                 dk.update({men[0].id:dk.get(men[0].id)+1})
               else:
                 dk.update({men[0].id:dk.get(men[0].id)+1})
-  await client.get_channel(728932829026844672).send('Данные обновлены, бот перезапущен.')
+  await client.get_channel(728932829026844672).send('```css\n[Данные обновлены, бот перезапущен].```')
     
 @client.event
 async def on_message(message):
@@ -448,7 +451,7 @@ async def server(message):
   idraw.text((365, 115), str(len(gg.emojis)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
   idraw.text((299, 167), str(len(gg.roles)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
   idraw.text((230, 243), str(gg.verification_level), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-  idraw.text((95, 345), str(gg.owner), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+  idraw.text((100, 345), str(gg.owner), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
   idraw.text((90, 425), '27 июля 2019 года', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
   idraw.text((540, 87), str(len(gg.voice_channels)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
   idraw.text((570, 142), str(len(gg.categories)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
@@ -459,6 +462,7 @@ async def server(message):
   idraw.text((503, 470), str(len(await gg.bans())), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 27))
   idraw.text((620, 559), str(message.author), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 15))
   idraw.text((621, 559), str(message.author), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 15))
+  idraw.text((410, 561), f'{kolpub}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 12))
 
   response.save('server_card.png')
   await message.channel.send(file = discord.File(fp = 'server_card.png'))
@@ -1085,7 +1089,7 @@ async def info(message, id = None):
                   idraw.text((365, 460), f'В команде с {a[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
                   break
                   
-            if 608600358570295307 in b or 620955813850120192 in b:
+            """if 608600358570295307 in b or 620955813850120192 in b:
               a = client.get_guild(604636579545219072).categories
               kol = 0
               idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
@@ -1102,7 +1106,7 @@ async def info(message, id = None):
               part = Image.open(io.BytesIO(part.content))
               part = part.convert('RGBA')
               part = part.resize((40, 25), Image.ANTIALIAS)
-              response.paste(part, (410, 63, 450, 88))
+              response.paste(part, (410, 63, 450, 88))"""
               
             warnow = 0
             for item in my_warn_md.find():
