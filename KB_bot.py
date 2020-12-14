@@ -1089,7 +1089,7 @@ async def info(message, id = None):
                   idraw.text((365, 460), f'В команде с {a[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
                   break
                   
-            """if 608600358570295307 in b or 620955813850120192 in b:
+            if 608600358570295307 in b or 620955813850120192 in b:
               a = client.get_guild(604636579545219072).categories
               kol = 0
               idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
@@ -1106,7 +1106,7 @@ async def info(message, id = None):
               part = Image.open(io.BytesIO(part.content))
               part = part.convert('RGBA')
               part = part.resize((40, 25), Image.ANTIALIAS)
-              response.paste(part, (410, 63, 450, 88))"""
+              response.paste(part, (410, 63, 450, 88))
               
             warnow = 0
             for item in my_warn_md.find():
