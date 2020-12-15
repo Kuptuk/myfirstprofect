@@ -282,7 +282,7 @@ async def ban(message, id=None, *, reason=None):
               if reason is None:
                 reason = 'Причина не указана.'
               await message.guild.ban(user=a, reason=f'{message.author.name}: {reason}')
-              embed = discord.Embed(description=f'{a.mention} [{a.id}] был забанен.\n`Причина:` {reason}',timestamp=datetime.datetime.utcnow())
+              embed = discord.Embed(description=f'```css\n{a} [{a.id}] был забанен.\nПричина: {reason}```',timestamp=datetime.datetime.utcnow())
               giffs = ['https://media1.tenor.com/images/bd4472618c4db926ba1518118280f4e6/tenor.gif?itemid=17267185','https://media.discordapp.net/attachments/728932829026844672/788550786253848586/1_1.gif','https://media.discordapp.net/attachments/728932829026844672/788550799369699378/2.gif','https://media.discordapp.net/attachments/728932829026844672/788550815622889492/4.gif','https://media.discordapp.net/attachments/728932829026844672/788550816948158515/3.gif']
               embed.set_image(url=giffs[random.randint(0,4)])
               embed.set_footer(text=f'Бан от {message.author.name}',icon_url=message.author.avatar_url)
