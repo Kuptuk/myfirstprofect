@@ -267,21 +267,14 @@ async def pm(message):
 @client.command()
 async def ban(message, id=None, *, reason=None):
     await message.message.delete()
-    a, staff = message.guild.members, []
-    for i in a:
-      if '608994688078184478' in str(i.roles):
-        staff.append(str(i.id))
     b = [role.id for role in message.author.roles]
     if 620955813850120192 in b or 677397817966198788 in b or message.author.id in admins:
       if id is None:
-        await message.channel.send('```css\nВы не указали пользователя.```')
+        await message.channel.send(embed=discord.Embed(colour=0x310000, description='**Вы не указали пользователя.**'))
       else:
         id = id.replace("!", "").replace("@","").replace("<","").replace(">","")
-        if id in staff:
-          if id == '562561140786331650':
-            await message.channel.send('<:nevozmutimo:751482937492504606>```css\nНельзя забанить Императора.```')
-          else:
-            await message.channel.send('```css\nНельзя забанить представителя команды каталога.```')
+        if id in [str(i22.id) for i22 in client.get_guild(604636579545219072).get_role(608994688078184478).members]:
+          await message.channel.send(embed=discord.Embed(colour=0x310000, description='**Нельзя забанить представителя команды каталога.**'))
         else:
           try:
             a = await client.fetch_user(int(id))
@@ -290,13 +283,14 @@ async def ban(message, id=None, *, reason=None):
                 reason = 'Причина не указана.'
               await message.guild.ban(user=a, reason=f'{message.author.name}: {reason}')
               embed = discord.Embed(description=f'{a.mention} [{a.id}] был забанен.\n`Причина:` {reason}',timestamp=datetime.datetime.utcnow())
-              embed.set_image(url="https://i.gifer.com/7Ork.gif")
+              giffs = ['https://media1.tenor.com/images/bd4472618c4db926ba1518118280f4e6/tenor.gif?itemid=17267185','https://media.discordapp.net/attachments/728932829026844672/788550786253848586/1_1.gif','https://media.discordapp.net/attachments/728932829026844672/788550799369699378/2.gif','https://media.discordapp.net/attachments/728932829026844672/788550815622889492/4.gif','https://media.discordapp.net/attachments/728932829026844672/788550816948158515/3.gif']
+              embed.set_image(url=giffs[random.randint(0,4)])
               embed.set_footer(text=f'Бан от {message.author.name}',icon_url=message.author.avatar_url)
               await message.channel.send(embed=embed)
             except:
-              await message.channel.send('```css\nЭтого пользователя невозможно забанить.```')
+              await message.channel.send(embed=discord.Embed(colour=0x310000, description='**Этого пользователя невозможно забанить.**'))
           except:
-            await message.channel.send('```css\nПользователя не существует.```')
+            await message.channel.send(embed=discord.Embed(colour=0x310000, description='**Пользователя не существует.**'))
         
 @client.command()
 async def unban(message, id=None, *, reason=None):
