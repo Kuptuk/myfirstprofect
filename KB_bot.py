@@ -1115,7 +1115,7 @@ async def info(message, id = None):
             idraw.text((145 , 440), f'Выговоров: {warnow}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
           
           else:
-            aktiv = requests.get(f'https://api.mrleonardos.tk:8080/stats/?user={member.id}').text
+            aktiv = requests.get(f'http://api.mrleonardos.tk:8080/stats/?user={member.id}').text
             if randch == 1:
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
               color = (255, 255, 255)
