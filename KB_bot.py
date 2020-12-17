@@ -1084,7 +1084,7 @@ async def info(message, id = None):
                   break
                   
             if 608600358570295307 in b or 620955813850120192 in b:
-              a = client.get_guild(604636579545219072).categories
+              """a = client.get_guild(604636579545219072).categories
               kol = 0
               idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
               for i in a:
@@ -1094,7 +1094,8 @@ async def info(message, id = None):
                       c = await j.history(limit=100, after=datetime.datetime.utcnow() - datetime.timedelta(hours=48)).flatten()
                       for k in c:
                         if k.author.id == member.id:
-                          kol += 1
+                          kol += 1"""
+              kol = requests.get(f'http://matrixproject.tk:8080/stats/pm/{member.id}').text
               idraw.text((457, 58), f'Партнёрств за 48 часов: {kol}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
               part = requests.get('https://media.discordapp.net/attachments/689479689756344328/740856668698574858/unknown.png', stream = True)
               part = Image.open(io.BytesIO(part.content))
