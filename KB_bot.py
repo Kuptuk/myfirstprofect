@@ -78,6 +78,21 @@ async def on_ready():
                 dk.update({men[0].id:dk.get(men[0].id)+1})
               else:
                 dk.update({men[0].id:dk.get(men[0].id)+1})
+  global crown, dev, medal, moder, rekr, rm, ngl, id22, bg22, cotz, activ, fat, bot, komanda
+  crown = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784811138671575121/owner.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  dev = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785183136362659880/developer.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  medal = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/788847715420209222/i_dont_know_what_is_it_say_plz.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  moder = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785197154624339988/moderator.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  rekr = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786736796100460604/shield.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  rm = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784816872516354088/rm.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  ngl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/787359332891230238/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  id22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785183175613743164/ideas.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  bg22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786749834748624896/29e29adc6b930ca0.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  cotz = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784103936075890718/e1ec53c5d89c0291001989a36716aa9a.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  activ = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784801731425861632/for_staff.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  fat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  bot = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784833729054900244/bot.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  komanda = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/788836971190550558/kk.png', stream = True).content)).convert('RGBA').resize((55, 55), Image.ANTIALIAS)
   await client.get_channel(728932829026844672).send('```css\n[Данные обновлены, бот перезапущен].```')
     
 @client.event
@@ -1183,36 +1198,30 @@ async def info(message, id = None):
           #prioritetnostb
           if member.id == message.guild.owner.id:
             prioritet += 1
-            crown = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784811138671575121/owner.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(crown, (ppz[prioritet], 225, ppz[prioritet]+37, 262), crown)
 
           msgbots = await client.get_channel(764191031318937674).fetch_message(785189856988627004)
           if str(member.id) in msgbots.content:
             prioritet += 1
-            dev = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785183136362659880/developer.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(dev, (ppz[prioritet], 225, ppz[prioritet]+37, 262), dev)
             
           medal22 = await client.get_channel(764191031318937674).fetch_message(788848844980092989)
           if str(member.id) in medal22.content:
             prioritet += 1
-            medal = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/788847715420209222/i_dont_know_what_is_it_say_plz.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(medal, (ppz[prioritet], 225, ppz[prioritet]+37, 262), medal)
 
           if 677397817966198788 in b or member.id in admins:
             prioritet += 1
-            moder = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785197154624339988/moderator.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(moder, (ppz[prioritet], 225, ppz[prioritet]+37, 262), moder)
             
           if 686256550951649317 in b or member.id in admins or 686639786672652363 in b or 686639826308825089 in b:
             prioritet += 1
-            rekr = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786736796100460604/shield.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(rekr, (ppz[prioritet], 225, ppz[prioritet]+37, 262), rekr)
                 
           try:
             msg = await client.get_channel(784815029118828548).history(limit=1).flatten()
             if str(member.id) in msg[0].content:
               prioritet += 1
-              rm = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784816872516354088/rm.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
               response.paste(rm, (ppz[prioritet], 225, ppz[prioritet]+37, 262), rm)
           except:
             pass
@@ -1220,44 +1229,36 @@ async def info(message, id = None):
           ngl = await client.get_channel(764191031318937674).fetch_message(787339282951569420)
           if str(member.id) in ngl.content:
             prioritet += 1
-            ngl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/787359332891230238/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(ngl, (ppz[prioritet], 225, ppz[prioritet]+37, 262), ngl)
           
           ideas = await client.get_channel(764191031318937674).fetch_message(785203816785903667)
           if str(member.id) in ideas.content:
             prioritet += 1
-            id22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785183175613743164/ideas.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(id22, (ppz[prioritet], 225, ppz[prioritet]+37, 262), id22)
             
           bang = await client.get_channel(764191031318937674).fetch_message(786738663433437244)
           if str(member.id) in bang.content:
             prioritet += 1
-            bg22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786749834748624896/29e29adc6b930ca0.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(bg22, (ppz[prioritet], 225, ppz[prioritet]+37, 262), bg22)
             
           msgotz = await client.get_channel(764191031318937674).fetch_message(782330900746076202)
           if str(member.id) in msgotz.content:
             prioritet += 1
-            cotz = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784103936075890718/e1ec53c5d89c0291001989a36716aa9a.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(cotz, (ppz[prioritet], 225, ppz[prioritet]+37, 262), cotz)
 
           if 619013112531517501 in b:
             prioritet += 1
-            activ = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784801731425861632/for_staff.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(activ, (ppz[prioritet], 225, ppz[prioritet]+37, 262), activ)
 
           if member.id == 394757049893912577:
             prioritet += 1
-            fat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(fat, (ppz[prioritet], 225, ppz[prioritet]+37, 262), fat)
             
           if member.bot:
             prioritet += 1
-            bot = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784833729054900244/bot.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(bot, (ppz[prioritet], 225, ppz[prioritet]+37, 262), bot)
             
           if 608994688078184478 in b:
-            komanda = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/788836971190550558/kk.png', stream = True).content)).convert('RGBA').resize((55, 55), Image.ANTIALIAS)
             response.paste(komanda, (836, 53, 891, 108), komanda)
           
           if randch == 1:
@@ -1268,7 +1269,6 @@ async def info(message, id = None):
           else:
             response.save('user_card.png')
             await message.channel.send(file = discord.File(fp = 'user_card.png'))
-
       except:
           try:
               randch = random.randint(1,100)
