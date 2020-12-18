@@ -431,7 +431,7 @@ async def moder(message):
         
 @client.command()
 async def say(message,id):
-    if 567025011408240667 == message.author.id or 414119169504575509 == message.author.id:
+    if message.author.id in admins:
         id = int(id.replace("#","").replace("<","").replace(">",""))
         msg = await message.channel.history(limit=1).flatten()
         text = " ".join(msg[0].content.split()[2::])
