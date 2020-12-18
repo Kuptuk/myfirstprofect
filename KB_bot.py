@@ -430,12 +430,9 @@ async def moder(message):
       await message.channel.send(embed=embed)
         
 @client.command()
-async def say(message,id):
-    if message.author.id in admins:
-        id = int(id.replace("#","").replace("<","").replace(">",""))
-        msg = await message.channel.history(limit=1).flatten()
-        text = " ".join(msg[0].content.split()[2::])
-        await client.get_channel(int(id)).send(text)
+async def say(message,id,*,text):
+  if message.author.id in admins:
+    await client.get_channel(int(id)).send(text)
         
 @client.command()
 async def clear(message,kol):
