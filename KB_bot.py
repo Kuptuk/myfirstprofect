@@ -289,7 +289,7 @@ async def ban(message, id=None, *, reason=None):
                 inf = 'Форма обжалования была доставлена нарушителю.'
               except:
                 inf = 'Форма обжалования не была доставлена нарушителю.'
-              await message.guild.ban(user=a, reason=f'{message.author.name}: {reason}')
+              await message.guild.ban(user=a, reason=f'{message.author.name}: {reason}', delete_message_days=0)
               embed = discord.Embed(description=f'```css\n{a} [{a.id}] был забанен.\nПричина: {reason}\n{inf}```',timestamp=datetime.datetime.utcnow())
               giffs = ['https://media1.tenor.com/images/bd4472618c4db926ba1518118280f4e6/tenor.gif?itemid=17267185','https://media.discordapp.net/attachments/728932829026844672/788550786253848586/1_1.gif','https://media.discordapp.net/attachments/728932829026844672/788550799369699378/2.gif','https://media.discordapp.net/attachments/728932829026844672/788550815622889492/4.gif','https://media.discordapp.net/attachments/728932829026844672/788550816948158515/3.gif']
               embed.set_image(url=giffs[random.randint(0,4)])
