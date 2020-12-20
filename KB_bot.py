@@ -1051,7 +1051,7 @@ async def set_rm(message,id=None):
 @client.command()
 async def info(message, id = None):
     if id == 'badges':
-      embed = discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),title=':clipboard: Обозначение значков',description='<:kk:788850405157240833> Метка представителя команды каталога.\n\n<:owner:784812161959854120> Владельцу сервера.\n<:developer:785191301321719828> Людям, принявшим участие в разработке/улучшении персонального бота.\n<:old:788850405308104765> Людям, которые внесли огромный вклад в развитие сервера.\n<:moderator:785197651716866121> Уполномоченным на выдачу наказаний.\n🔰 Рекрутерам.\n🤝 Лучшему работнику на данный момент.\n<:secret:787360058328481812> Секретный значок.\n💡 Предложившим большое количество дельных идей.\n‼️ Подавшему большое количество жалоб.\n📝 Оставившему рецензию серверу на 3-х мониторингах.\n`Примечание:` **[здесь](https://server-discord.com/604636579545219072)**, **[здесь](https://disboard.org/ru/server/604636579545219072)** и **[здесь](https://discord-server.com/ru/604636579545219072)**.\n<:activ:784808269667237910> Активному пользователю нашего сервера.\n<:bot:784833842002657301> Ботам сервера.\n\nЗначков всего с учётом кастомных: `14`.\n`Примечания:`\n• Кастомный значок возможен в случае больших заслуг перед Каталогом.\n• Значки выдаются автоматизированной системой. Это значит, что нет необходимости выпрашивать их у администрации сервера.')
+      embed = discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),title=':clipboard: Обозначение значков',description='<:kk:788850405157240833> Метка представителя команды каталога.\n\n<:owner:784812161959854120> Владельцу сервера.\n<:developer:785191301321719828> Людям, принявшим участие в разработке/улучшении персонального бота.\n<:old:788850405308104765> Людям, которые внесли огромный вклад в развитие сервера.\n<:moderator:785197651716866121> Уполномоченным на выдачу наказаний.\n🔰 Рекрутерам.\n🤝 Лучшему работнику на данный момент.\n<:secret:787360058328481812> Секретный значок.\n💡 Предложившим большое количество дельных идей.\n‼️ Подавшему большое количество жалоб.\n📝 Оставившему рецензию серверу на 3-х мониторингах.\n`Примечание:` **[здесь](https://server-discord.com/604636579545219072)**, **[здесь](https://disboard.org/ru/server/604636579545219072)** и **[здесь](https://discord-server.com/ru/604636579545219072)**.\n<:activ:784808269667237910> Активному пользователю нашего сервера.\n🍬 Выдаётся в новогоднюю ночь 2021 года за найденные пасхалки.\n<:bot:784833842002657301> Ботам сервера.\n\nЗначков всего с учётом кастомных: `14`.\n`Примечания:`\n• Кастомный значок возможен в случае больших заслуг перед Каталогом.\n• Значки выдаются автоматизированной системой. Это значит, что нет необходимости выпрашивать их у администрации сервера.')
       embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
       embed.set_thumbnail(url=message.guild.icon_url)
       await message.channel.send(embed=embed)
@@ -1125,12 +1125,13 @@ async def info(message, id = None):
                         if k.author.id == member.id:
                           kol += 1"""
               kol = requests.get(f'http://matrixproject.tk:8080/stats/pm/{member.id}').text
-              idraw.text((457, 58), f'Партнёрств за 48 часов: {kol}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-              part = requests.get('https://media.discordapp.net/attachments/689479689756344328/740856668698574858/unknown.png', stream = True)
-              part = Image.open(io.BytesIO(part.content))
-              part = part.convert('RGBA')
-              part = part.resize((40, 25), Image.ANTIALIAS)
+              idraw.text((457, 58), f'За 48 часов: {kol}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              kol_all = requests.get(f'http://matrixproject.tk:8080/stats/pm/{member.id}?type=all').text
+              idraw.text((457, 98), f'Всего: {kol_all}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              part = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689479689756344328/740856668698574858/unknown.png', stream = True).content)).convert('RGBA').resize((40, 25), Image.ANTIALIAS)
+              part2 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/728932829026844672/790278591803162674/ffds-removebg-preview.png', stream = True).content)).convert('RGBA').resize((50, 33), Image.ANTIALIAS)
               response.paste(part, (410, 63, 450, 88))
+              response.paste(part2, (405, 98, 455, 131), part2)
               
             warnow = 0
             for item in my_warn_md.find():
@@ -1276,6 +1277,12 @@ async def info(message, id = None):
             activ = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784801731425861632/for_staff.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(activ, (ppz[prioritet], 225, ppz[prioritet]+37, 262), activ)
 
+          candys = await client.get_channel(764191031318937674).fetch_message(790310798895480833)
+          if str(member.id) in candys.content:
+            prioritet += 1
+            candy = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/790311315704512552/45c8f940aac4dab66e6e73181663a59e.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+            response.paste(candy, (ppz[prioritet], 225, ppz[prioritet]+37, 262), candy)
+            
           if member.id == 394757049893912577:
             prioritet += 1
             fat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
@@ -1293,9 +1300,13 @@ async def info(message, id = None):
           if randch == 1:
             gl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786978327420076062/glitchon.png', stream = True).content)).convert('RGBA').resize((950, 616), Image.ANTIALIAS)
             response.paste(gl, (0, 0, 950, 616), gl)
+            novii = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/790265650416844820/chetopngfull.png', stream = True).content)).convert('RGBA').resize((950, 616), Image.ANTIALIAS)
+            response.paste(novii, (0, 0, 950, 616), novii)
             response.save('user_card.png')
             await message.channel.send(content='О̵͌́й̶̿̒.̵̅͛.̵̯̃.̶̊̿ ̵̇̚В̷̒̀ӹ̸́̈ ̸̍͝с̷͐͐л̷͒̊о̵͑̌м̶̐̿ӓ̶́͐л̸̒̍и̸͂̚ ̶͌͘б̶̍̾о̷̇̈́т̴̋̓а̶̎͊ ',file = discord.File(fp = 'user_card.png'))
           else:
+            novii = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/790265650416844820/chetopngfull.png', stream = True).content)).convert('RGBA').resize((950, 616), Image.ANTIALIAS)
+            response.paste(novii, (0, 0, 950, 616), novii)
             response.save('user_card.png')
             await message.channel.send(file = discord.File(fp = 'user_card.png'))
 
@@ -1331,9 +1342,13 @@ async def info(message, id = None):
               if randch == 1:
                 gl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786978327420076062/glitchon.png', stream = True).content)).convert('RGBA').resize((950, 616), Image.ANTIALIAS)
                 response.paste(gl, (0, 0, 950, 616), gl)
+                novii = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/790265650416844820/chetopngfull.png', stream = True).content)).convert('RGBA').resize((950, 616), Image.ANTIALIAS)
+                response.paste(novii, (0, 0, 950, 616), novii)
                 response.save('user_card.png')
                 await message.channel.send(content='О̵͌́й̶̿̒.̵̅͛.̵̯̃.̶̊̿ ̵̇̚В̷̒̀ӹ̸́̈ ̸̍͝с̷͐͐л̷͒̊о̵͑̌м̶̐̿ӓ̶́͐л̸̒̍и̸͂̚ ̶͌͘б̶̍̾о̷̇̈́т̴̋̓а̶̎͊ ',file = discord.File(fp = 'user_card.png'))
               else:
+                novii = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/790265650416844820/chetopngfull.png', stream = True).content)).convert('RGBA').resize((950, 616), Image.ANTIALIAS)
+                response.paste(novii, (0, 0, 950, 616), novii)
                 response.save('user_card.png')
                 await message.channel.send(file = discord.File(fp = 'user_card.png'))
           except:
