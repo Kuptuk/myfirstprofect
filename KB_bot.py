@@ -110,6 +110,11 @@ async def on_message(message):
         dk.update({men[0].id:1})
       else:
         dk.update({men[0].id:dk.get(men[0].id)+1})
+  if message.guild is None:
+    embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description=message.content)
+    embed.set_author(name=message.author, icon_url=message.author.avatar_url)
+    embed.set_footer(text=message.author.id)
+    await client.get_channel(790287251343015986).send(embed=embed)
   await client.process_commands(message)
 
 @client.event
