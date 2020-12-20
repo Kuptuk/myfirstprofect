@@ -431,6 +431,7 @@ async def moder(message):
       
 @client.command()
 async def cont(message, url=None):
+  await message.message.delete()
   if message.author.id in admins:
     if url is None:
       await message.channel.send(embed=discord.Embed(colour=0x310000, description='**Отсутствует ссылка на сообщение.**'))
