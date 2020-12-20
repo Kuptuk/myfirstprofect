@@ -443,7 +443,7 @@ async def cont(message, url=None):
         f = open(f'{message.author}.txt', 'w')
         f.write(a)
         f.close()
-        await message.author.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000, description=f'**Вы получили текстовый документ по Вашему запросу, содержащий информацию с [этого]({gip_s}) сообщения.**').set_footer(text='С уважением, Ваш серсональный помощник ^^', icon_url=message.guild.icon_url), file = discord.File(fp = f'{message.author}.txt'))
+        await message.author.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000, description=f'**Вы получили текстовый документ по Вашему запросу, содержащий информацию с [этого]({gip_s}) сообщения.**').set_footer(text='С уважением, Ваш персональный помощник ^^', icon_url=message.guild.icon_url), file = discord.File(fp = f'{message.author}.txt'))
       except:
         await message.channel.send(embed=discord.Embed(colour=0x310000, description='**Возникла ошибка в ссылке.**'))
         
