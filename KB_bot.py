@@ -82,13 +82,18 @@ async def on_ready():
     
 @client.event
 async def on_message(message):
-  if message.channel.id == 740651083533254717:
+  if message.guild is None:
+    embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description=message.content)
+    embed.set_author(name=message.author, icon_url=message.author.avatar_url)
+    embed.set_footer(text=message.author.id)
+    await client.get_channel(790287251343015986).send(embed=embed)
+  elif message.channel.id == 740651083533254717:
     if "K.problem" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins:
       await message.delete()
       embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=discord.Colour(0x310000),description=f'Ваше сообщение в канале <#740651083533254717> следующего содержания: `{message.content}` было удалено по причине оффтопа.\nПросьба ознакомиться с **[закреплённым информационным сообщением](https://discord.com/channels/604636579545219072/740651083533254717/744485922258681896).**')
       embed.set_footer(text='С уважением, Команда Каталога!',icon_url=message.guild.icon_url)
       await message.author.send(embed=embed)
-  if message.channel.id == 678666229661171724:
+  elif message.channel.id == 678666229661171724:
     if "K.suggest" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins:
       await message.delete()
       embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=discord.Colour(0x310000),description=f'Ваше сообщение в канале <#678666229661171724> следующего содержания: `{message.content}` было удалено по причине оффтопа.\nПросьба ознакомиться с **[закреплённым информационным сообщением](https://discord.com/channels/604636579545219072/678666229661171724/732206889110339655).**')
@@ -110,11 +115,6 @@ async def on_message(message):
         dk.update({men[0].id:1})
       else:
         dk.update({men[0].id:dk.get(men[0].id)+1})
-  if message.guild is None:
-    embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description=message.content)
-    embed.set_author(name=message.author, icon_url=message.author.avatar_url)
-    embed.set_footer(text=message.author.id)
-    await client.get_channel(790287251343015986).send(embed=embed)
   await client.process_commands(message)
 
 @client.event
