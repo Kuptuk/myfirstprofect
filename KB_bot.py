@@ -410,7 +410,7 @@ async def team(message):
     l = [i.mention for i in message.guild.get_role(765212719380037663).members]
     embed.add_field(name=f"Лента: [{len(l)}]",value=("\n".join(l)))
     a = [i.mention for i in message.guild.get_role(686621891230040077).members]
-    embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=("\n".join(a)))
+    embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=((requests.get("http://matrixproject.tk:8080/stats/pm/all?type=list").text).replace("<br>","\n")))
     c = [i.mention for i in message.guild.get_role(686618397668147220).members]
     embed.add_field(name=f"Отдел творчества: [{len(c)}]",value=("\n".join(c)))
     c = [i.mention for i in message.guild.get_role(757890413838467133).members]
@@ -1112,8 +1112,8 @@ async def info(message, id = None):
                   idraw.text((365, 460), f'В команде с {a[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
                   break
                   
-            if 608600358570295307 in b or 620955813850120192 in b:
-              """a = client.get_guild(604636579545219072).categories
+            """if 608600358570295307 in b or 620955813850120192 in b:
+              a = client.get_guild(604636579545219072).categories
               kol = 0
               idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
               for i in a:
@@ -1123,7 +1123,7 @@ async def info(message, id = None):
                       c = await j.history(limit=100, after=datetime.datetime.utcnow() - datetime.timedelta(hours=48)).flatten()
                       for k in c:
                         if k.author.id == member.id:
-                          kol += 1"""
+                          kol += 1
               kol = requests.get(f'http://matrixproject.tk:8080/stats/pm/{member.id}').text
               idraw.text((457, 58), f'За 48 часов: {kol}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
               kol_all = requests.get(f'http://matrixproject.tk:8080/stats/pm/{member.id}?type=all').text
@@ -1131,7 +1131,7 @@ async def info(message, id = None):
               part = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689479689756344328/740856668698574858/unknown.png', stream = True).content)).convert('RGBA').resize((40, 25), Image.ANTIALIAS)
               part2 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/728932829026844672/790278591803162674/ffds-removebg-preview.png', stream = True).content)).convert('RGBA').resize((50, 33), Image.ANTIALIAS)
               response.paste(part, (410, 63, 450, 88))
-              response.paste(part2, (405, 98, 455, 131), part2)
+              response.paste(part2, (405, 98, 455, 131), part2)"""
               
             warnow = 0
             for item in my_warn_md.find():
