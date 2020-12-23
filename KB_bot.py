@@ -435,23 +435,24 @@ async def moder(message):
       await message.channel.send(embed=embed)
       
 @client.command()
-async def cont(message, url=None):
+async def cont(message, *, url=None):
   await message.message.delete()
   if message.author.id in admins:
     if url is None:
       await message.channel.send(embed=discord.Embed(colour=0x310000, description='**Отсутствует ссылка на сообщение.**'))
     else:
-      try:
-        gip_s = url
-        url = url.split('/')
-        a = await client.get_channel(int(url[5])).fetch_message(int(url[6]))
-        a = a.content
-        f = open(f'{message.author}.txt', 'w')
-        f.write(a)
-        f.close()
-        await message.author.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000, description=f'**Вы получили текстовый документ по Вашему запросу, содержащий информацию с [этого]({gip_s}) сообщения.**').set_footer(text='С уважением, Ваш персональный помощник ^^', icon_url=message.guild.icon_url), file = discord.File(fp = f'{message.author}.txt'))
-      except:
-        await message.channel.send(embed=discord.Embed(colour=0x310000, description='**Возникла ошибка в ссылке.**'))
+      for i in url.split('\n'):
+        try:
+          url2 = i.split('/')
+          a = await client.get_channel(int(url2[5])).fetch_message(int(url2[6]))
+          a = a.content
+          f = open(f'{message.author}.txt', 'w')
+          f.write(a)
+          f.close()
+          a = a.replace("`","\`").replace('*','\*').replace('_','\_').replace('<','\<')
+          await message.author.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000, description=a).set_footer(text='С уважением, Ваш персональный помощник ^^', icon_url=message.guild.icon_url), file = discord.File(fp = f'{message.author}.txt'))
+        except:
+          await message.channel.send(embed=discord.Embed(colour=0x310000, description='**Возникла ошибка в ссылке.**'))
         
 @client.command()
 async def say(message,id,*,text):
