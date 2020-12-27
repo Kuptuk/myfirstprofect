@@ -627,110 +627,73 @@ async def apm(message,id=None,key=None):
         await message.channel.send('```css\n[Возникла ошибка.]```')
         
 @client.command()
-async def rebuke(message, id = None, *, reason=None):
-  await message.message.delete()
-  b = [role.id for role in message.author.roles]
-  if 686639786672652363 in b or message.author.id in admins:
-    if id is None:
-      await message.channel.send('```\nВы не указали пользователя.```')
-    elif reason is None:
-      await message.channel.send('```\nВы не указали причину.```')
-    else:
-      try:
-        member = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
-        flag = True
-      except:
-        await message.channel.send('```\nПользователя не существует.```')
-        flag = False
-      if flag:
-        all = my_warn_kol_md.find()[0]["all"]+1
-        count = 0
-        for item in my_warn_md.find():
-          if item['id'] == member.id:
-            for j in my_warn_md.find():
-              if j['id'] == member.id:
-                count += 1
-            my_warn_md.insert_one({"id":member.id, "number_warn":count+1, "mod_id":message.author.id, "reason":reason, "all": all, "data":str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0])})
-            break
-        else:
-          my_warn_md.insert_one({"id":member.id, "number_warn":1, "mod_id":message.author.id, "reason":reason, "all":all, "data":str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0])})
-        embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Пользователь `{member}` получил выговор `№{count+1}` (случай `№{all}`) по причине: `{reason}`',timestamp=datetime.datetime.utcnow())
-        embed.set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url)
-        embed.set_footer(text=f'Предупреждение от {message.author.name}',icon_url=message.author.avatar_url)
-        await message.channel.send(embed=embed)
-        my_warn_kol_md.update_one({"id":1},{"$set":{"all":all}})
-        embed=discord.Embed(colour=discord.Colour.red(), description = f'Вы получили выговор `№{count+1}` по причине: `{reason}`',timestamp=datetime.datetime.utcnow())
-        embed.set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url)
-        embed.set_footer(text=f'Выговор от администратора {message.author.name}',icon_url=message.author.avatar_url)
-        await member.send(embed=embed)
-        
-@client.command()
-async def unrebuke(message, number=None):
-  await message.message.delete()
-  b = [role.id for role in message.author.roles]
-  if 686639786672652363 in b or message.author.id in admins:
-    if number is None:
-      await message.channel.send('```\nВы не указали номер случая.```')
-    else:
-      try:
-        for item in my_warn_md.find():
-          if item['all'] == int(number):
-            a = await client.fetch_user(item['id'])
-            embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Случай `№{number}` благополучно был снят у пользователя `{a}`',timestamp=datetime.datetime.utcnow())
-            embed.set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url)
-            embed.set_footer(text=f'Выговор снял(а) администратор {message.author.name}',icon_url=message.author.avatar_url)
-            await message.channel.send(embed=embed)
-            my_warn_md.delete_one({'all':int(number)})
-            break
-        else:
-          await message.channel.send('```Указанного случая нет в базе предупреждений.```')
-      except:
-        await message.channel.send('```Указанного случая нет в базе предупреждений.```')
-  
-@client.command()
-async def rebukes(message, id=None):
-  b = [role.id for role in message.author.roles]
-  if 686639786672652363 in b or message.author.id in admins:
-    if id is None:
-      member = message.author
-    else:
-      member = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
-    if 608994688078184478 in [role.id for role in member.roles] or 757890413838467133 in [role.id for role in member.roles]:
-      embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Выговоры пользователя `{member}`:',timestamp=datetime.datetime.utcnow())
-      embed.set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url)
-      embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-      for item in my_warn_md.find():
-        if item['id'] == member.id:
-          namember = await client.fetch_user(item["mod_id"])
-          embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{namember}`',value=f'{item["reason"]}',inline=False)
-      await message.channel.send(embed=embed)
-  elif 608994688078184478 in b or 757890413838467133 in b:
-    embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Выговоры пользователя `{message.author}`:',timestamp=datetime.datetime.utcnow())
-    embed.set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url)
-    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    for item in my_warn_md.find():
-      if item['id'] == message.author.id:
+async def warns(message, id=None):
+  member, flag = message.author, False
+  try:
+    if (677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins) and not id is None:
+      member = await client.fetch_user(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+    flag = True
+  except:
+    await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Пользователя не существует.]```'))
+  if flag:
+    posl_date, s, embeds, k, ss_s, spisok = '', '', [], 0, {}, []
+    sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+    for item in my_warn.find():
+      if item['id'] == member.id:
         namember = await client.fetch_user(item["mod_id"])
-        embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{namember}`',value=f'{item["reason"]}',inline=False)
-    await message.channel.send(embed=embed)
-        
+        if item["data"].split()[0] != posl_date:
+          ss_s.update({posl_date:spisok})
+          posl_date = item["data"].split()[0]
+          spisok = f'`Случай №{item["all"]}:` {item["reason"]}\n`Mod:` {namember}\n'
+        else:
+          spisok += f'`Случай №{item["all"]}:` {item["reason"]}\n`Mod:` {namember}\n'
+    ss_s.update({posl_date:spisok})
+    del ss_s['']
+    for key, value in ss_s.items():
+      txt = key.split()[0].split('-')
+      s += f'```css\n[{txt[2]} {sp[int(txt[1])]} {txt[0]} года]```{value}'
+      k += 1
+      if k == 5:
+        embed = discord.Embed(colour=discord.Colour(0x310000),description=f'**Предупреждения пользователя `{member}:`**{s}',timestamp=datetime.datetime.utcnow())
+        embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+        embed.set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url)
+        embeds.append(embed)
+        k = 0
+        s = ''
+    if k != 0:
+      embed = discord.Embed(colour=discord.Colour(0x310000),description=f'**Предупреждения пользователя `{member}:`**{s}',timestamp=datetime.datetime.utcnow())
+      embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+      embed.set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url)
+      embeds.append(embed)
+    if embeds == []:
+      await message.channel.send(embed=discord.Embed(colour=0x310000, description=f'```css\n[У пользователя {member} предупреждения отсутствуют.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
+    elif len(embeds) == 1:
+      await message.channel.send(embed=embeds[0])
+    else:
+      msg = await message.channel.send(embed=embeds[0])
+      page = Paginator(client, msg, only=message.author, use_more=False, embeds=embeds)
+      await page.start()
+      
 @client.command()
 async def warn(message, id = None, *, reason=None):
   await message.message.delete()
-  b = [role.id for role in message.author.roles]
-  if 677397817966198788 in b or message.author.id in admins:
+  if 677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins:
     if id is None:
-      await message.channel.send('```\nВы не указали пользователя.```')
+      await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не указали пользователя.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
     elif reason is None:
-      await message.channel.send('```\nВы не указали причину.```')
+      await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не указали причину предупреждения.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
     else:
       try:
-        member = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+        member = await client.fetch_user(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
         flag = True
       except:
-        await message.channel.send('```\nПользователя не существует.```')
+        await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Пользователя не существует.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
         flag = False
-      if flag:
+      if member == message.author:
+        await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не можете выдать предупреждение самому себе.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
+      elif member.id in admins:
+        await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не можете выдать предупреждение администратору.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
+      elif flag:
         all = my_warn_kol.find()[0]["all"]+1
         count = 0
         for item in my_warn.find():
@@ -742,59 +705,160 @@ async def warn(message, id = None, *, reason=None):
             break
         else:
           my_warn.insert_one({"id":member.id, "number_warn":1, "mod_id":message.author.id, "reason":reason, "all":all, "data":str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0])})
-        embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Пользователь `{member}` получил предупреждение `№{count+1}` (случай `№{all}`) по причине: `{reason}`',timestamp=datetime.datetime.utcnow())
+        embed = discord.Embed(colour=discord.Colour(0x310000),description=f'**Пользователь `{member}` получил предупреждение `№{count+1}:`**\n```py\nID: {member.id}\nСлучай: {all}\nПричина: {reason}```',timestamp=datetime.datetime.utcnow())
+        embed.set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url)
         embed.set_footer(text=f'Предупреждение от {message.author.name}',icon_url=message.author.avatar_url)
         await message.channel.send(embed=embed)
         my_warn_kol.update_one({"id":1},{"$set":{"all":all}})
-        embed=discord.Embed(colour=discord.Colour.red(), description = f'Вы получили предупреждение `№{count+1}` по причине: `{reason}`',timestamp=datetime.datetime.utcnow())
+        embed=discord.Embed(colour=0x310000, description = f'**Вы получили предупреждение `№{count+1}:`**\n```py\nСлучай: {all}\nПричина: {reason}```❗ С правилами можно ознакомиться **[здесь](https://discord.com/channels/604636579545219072/642171728273080330/699328371783630988).**',timestamp=datetime.datetime.utcnow())
+        embed.set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url)
         embed.set_footer(text=f'Предупреждение от {message.author.name}',icon_url=message.author.avatar_url)
         await member.send(embed=embed)
         
 @client.command()
 async def unwarn(message, number=None):
   await message.message.delete()
-  b = [role.id for role in message.author.roles]
-  if 677397817966198788 in b or message.author.id in admins:
+  if 677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins:
     if number is None:
-      await message.channel.send('```\nВы не указали номер случая.```')
+      await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не указали номер случая.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
     else:
       try:
         for item in my_warn.find():
           if item['all'] == int(number):
             a = await client.fetch_user(item['id'])
-            embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Случай `№{number}` благополучно был снят у пользователя `{a}`',timestamp=datetime.datetime.utcnow())
-            embed.set_footer(text=f'Предупреждение снял(а) {message.author.name}',icon_url=message.author.avatar_url)
-            await message.channel.send(embed=embed)
-            my_warn.delete_one({'all':int(number)})
+            b = await client.fetch_user(item['mod_id'])
+            sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+            date = item['data'].split()[0].split('-')
+            if a == message.author:
+              await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не можете снять себе предупреждение.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
+            else:              
+              embed = discord.Embed(colour=discord.Colour(0x310000),description=f'**Случай `№{number}` благополучно был снят у пользователя `{a}:`**\n```py\nID: {a.id}\nВыдавал модератор: {b}\nБыл наказан: {date[2]} {sp[int(date[1])]} {date[0]} года.\nПричина снятого случая: {item["reason"]}```',timestamp=datetime.datetime.utcnow())
+              embed.set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url)
+              embed.set_footer(text=f'Предупреждение снял(а) {message.author.name}',icon_url=message.author.avatar_url)
+              await message.channel.send(embed=embed)
+              my_warn.delete_one({'all':int(number)})
             break
         else:
-          await message.channel.send('```Указанного случая нет в базе предупреждений.```')
+          await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Указанного случая нет в базе предупреждений.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
       except:
-        await message.channel.send('```Указанного случая нет в базе предупреждений.```')
+        await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Указанного случая нет в базе предупреждений.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
         
 @client.command()
-async def warns(message, id=None):
-  b = [role.id for role in message.author.roles]
-  if 677397817966198788 in b or message.author.id in admins:
+async def rebuke(message, id = None, *, reason=None):
+  await message.message.delete()
+  if 677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins:
     if id is None:
-      member = message.author
+      await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не указали пользователя.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
+    elif reason is None:
+      await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не указали причину выговора.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
     else:
-      member = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
-    embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Предупреждения пользователя `{member}`:',timestamp=datetime.datetime.utcnow())
-    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    for item in my_warn.find():
+      try:
+        member = await client.fetch_user(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+        flag = True
+      except:
+        await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Пользователя не существует.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
+        flag = False
+      if member == message.author:
+        await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не можете выдать выговор самому себе.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
+      elif member.id in admins:
+        await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не можете выдать выговор администратору.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
+      elif flag:
+        all = my_warn_kol_md.find()[0]["all"]+1
+        count = 0
+        for item in my_warn_md.find():
+          if item['id'] == member.id:
+            for j in my_warn_md.find():
+              if j['id'] == member.id:
+                count += 1
+            my_warn_md.insert_one({"id":member.id, "number_warn":count+1, "mod_id":message.author.id, "reason":reason, "all": all, "data":str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0])})
+            break
+        else:
+          my_warn_md.insert_one({"id":member.id, "number_warn":1, "mod_id":message.author.id, "reason":reason, "all":all, "data":str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0])})
+        embed = discord.Embed(colour=discord.Colour(0x310000),description=f'**Пользователь `{member}` получил выговор `№{count+1}:`**\n```py\nID: {member.id}\nСлучай: {all}\nПричина: {reason}```',timestamp=datetime.datetime.utcnow())
+        embed.set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url)
+        embed.set_footer(text=f'Выговор от {message.author.name}',icon_url=message.author.avatar_url)
+        await message.channel.send(embed=embed)
+        my_warn_kol_md.update_one({"id":1},{"$set":{"all":all}})
+        embed=discord.Embed(colour=0x310000, description = f'**Вы получили выговор `№{count+1}:`**\n```py\nСлучай: {all}\nПричина: {reason}```',timestamp=datetime.datetime.utcnow())
+        embed.set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url)
+        embed.set_footer(text=f'Выговор от {message.author.name}',icon_url=message.author.avatar_url)
+        await member.send(embed=embed)
+      
+@client.command()
+async def unrebuke(message, number=None):
+  await message.message.delete()
+  if 677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins:
+    if number is None:
+      await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не указали номер случая.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
+    else:
+      try:
+        for item in my_warn_md.find():
+          if item['all'] == int(number):
+            a = await client.fetch_user(item['id'])
+            b = await client.fetch_user(item['mod_id'])
+            sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+            date = item['data'].split()[0].split('-')
+            if a == message.author:
+              await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не можете снять себе выговор.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
+            else:
+              embed = discord.Embed(colour=discord.Colour(0x310000),description=f'**Случай `№{number}` благополучно был снят у пользователя `{a}:`**\n```py\nID: {a.id}\nВыдавал администратор: {b}\nБыл наказан: {date[2]} {sp[int(date[1])]} {date[0]} года.\nПричина снятого случая: {item["reason"]}```',timestamp=datetime.datetime.utcnow())
+              embed.set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url)
+              embed.set_footer(text=f'Выговор снял(а) {message.author.name}',icon_url=message.author.avatar_url)
+              await message.channel.send(embed=embed)
+              my_warn_md.delete_one({'all':int(number)})
+            break
+        else:
+          await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Указанного случая нет в базе выговоров.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
+      except:
+        await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Указанного случая нет в базе выговоров.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
+      
+@client.command()
+async def rebukes(message, id=None):
+  member, flag = message.author, False
+  try:
+    if (677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins) and not id is None:
+      member = await client.fetch_user(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+    flag = True
+  except:
+    await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Пользователя не существует.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
+  if flag:
+    posl_date, s, embeds, k, ss_s, spisok = '', '', [], 0, {}, []
+    sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+    for item in my_warn_md.find():
       if item['id'] == member.id:
         namember = await client.fetch_user(item["mod_id"])
-        embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{namember}`',value=f'{item["reason"]}',inline=False)
-    await message.channel.send(embed=embed)
-  else:
-    embed = discord.Embed(colour=discord.Colour(0x310000),description=f'Предупреждения пользователя `{message.author}`:',timestamp=datetime.datetime.utcnow())
-    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    for item in my_warn.find():
-      if item['id'] == message.author.id:
-        namember = await client.fetch_user(item["mod_id"])
-        embed.add_field(name=f'`Случай №{item["all"]}` {item["data"]} от `{namember}`',value=f'{item["reason"]}',inline=False)
-    await message.channel.send(embed=embed)
+        if item["data"].split()[0] != posl_date:
+          ss_s.update({posl_date:spisok})
+          posl_date = item["data"].split()[0]
+          spisok = f'`Случай №{item["all"]}:` {item["reason"]}\n`Adm:` {namember}\n'
+        else:
+          spisok += f'`Случай №{item["all"]}:` {item["reason"]}\n`Adm:` {namember}\n'
+    ss_s.update({posl_date:spisok})
+    del ss_s['']
+    for key, value in ss_s.items():
+      txt = key.split()[0].split('-')
+      s += f'```css\n[{txt[2]} {sp[int(txt[1])]} {txt[0]} года]```{value}'
+      k += 1
+      if k == 5:
+        embed = discord.Embed(colour=discord.Colour(0x310000),description=f'**Выговоры пользователя `{member}:`**{s}',timestamp=datetime.datetime.utcnow())
+        embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+        embed.set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url)
+        embeds.append(embed)
+        k = 0
+        s = ''
+    if k != 0:
+      embed = discord.Embed(colour=discord.Colour(0x310000),description=f'**Выговоры пользователя `{member}:`**{s}',timestamp=datetime.datetime.utcnow())
+      embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+      embed.set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url)
+      embeds.append(embed)
+    if embeds == []:
+      await message.channel.send(embed=discord.Embed(colour=0x310000, description=f'```css\n[У пользователя {member} выговоры отсутствуют.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
+    elif len(embeds) == 1:
+      await message.channel.send(embed=embeds[0])
+    else:
+      msg = await message.channel.send(embed=embeds[0])
+      page = Paginator(client, msg, only=message.author, use_more=False, embeds=embeds)
+      await page.start()
                         
 @client.command()
 async def mute(message, id=None, time=None, *, reason=None):
