@@ -232,9 +232,16 @@ async def ev(message,*command):
     command = " ".join(command)
     res = eval(command)
     if inspect.isawaitable(res): 
-      await message.channel.send('```py\n' + str(await res) + '```')
+      res = str(await res)
     else:
-      await message.channel.send('```py\n' + str(res) + '```')
+      res = str(res)
+    if len(res) >= 2000:
+      f = open(f'{message.author}.txt', 'w')
+      f.write(res)
+      f.close()
+      await message.channel.send(content='Результат вывода слишком большой.',file = discord.File(fp = f'{message.author}.txt'))
+    else:
+      await message.channel.send(embed=discord.Embed(description=f'```diff\n- {res}```'))
     
 @client.command()
 async def help(message):
