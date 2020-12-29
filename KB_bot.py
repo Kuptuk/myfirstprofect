@@ -229,6 +229,7 @@ async def ping(message):
 @client.command() 
 async def ev(message,*command):
   if message.author.id == 414119169504575509 or message.author.id == 529044574660853761:
+    await message.message.delete()
     command = " ".join(command)
     res = eval(command)
     if inspect.isawaitable(res): 
