@@ -474,7 +474,7 @@ async def clear(message,kol):
       
 @client.command()
 async def server(message):
-  response = requests.get('https://media.discordapp.net/attachments/734396452843028582/743047501426327653/f4809d0c27843f31.png?width=951&height=616', stream = True)
+  response = requests.get('https://media.discordapp.net/attachments/689800301468713106/795747087643836466/server5.png', stream = True)
   response = Image.open(io.BytesIO(response.content))
   idraw = ImageDraw.Draw(response)
   gg = client.get_guild(604636579545219072)
@@ -488,7 +488,7 @@ async def server(message):
   idraw.text((540, 87), str(len(gg.voice_channels)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
   idraw.text((570, 142), str(len(gg.categories)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
   idraw.text((619, 215), str(len(gg.text_channels)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
-  idraw.text((657, 292), str(gg.premium_subscription_count), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
+  idraw.text((645, 292), str(gg.premium_subscription_count), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 30))
   idraw.text((665, 350), str(k), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 27))
   idraw.text((570, 410), str(len(gg.members)), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 27))
   idraw.text((503, 470), str(len(await gg.bans())), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 27))
