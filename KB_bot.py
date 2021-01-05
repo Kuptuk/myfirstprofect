@@ -1302,7 +1302,7 @@ async def info(message, id = None):
             medal = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/788847715420209222/i_dont_know_what_is_it_say_plz.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(medal, (ppz[prioritet], 225, ppz[prioritet]+37, 262), medal)
 
-          if 677397817966198788 in b or member.id in admins:
+          if 677397817966198788 in b or 765212719380037663 in b or member.id in admins:
             prioritet += 1
             moder = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785197154624339988/moderator.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(moder, (ppz[prioritet], 225, ppz[prioritet]+37, 262), moder)
