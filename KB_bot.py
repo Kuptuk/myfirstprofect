@@ -1308,7 +1308,7 @@ async def info(message, id = None):
             allia = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/796120799551160360/rm.png', stream = True).content)).convert('RGBA')
             response.paste(allia, (ppz[prioritet], 225, ppz[prioritet]+37, 262), allia)
 
-          if 677397817966198788 in b or member.id in admins:
+          if 677397817966198788 in b or 765212719380037663 in b or member.id in admins:
             prioritet += 1
             moder = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785197154624339988/moderator.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(moder, (ppz[prioritet], 225, ppz[prioritet]+37, 262), moder)
