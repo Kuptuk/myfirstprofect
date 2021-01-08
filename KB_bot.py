@@ -1142,7 +1142,7 @@ async def info(message, id = None):
           avatar = avatar.convert('RGBA')
 
           b = [role.id for role in member.roles]
-          
+          msg2021 = await message.channel.send(embed=discord.Embed(colour=0x310000,description=f'**Пожалуйста, подождите, рисуем значки в замечательную карточку {member.mention} <:fox:610352379748941824>**'))
           if 608994688078184478 in b and list(message.message.content)[-1] != '-':
             if randch == 1:
               response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True).content))
@@ -1364,6 +1364,11 @@ async def info(message, id = None):
             fat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(fat, (ppz[prioritet], 205), fat)
             
+          if member.id == 354958324355039233:
+            prioritet += 1
+            tig = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797198927673032734/rm.png', stream = True).content)).convert('RGBA')
+            response.paste(tig, (ppz[prioritet], 205), tig)
+            
           if member.bot:
             prioritet += 1
             bot = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784833729054900244/bot.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
@@ -1383,9 +1388,11 @@ async def info(message, id = None):
             response.paste(gl, (0, 0), gl)
             response.save('user_card.png')
             await message.channel.send(content='О̵͌́й̶̿̒.̵̅͛.̵̯̃.̶̊̿ ̵̇̚В̷̒̀ӹ̸́̈ ̸̍͝с̷͐͐л̷͒̊о̵͑̌м̶̐̿ӓ̶́͐л̸̒̍и̸͂̚ ̶͌͘б̶̍̾о̷̇̈́т̴̋̓а̶̎͊ ',file = discord.File(fp = 'user_card.png'))
+            await msg2021.delete()
           else:
             response.save('user_card.png')
             await message.channel.send(file = discord.File(fp = 'user_card.png'))
+            await msg2021.delete()
 
       except:
           try:
