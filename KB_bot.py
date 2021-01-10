@@ -1368,6 +1368,11 @@ async def info(message, id = None):
             prioritet += 1
             tig = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797198927673032734/rm.png', stream = True).content)).convert('RGBA')
             response.paste(tig, (ppz[prioritet], 205), tig)
+                       
+          if member.id == 713780299024039936:
+            prioritet += 1
+            ang = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/797940366254800906/rm.png', stream = True).content)).convert('RGBA')
+            response.paste(ang, (ppz[prioritet], 205), ang)
             
           if member.bot:
             prioritet += 1
