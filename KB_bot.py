@@ -418,7 +418,7 @@ async def team(message):
     l = [i.mention for i in message.guild.get_role(765212719380037663).members]
     embed.add_field(name=f"Лента: [{len(l)}]",value=("\n".join(l)))
     a = [i.mention for i in message.guild.get_role(686621891230040077).members]
-    embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=((requests.get("http://matrixproject.tk:8080/stats/pm/all?type=list").text).replace("<br>","\n")))
+    embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=((requests.get("https://catalogserverov.ml/stats/pm/all?type=list").text).replace("<br>","\n")))
     c = [i.mention for i in message.guild.get_role(686618397668147220).members]
     embed.add_field(name=f"Отдел творчества: [{len(c)}]",value=("\n".join(c)))
     c = [i.mention for i in message.guild.get_role(757890413838467133).members]
@@ -1218,7 +1218,7 @@ async def info(message, id = None):
             idraw.text((145 , 440), f'Выговоров: {warnow}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
           
           else:
-            aktiv = requests.get(f'http://api.mrleonardos.tk:8080/stats/?user={member.id}').text
+            aktiv = requests.get(f'https://catalogserverov.ml/stats?user={member.id}').text
             if randch == 1:
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
             elif not member.premium_since is None:
