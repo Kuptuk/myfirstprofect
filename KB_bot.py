@@ -418,7 +418,10 @@ async def team(message):
     l = [i.mention for i in message.guild.get_role(765212719380037663).members]
     embed.add_field(name=f"Лента: [{len(l)}]",value=("\n".join(l)))
     a = [i.mention for i in message.guild.get_role(686621891230040077).members]
-    embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=((requests.get("https://catalogserverov.ml/stats/pm/all?type=list").text).replace("<br>","\n")))
+    try:
+      embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=((requests.get("https://catalogserverov.ml/stats/pm/all?type=list").text).replace("<br>","\n")))
+    except:
+      embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=("\n".join(a)))
     c = [i.mention for i in message.guild.get_role(686618397668147220).members]
     embed.add_field(name=f"Отдел творчества: [{len(c)}]",value=("\n".join(c)))
     c = [i.mention for i in message.guild.get_role(757890413838467133).members]
