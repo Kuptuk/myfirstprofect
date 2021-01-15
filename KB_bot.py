@@ -1380,7 +1380,12 @@ async def info(message, id = None):
             prioritet += 1
             ang = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/797940366254800906/rm.png', stream = True).content)).convert('RGBA')
             response.paste(ang, (ppz[prioritet], 205), ang)
-            
+                       
+          if member.id == 673907825705222165:
+            prioritet += 1
+            vaf = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799701209078038539/rm.png', stream = True).content)).convert('RGBA')
+            response.paste(vaf, (ppz[prioritet], 205), vaf)
+
           if member.bot:
             prioritet += 1
             bot = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784833729054900244/bot.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
