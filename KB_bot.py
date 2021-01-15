@@ -1221,7 +1221,6 @@ async def info(message, id = None):
             idraw.text((145 , 440), f'Выговоров: {warnow}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
           
           else:
-            aktiv = requests.get(f'https://catalogserverov.ml/stats?user={member.id}').text
             if randch == 1:
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
             elif not member.premium_since is None:
@@ -1248,9 +1247,14 @@ async def info(message, id = None):
                 idraw.text((365, 480), f'Неизвестна', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
               kolvo = dk.get(member.id) if dk.get(member.id) is not None else 0
               idraw.text((135, 440), f'Публикаций: {kolvo}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            
+              
+            try:
+              aktiv = requests.get(f'https://catalogserverov.ml/stats?user={member.id}').text
+            except:
+              aktiv = '? сообщений|? минут'
             idraw.text((365, 360), f'Активность сегодня: {aktiv.split("|")[0]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             idraw.text((365, 400), f'Voice сегодня: {aktiv.split("|")[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            
               
           prioritet = -1
           ppz = [365, 405, 445, 485, 525, 565, 605, 645, 685, 725, 765, 805, 845, 885, 925, 965, 1005]
