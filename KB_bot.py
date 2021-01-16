@@ -1127,7 +1127,7 @@ async def set_rm(message,id=None):
 @client.command()
 async def info(message, id = None):
     if id == 'badges':
-      embed = discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),title=':clipboard: Обозначение значков',description='<:kk:788850405157240833> Метка представителя команды каталога.\n<:booster:797134090594680942> Бустерам сервера.\n\n<:owner:784812161959854120> Владельцу сервера.\n<:developer:785191301321719828> Людям, принявшим участие в разработке/улучшении персонального бота.\n<:old:788850405308104765> Людям, которые внесли огромный вклад в развитие сервера.\n<:alliance:796120972729122856> Представителям союза каталога.\n<:moderator:785197651716866121> Уполномоченным на выдачу наказаний.\n🏆 Лучшему работнику на данный момент.\n<:secret:787360058328481812> Секретный значок.\n💡 Предложившим большое количество дельных идей.\n‼️ Подавшему большое количество жалоб.\n📝 Оставившему рецензию серверу на 3-х мониторингах.\n`Примечание:` **[здесь](https://server-discord.com/604636579545219072)**, **[здесь](https://disboard.org/ru/server/604636579545219072)** и **[здесь](https://discord-server.com/ru/604636579545219072)**.\n<:activ:784808269667237910> Активному пользователю нашего сервера.\n🍬 Выдаётся в новогоднюю ночь 2021 года за найденные пасхалки.\n<:bot:784833842002657301> Ботам сервера.\n\nЗначков всего с учётом кастомных: `16`.\n`Примечания:`\n• Кастомный значок возможен в случае больших заслуг перед Каталогом.\n• Значки выдаются автоматизированной системой. Это значит, что нет необходимости выпрашивать их у администрации сервера.')
+      embed = discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),title=':clipboard: Обозначение значков',description='<:kk:788850405157240833> Метка представителя команды каталога.\n<:booster:797134090594680942> Бустерам сервера.\n\n<:owner:784812161959854120> Владельцу сервера.\n<:developer:785191301321719828> Людям, принявшим участие в разработке/улучшении персонального бота.\n<:old:788850405308104765> Людям, которые внесли огромный вклад в развитие сервера.\n<:alliance:796120972729122856> Представителям союза каталога.\n<:moderator:785197651716866121> Уполномоченным на выдачу наказаний.\n<:helper:799908854795731004> Людям, которые оказывали помощь новичкам, отвечая на их различные вопросы в общем чате.\n🏆 Лучшему работнику на данный момент.\n<:secret:787360058328481812> Секретный значок.\n<:puzzle:799908854783016960> Предложившим большое количество дельных идей.\n‼️ Подавшему большое количество жалоб.\n<:review:799908854812377098> Оставившему рецензию серверу на 3-х мониторингах.\n`Примечание:` **[здесь](https://server-discord.com/604636579545219072)**, **[здесь](https://disboard.org/ru/server/604636579545219072)** и **[здесь](https://discord-server.com/ru/604636579545219072)**.\n<:activ:784808269667237910> Активному пользователю нашего сервера.\n🍬 Выдаётся в новогоднюю ночь 2021 года за найденные пасхалки. Существует до 2022 года.\n<:bot:784833842002657301> Ботам сервера.\n\nЗначков всего с учётом кастомных: `16+4`.\n`Примечания:`\n• Кастомный значок возможен в случае больших заслуг перед Каталогом, а так же за 2 ваших буста.\n• Значки выдаются автоматизированной системой. Это значит, что нет необходимости выпрашивать их у администрации сервера.')
       embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
       embed.set_thumbnail(url=message.guild.icon_url)
       await message.channel.send(embed=embed)
@@ -1255,7 +1255,6 @@ async def info(message, id = None):
             idraw.text((365, 360), f'Активность сегодня: {aktiv.split("|")[0]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             idraw.text((365, 400), f'Voice сегодня: {aktiv.split("|")[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             
-              
           prioritet = -1
           ppz = [365, 405, 445, 485, 525, 565, 605, 645, 685, 725, 765, 805, 845, 885, 925, 965, 1005]
           avatar = avatar.resize((212, 212), Image.ANTIALIAS)
@@ -1294,40 +1293,54 @@ async def info(message, id = None):
           response.paste(st, (360, y_2021), st)
 
           #prioritetnostb
+          net_zn = 0
           if member.id == message.guild.owner.id:
             prioritet += 1
             crown = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784811138671575121/owner.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(crown, (ppz[prioritet], 205), crown)
+            net_zn += 1
 
           msgbots = await client.get_channel(764191031318937674).fetch_message(785189856988627004)
           if str(member.id) in msgbots.content:
             prioritet += 1
             dev = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785183136362659880/developer.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(dev, (ppz[prioritet], 205), dev)
+            net_zn += 1
             
           medal22 = await client.get_channel(764191031318937674).fetch_message(788848844980092989)
           if str(member.id) in medal22.content:
             prioritet += 1
             medal = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/788847715420209222/i_dont_know_what_is_it_say_plz.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(medal, (ppz[prioritet], 205), medal)
+            net_zn += 1
             
           souz = await client.get_channel(764191031318937674).fetch_message(793762809396985866)
           if str(member.id) in souz.content:
             prioritet += 1
             allia = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/796120799551160360/rm.png', stream = True).content)).convert('RGBA')
             response.paste(allia, (ppz[prioritet], 205), allia)
+            net_zn += 1
 
           if 677397817966198788 in b or 765212719380037663 in b or member.id in admins:
             prioritet += 1
             moder = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785197154624339988/moderator.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(moder, (ppz[prioritet], 205), moder)
+            net_zn += 1
                 
+          help = await client.get_channel(764191031318937674).fetch_message(799910635206868992)
+          if str(member.id) in help.content:
+            prioritet += 1
+            help22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910232079466537/helper_1.png', stream = True).content)).convert('RGBA')
+            response.paste(help22, (ppz[prioritet], 205), help22)
+            net_zn += 1
+              
           try:
             msg = await client.get_channel(784815029118828548).history(limit=1).flatten()
             if str(member.id) in msg[0].content:
               prioritet += 1
               rm = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/796115970003173436/rm.png', stream = True).content)).convert('RGBA')
               response.paste(rm, (ppz[prioritet], 205), rm)
+              net_zn += 1
           except:
             pass
           
@@ -1336,70 +1349,73 @@ async def info(message, id = None):
             prioritet += 1
             ngl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/787359332891230238/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(ngl, (ppz[prioritet], 205), ngl)
+            net_zn += 1
           
           ideas = await client.get_channel(764191031318937674).fetch_message(785203816785903667)
           if str(member.id) in ideas.content:
             prioritet += 1
-            id22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797121241013026826/rm.png', stream = True).content)).convert('RGBA')
+            id22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910224001106000/puzzle.png', stream = True).content)).convert('RGBA')
             response.paste(id22, (ppz[prioritet], 205), id22)
+            net_zn += 1
             
           bang = await client.get_channel(764191031318937674).fetch_message(786738663433437244)
           if str(member.id) in bang.content:
             prioritet += 1
             bg22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119556178935848/rm.png', stream = True).content)).convert('RGBA')
             response.paste(bg22, (ppz[prioritet], 205), bg22)
+            net_zn += 1
             
           msgotz = await client.get_channel(764191031318937674).fetch_message(782330900746076202)
           if str(member.id) in msgotz.content:
             prioritet += 1
-            cotz = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797116099430318121/rm.png', stream = True).content)).convert('RGBA')
+            cotz = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910237448175626/review.png', stream = True).content)).convert('RGBA')
             response.paste(cotz, (ppz[prioritet], 205), cotz)
+            net_zn += 1
 
           if 619013112531517501 in b:
             prioritet += 1
             activ = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784801731425861632/for_staff.png', stream = True).content)).convert('RGBA')
             response.paste(activ, (ppz[prioritet], 205), activ)
+            net_zn += 1
 
           candys = await client.get_channel(764191031318937674).fetch_message(790310798895480833)
           if str(member.id) in candys.content:
             prioritet += 1
             candy = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119577951436810/rm.png', stream = True).content)).convert('RGBA')
             response.paste(candy, (ppz[prioritet], 205), candy)
-            
-          if member.id == 394757049893912577:
-            prioritet += 1
-            fat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-            response.paste(fat, (ppz[prioritet], 205), fat)
-            
-          if member.id == 354958324355039233:
-            prioritet += 1
-            tig = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797198927673032734/rm.png', stream = True).content)).convert('RGBA')
-            response.paste(tig, (ppz[prioritet], 205), tig)
-                       
-          if member.id == 713780299024039936:
-            prioritet += 1
-            ang = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/797940366254800906/rm.png', stream = True).content)).convert('RGBA')
-            response.paste(ang, (ppz[prioritet], 205), ang)
-                       
-          if member.id == 673907825705222165:
-            prioritet += 1
-            vaf = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799701209078038539/rm.png', stream = True).content)).convert('RGBA')
-            response.paste(vaf, (ppz[prioritet], 205), vaf)
+            net_zn += 1
 
           if member.bot:
             prioritet += 1
             bot = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784833729054900244/bot.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(bot, (ppz[prioritet], 205), bot)
+            net_zn += 1
             
           if 608994688078184478 in b:
             komanda = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/788836971190550558/kk.png', stream = True).content)).convert('RGBA')
             response.paste(komanda, (836, 53), komanda)
-          
-          if not member.premium_since is None:
+
+          if member.id == 394757049893912577:
+            fat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+            response.paste(fat, (54, 100), fat)
+          elif member.id == 354958324355039233:
+            tig = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797198927673032734/rm.png', stream = True).content)).convert('RGBA')
+            response.paste(tig, (54, 100), tig)      
+          elif member.id == 713780299024039936:
+            ang = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/797940366254800906/rm.png', stream = True).content)).convert('RGBA')
+            response.paste(ang, (54, 100), ang)
+          elif member.id == 673907825705222165:
+            vaf = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799701209078038539/rm.png', stream = True).content)).convert('RGBA')
+            response.paste(vaf, (54, 100), vaf)
+          elif not member.premium_since is None:
             boost = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797122464026198066/rm.png', stream = True).content)).convert('RGBA')
             response.paste(boost, (54, 100), boost)
+          if not member.premium_since is None:
             idraw.text((100 , 102), f'{member.top_role.name}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-
+            
+          if net_zn == 0:
+            idraw.text((365 , 200), f'У вас пока нет ни одного значка ;(', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+          
           if randch == 1:
             gl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786978327420076062/glitchon.png', stream = True).content)).convert('RGBA')
             response.paste(gl, (0, 0), gl)
