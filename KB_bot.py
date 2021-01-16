@@ -1411,6 +1411,9 @@ async def info(message, id = None):
           elif member.id == 673907825705222165:
             vaf = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799701209078038539/rm.png', stream = True).content)).convert('RGBA')
             response.paste(vaf, (54, 100), vaf)
+          elif member.id == 571006178444836875:
+            leo = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799946949679120424/review.png', stream = True).content)).convert('RGBA')
+            response.paste(leo, (54, 100), leo)
           elif not member.premium_since is None:
             boost = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797122464026198066/rm.png', stream = True).content)).convert('RGBA')
             response.paste(boost, (54, 100), boost)
