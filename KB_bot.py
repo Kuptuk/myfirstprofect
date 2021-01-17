@@ -1470,7 +1470,8 @@ async def info(message, id = None):
               try:
                 a = await client.get_guild(604636579545219072).fetch_ban(member)
                 idraw.text((365 , 260), 'Пользователь в бане.', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-                if 677397817966198788 in [role.id for role in message.author.roles] or 765212719380037663 in [role.id for role in message.author.roles] or message.author.id in admins:
+                b_01 = [role.id for role in message.author.roles]
+                if 677397817966198788 in b_01 or 765212719380037663 in b_01 or 800474182474268734 in b_01 or message.author.id in admins:
                   idraw.text((52 , 520), f'Причина: {a.reason}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 20))
                 else:
                   idraw.text((52 , 520), 'Просматривать причину бана могут лишь уполномоченные сотрудники.', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 20))
