@@ -82,11 +82,21 @@ async def on_ready():
     
 @client.event
 async def on_message(message):
+  idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
   if message.guild is None:
     embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description=message.content)
     embed.set_author(name=message.author, icon_url=message.author.avatar_url)
     embed.set_footer(text=message.author.id)
     await client.get_channel(790287251343015986).send(embed=embed)
+  elif '.gg' in message.content and message.channel.category.id == 604636579545219073 and message.channel.id != 699306241981415424:
+    await message.delete()
+    my_mute.delete_one({'id':message.author.id})
+    my_mute.insert_one({"id":message.author.id, "data":datetime.datetime.utcnow() + datetime.timedelta(hours=99999)})
+    embed = discord.Embed(colour=discord.Colour(0x310000), description=f'Пользователь `{message.author}` был заткнут навсегда автомодерацией.', timestamp=datetime.datetime.utcnow())
+    embed.set_footer(text=f'ID: {message.author.id}',icon_url=message.author.avatar_url)
+    await message.channel.send(content='<@&677397817966198788>',embed=embed)
+    await message.author.remove_roles(message.guild.get_role(648271372585533441),reason=f'Автомодерация: время мута истекло.')
+    await message.author.add_roles(message.guild.get_role(648271372585533441),reason=f'Автомодерация: был заткнут навсегда.')
   elif message.channel.id == 740651083533254717:
     if "K.problem" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins:
       await message.delete()
@@ -105,8 +115,7 @@ async def on_message(message):
         await client.get_guild(604636579545219072).get_member(item['id']).remove_roles(client.get_guild(604636579545219072).get_role(648271372585533441),reason=f'Время мута истекло.')
       except:
         pass
-      my_mute.delete_one({'id':item['id']})      
-  idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
+      my_mute.delete_one({'id':item['id']})
   if message.channel.category_id in idd:
     men = message.mentions
     if men != []:
