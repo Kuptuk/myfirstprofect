@@ -409,36 +409,33 @@ async def stats(message):
 async def team(message):
     embed = discord.Embed(colour=discord.Colour(0x310000),title="Команда Каталога",description=f"Людей в команде: `{len([i.mention for i in message.guild.get_role(608994688078184478).members])}`",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    d = [i.mention for i in message.guild.get_role(620955813850120192).members]
-    embed.add_field(name=f"Администраторы: [{len(d)}]",value="<:crown:763415131622998046> <@414119169504575509>\n:crossed_swords: <@562561140786331650>\n<:PandeMiaa:775425060130652242> <@529044574660853761>")
-    e = [i.mention for i in message.guild.get_role(686256550951649317).members]
-    embed.add_field(name=f"Рекрутеры: [{len(e)}]",value=("\n".join(e)))
-    f = [i.mention for i in message.guild.get_role(677397817966198788).members]
-    embed.add_field(name=f"Модераторы: [{len(f)}]",value=("\n".join(f)))
     
     gp = [i.mention for i in message.guild.get_role(686639786672652363).members]
     gp = 'Отсутствует.' if gp==[] else ':crown: ' + "\n".join(gp)
-    embed.add_field(name=f"Глава отдела партнерства:",value=gp)
+    embed.add_field(name=f"Глава отдела партнёрства:",value=gp)
+    
+    gm = [i.mention for i in message.guild.get_role(800474182474268734).members]
+    gm = 'Отсутствует.' if gm==[] else '<a:black_fire:763424597369815042> ' + "\n".join(gm)
+    embed.add_field(name=f"Главный модератор:",value=gm)
     
     gt = [i.mention for i in message.guild.get_role(686639826308825089).members]
     gt = 'Отсутствует.' if gt==[] else '<a:black_fire:763424597369815042> ' + "\n".join(gt)
     embed.add_field(name=f"Глава отдела творчества:",value=gt)
     
-    l = [i.mention for i in message.guild.get_role(765212719380037663).members]
-    embed.add_field(name=f"Лента: [{len(l)}]",value=("\n".join(l)))
     a = [i.mention for i in message.guild.get_role(686621891230040077).members]
     try:
-      embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=((requests.get("https://catalogserverov.ml/stats/pm/all?type=list").text).replace("<br>","\n")))
+      embed.add_field(name=f"Отдел партнёрства: [{len(a)}]",value=((requests.get("https://catalogserverov.ml/stats/pm/all?type=list").text).replace("<br>","\n")))
     except:
-      embed.add_field(name=f"Отдел партнерства: [{len(a)}]",value=("\n".join(a)))
+      embed.add_field(name=f"Отдел партнёрства: [{len(a)}]",value=("\n".join(a)))
+    c = [i.mention for i in message.guild.get_role(677397817966198788).members]
+    c2 = [i.mention for i in message.guild.get_role(765212719380037663).members]
+    embed.add_field(name=f"Модерация: [0]",value=('Отсутствует.')) if c == [] else embed.add_field(name=f"Модерация: [{len(c)}]",value=("\n".join(c)+f'\n\n**Мл. Модерация: [{len(c2)}]**\n' + "\n".join(c2)))
     c = [i.mention for i in message.guild.get_role(686618397668147220).members]
-    embed.add_field(name=f"Отдел творчества: [{len(c)}]",value=("\n".join(c)))
+    embed.add_field(name=f"Отдел творчества: [0]",value=('Отсутствует.')) if c == [] else embed.add_field(name=f"Отдел творчества: [{len(c)}]",value=("\n".join(c)))
     c = [i.mention for i in message.guild.get_role(757890413838467133).members]
-    embed.add_field(name=f"В отставке: [{len(c)}]",value=("\n".join(c)))
+    embed.add_field(name=f"В отставке: [0]",value=('Отсутствует.')) if c == [] else embed.add_field(name=f"В отставке: [{len(c)}]",value=("\n".join(c)))
                                                                                     
-    embed.add_field(name=f"Совсем скоро: [?]",value=('?'))
-    embed.add_field(name=f"Совсем скоро: [?]",value=('?'))
-    embed.add_field(name=f"Совсем скоро: [?]",value=('?'))
+    embed.add_field(name=f"Администраторы: [3]",value="<:crown:763415131622998046> <@414119169504575509>\n:crossed_swords: <@562561140786331650>\n<:PandeMiaa:775425060130652242> <@529044574660853761>")
     await message.channel.send(embed=embed)
     
 @client.command()
