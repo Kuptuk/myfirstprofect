@@ -42,7 +42,7 @@ my_warn_kol_md = my_client.Catalog.warn_kol_md
 client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
 client.remove_command("help")
 
-admins = [562561140786331650,414119169504575509,529044574660853761]
+admins = [562561140786331650,414119169504575509]
 
 @client.event
 async def on_ready():
@@ -1339,7 +1339,7 @@ async def info(message, id = None):
             response.paste(allia, (ppz[prioritet], 205), allia)
             net_zn += 1
 
-          if 677397817966198788 in b or 765212719380037663 in b or member.id in admins:
+          if 677397817966198788 in b or 765212719380037663 in b or 800474182474268734 in b or member.id in admins:
             prioritet += 1
             moder = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785197154624339988/moderator.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(moder, (ppz[prioritet], 205), moder)
