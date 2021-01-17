@@ -770,7 +770,8 @@ async def unwarn(message, number=None):
 @client.command()
 async def rebuke(message, id = None, *, reason=None):
   await message.message.delete()
-  if 677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins:
+  b_01 = [role.id for role in message.author.roles]
+  if 677397817966198788 in b_01 or 800474182474268734 in b_01 or message.author.id in admins:
     if id is None:
       await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не указали пользователя.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
     elif reason is None:
@@ -811,7 +812,8 @@ async def rebuke(message, id = None, *, reason=None):
 @client.command()
 async def unrebuke(message, number=None):
   await message.message.delete()
-  if 677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins:
+  b_01 = [role.id for role in message.author.roles]
+  if 677397817966198788 in b_01 or 800474182474268734 in b_01 or message.author.id in admins:
     if number is None:
       await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не указали номер случая.]```').set_author(name='Нарушения Команды Каталога', icon_url=message.guild.icon_url))
     else:
@@ -840,7 +842,8 @@ async def unrebuke(message, number=None):
 async def rebukes(message, id=None):
   member, flag = message.author, False
   try:
-    if (677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins) and not id is None:
+    b_01 = [role.id for role in message.author.roles]
+    if (677397817966198788 in b_01 or 800474182474268734 in b_01 or message.author.id in admins) and not id is None:
       member = await client.fetch_user(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
     flag = True
   except:
@@ -888,7 +891,7 @@ async def rebukes(message, id=None):
 async def mute(message, id=None, time=None, *, reason=None):
   await message.message.delete()
   b = [role.id for role in message.author.roles]
-  if 677397817966198788 in b or 765212719380037663 in b or message.author.id in admins:
+  if 677397817966198788 in b or 765212719380037663 in b or 800474182474268734 in b or message.author.id in admins:
     if id is None:
       await message.channel.send('```css\nВы не указали id нарушителя.```')
     elif time is None:
@@ -921,7 +924,7 @@ async def mute(message, id=None, time=None, *, reason=None):
 async def unmute(message,id=None):
   await message.message.delete()
   b = [role.id for role in message.author.roles]
-  if 677397817966198788 in b or 765212719380037663 in b or message.author.id in admins:
+  if 677397817966198788 in b or 765212719380037663 in b or 800474182474268734 in b or message.author.id in admins:
     if id is None:
       await message.channel.send('```css\nВы не указали id нарушителя.```')
     else:
