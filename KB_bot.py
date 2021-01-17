@@ -452,7 +452,7 @@ async def staff(message):
 @client.command()
 async def moder(message):
     b = [role.id for role in message.author.roles]
-    if 620955813850120192 in b or 677397817966198788 in b or message.author.id in admins:
+    if 620955813850120192 in b or 677397817966198788 in b or 765212719380037663 in b or message.author.id in admins:
       embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&677397817966198788>:**\n\n`K.ban @user|ID причина` — забанить пользователя.\n`K.unban @user|ID причина` — разбанить пользователя.\n\n`K.warn @user|ID причина` — выдать предупреждение пользователю.\n`K.warns @user|ID` — просмотреть предупреждения пользователя.\n`K.unwarn <Номер_случая>` — снять предупреждение по номеру случая.\n\n`K.mute @user|ID time причина` — замутить человека на time часов.\n`K.unmute @user|ID` — размутить человека.\n`K.rebukes` — просмотреть свои выговоры.")
       embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
       embed.set_thumbnail(url=message.guild.icon_url)
@@ -654,7 +654,7 @@ async def apm(message,id=None,key=None):
 async def warns(message, id=None):
   member, flag = message.author, False
   try:
-    if (677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins) and not id is None:
+    if (677397817966198788 in [role.id for role in message.author.roles] or 765212719380037663 in [role.id for role in message.author.roles] or message.author.id in admins) and not id is None:
       member = await client.fetch_user(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
     flag = True
   except:
@@ -701,7 +701,7 @@ async def warns(message, id=None):
 @client.command()
 async def warn(message, id = None, *, reason=None):
   await message.message.delete()
-  if 677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins:
+  if 677397817966198788 in [role.id for role in message.author.roles] or 765212719380037663 in [role.id for role in message.author.roles] or message.author.id in admins:
     if id is None:
       await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не указали пользователя.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
     elif reason is None:
@@ -742,7 +742,7 @@ async def warn(message, id = None, *, reason=None):
 @client.command()
 async def unwarn(message, number=None):
   await message.message.delete()
-  if 677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins:
+  if 677397817966198788 in [role.id for role in message.author.roles] or 765212719380037663 in [role.id for role in message.author.roles] or message.author.id in admins:
     if number is None:
       await message.channel.send(embed=discord.Embed(colour=0x310000, description='```css\n[Вы не указали номер случая.]```').set_author(name='Нарушения пользовательского соглашения', icon_url=message.guild.icon_url))
     else:
@@ -888,7 +888,7 @@ async def rebukes(message, id=None):
 async def mute(message, id=None, time=None, *, reason=None):
   await message.message.delete()
   b = [role.id for role in message.author.roles]
-  if 677397817966198788 in b or message.author.id in admins:
+  if 677397817966198788 in b or 765212719380037663 in b or message.author.id in admins:
     if id is None:
       await message.channel.send('```css\nВы не указали id нарушителя.```')
     elif time is None:
@@ -921,7 +921,7 @@ async def mute(message, id=None, time=None, *, reason=None):
 async def unmute(message,id=None):
   await message.message.delete()
   b = [role.id for role in message.author.roles]
-  if 677397817966198788 in b or message.author.id in admins:
+  if 677397817966198788 in b or 765212719380037663 in b or message.author.id in admins:
     if id is None:
       await message.channel.send('```css\nВы не указали id нарушителя.```')
     else:
@@ -1470,7 +1470,7 @@ async def info(message, id = None):
               try:
                 a = await client.get_guild(604636579545219072).fetch_ban(member)
                 idraw.text((365 , 260), 'Пользователь в бане.', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-                if 677397817966198788 in [role.id for role in message.author.roles] or message.author.id in admins:
+                if 677397817966198788 in [role.id for role in message.author.roles] or 765212719380037663 in [role.id for role in message.author.roles] or message.author.id in admins:
                   idraw.text((52 , 520), f'Причина: {a.reason}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 20))
                 else:
                   idraw.text((52 , 520), 'Просматривать причину бана могут лишь уполномоченные сотрудники.', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 20))
