@@ -1429,7 +1429,7 @@ async def info(message, id = None):
             ang = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/797940366254800906/rm.png', stream = True).content)).convert('RGBA')
             response.paste(ang, (54, 100), ang)
           elif member.id == 673907825705222165:
-            vaf = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799701209078038539/rm.png', stream = True).content)).convert('RGBA')
+            vaf = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/800660579252568064/review.png', stream = True).content)).convert('RGBA')
             response.paste(vaf, (54, 100), vaf)
           elif member.id == 571006178444836875:
             leo = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799946949679120424/review.png', stream = True).content)).convert('RGBA')
