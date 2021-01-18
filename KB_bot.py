@@ -257,7 +257,7 @@ async def ev(message,*command):
 async def help(message):
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed=discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.info badges` — обозначение значков.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера.\n`K.problem` — задать вопрос администрации сервера.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed=discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.emoji emoji|ID` — информация об эмодзи (только нашего сервера).\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.info badges` — обозначение значков.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера.\n`K.problem` — задать вопрос администрации сервера.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     
@@ -286,6 +286,19 @@ async def pm(message):
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
     
+@client.command()
+async def emoji(message, emoji:discord.Emoji):
+  a = f'[webp]({emoji.url_as(format="webp")}) | [jpeg]({emoji.url_as(format="jpeg")}) | [jpg]({emoji.url_as(format="jpg")}) | [png]({emoji.url_as(format="png")})'
+  if emoji.animated:
+    a += f' | [gif]({emoji.url_as(format="gif")})'
+  sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+  data = str(emoji.created_at).split()[0].split('-')
+  mod = await message.guild.fetch_emoji(emoji.id)
+  embed = discord.Embed(colour=0x310000, timestamp=datetime.datetime.utcnow(), description=f'**Эмодзи [{emoji.name}]({emoji.url})**\n{a}\nСоздан пользователем {mod.user.mention}\n`ID:` {emoji.id}\n`Дата создания:` {data[2]} {sp[int(data[1])]} {data[0]} года')
+  embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+  embed.set_thumbnail(url=emoji.url)
+  await message.channel.send(embed=embed)
+                                                                                    
 @client.command()
 async def ban(message, id=None, *, reason=None):
     await message.message.delete()
