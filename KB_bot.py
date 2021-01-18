@@ -1444,6 +1444,9 @@ async def info(message, id = None):
           elif member.id == 673907825705222165:
             vaf = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/800660579252568064/review.png', stream = True).content)).convert('RGBA')
             response.paste(vaf, (54, 100), vaf)
+          elif member.id == 346263496394276867:
+            nef = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/800773662453530644/review.png', stream = True).content)).convert('RGBA')
+            response.paste(nef, (54, 100), nef)
           elif member.id == 571006178444836875:
             leo = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799946949679120424/review.png', stream = True).content)).convert('RGBA')
             response.paste(leo, (54, 100), leo)
