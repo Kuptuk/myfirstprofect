@@ -1187,9 +1187,6 @@ async def info(message, id = None):
             elif member.id == 394757049893912577:
               response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797166412288098314/fatal.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
-            elif not member.premium_since is None:
-              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797145563191705630/booster.png', stream = True).content))
-              idraw = ImageDraw.Draw(response)
             else:
               response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797092622710603797/staff.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
@@ -1256,6 +1253,10 @@ async def info(message, id = None):
               if item['id'] == member.id:
                 warnow += 1
             idraw.text((145 , 440), f'Выговоров: {warnow}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+          
+            if not member.premium_since is None:
+              boost = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/801384972471500800/review.png', stream = True).content)).convert('RGBA')
+              response.paste(boost, (340, 48), boost)
           
           else:
             if randch == 1:
