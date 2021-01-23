@@ -526,8 +526,9 @@ async def server(message):
   await message.channel.send(file = discord.File(fp = 'server_card.png'))
         
 @client.command()
-async def deldouble(message,*,urls=None):
-  if message.author.id == 414119169504575509:
+async def dd(message,*,urls=None):
+  await message.message.delete()
+  if message.author.id == 414119169504575509 or message.author.id == 529044574660853761:
     if urls is None:
       await message.channel.send('```css\nВы не указали ссылки на сообщения для удаления.```')
     else:
