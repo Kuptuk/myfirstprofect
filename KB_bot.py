@@ -1186,10 +1186,10 @@ async def info(message, id = None):
               response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
             elif member.id == 394757049893912577:
-              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797166412288098314/fatal.png', stream = True).content))
+              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802574569457713152/test.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
             else:
-              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797092622710603797/staff.png', stream = True).content))
+              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802581229613350942/test.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
             dol, otd, flag = 'Не указана', 'Отдел не указан', False
             if member.id == 414119169504575509:
