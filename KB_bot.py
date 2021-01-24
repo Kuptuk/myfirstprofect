@@ -1449,6 +1449,12 @@ async def info(message, id = None):
           elif member.id == 571006178444836875:
             leo = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799946949679120424/review.png', stream = True).content)).convert('RGBA')
             response.paste(leo, (54, 100), leo)
+          elif member.id == 735540766289690646:
+            nav = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/802870820925079572/review.png', stream = True).content)).convert('RGBA')
+            response.paste(nav, (54, 100), nav)
+          elif member.id == 631849405577691137:
+            bub = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/802871803369226260/review.png', stream = True).content)).convert('RGBA')
+            response.paste(bub, (54, 100), bub)
           elif not member.premium_since is None:
             boost = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797122464026198066/rm.png', stream = True).content)).convert('RGBA')
             response.paste(boost, (54, 100), boost)
