@@ -1188,6 +1188,9 @@ async def info(message, id = None):
             elif member.id == 394757049893912577:
               response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802574569457713152/test.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
+            elif member.id == 414119169504575509:
+              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802897713330126868/card_helya.png', stream = True).content))
+              idraw = ImageDraw.Draw(response)
             else:
               response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802581229613350942/test.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
@@ -1455,6 +1458,9 @@ async def info(message, id = None):
           elif member.id == 631849405577691137:
             bub = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/802871803369226260/review.png', stream = True).content)).convert('RGBA')
             response.paste(bub, (54, 100), bub)
+          elif member.id == 583624731706523688:
+            expun = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/802899543137320970/review.png', stream = True).content)).convert('RGBA')
+            response.paste(expun, (54, 100), expun)
           elif not member.premium_since is None:
             boost = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797122464026198066/rm.png', stream = True).content)).convert('RGBA')
             response.paste(boost, (54, 100), boost)
