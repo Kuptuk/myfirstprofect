@@ -1434,7 +1434,7 @@ async def info(message, id = None):
             net_zn += 1
             
           if 608994688078184478 in b:
-            komanda = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/788836971190550558/kk.png', stream = True).content)).convert('RGBA')
+            komanda = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802901600577650688/testnew2.png', stream = True).content)).convert('RGBA')
             response.paste(komanda, (836, 53), komanda)
 
           if member.id == 394757049893912577:
