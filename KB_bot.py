@@ -415,8 +415,12 @@ async def stats(message):
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
     embed.add_field(name="Случайный партнёр",value="[Ссылка на сервер](" + msg[random.randint(0,len(msg)-1)]+")")
-
-    await message.channel.send(embed=embed)
+    
+    embed.add_field(name='឵឵឵',value="Более подробная статистика находится в Beta-тестировании для представителей администрации.")
+    
+    a = await message.channel.send(embed=embed)
+    await a.add_reaction('⬅️')
+    await a.add_reaction('➡️')
           
 @client.command()
 async def team(message):
