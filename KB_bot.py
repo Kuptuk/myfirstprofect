@@ -39,6 +39,9 @@ my_bl_kol = my_client.Catalog.bl_kol
 my_warn_md = my_client.Catalog.warns_md
 my_warn_kol_md = my_client.Catalog.warn_kol_md
 
+my_feb = my_client.feb.feb
+my_feb2 = my_client.feb.feb2
+
 client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
 client.remove_command("help")
 
