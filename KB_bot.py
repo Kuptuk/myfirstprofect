@@ -1172,7 +1172,6 @@ async def set_rm(message,id=None):
                       
 @client.command()
 async def info(message, id = None):
-  if message.author.id == 414119169504575509:
     if id == 'badges':
       embed = discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),title=':clipboard: Обозначение значков')
       embed.add_field(name='Значки Staff:',value='<:owner:784812161959854120> Владельцу сервера.\n<:developer:785191301321719828> Людям, принявшим участие в разработке/улучшении персонального бота.\n<:moderator:785197651716866121> Уполномоченным на выдачу наказаний.\n🏆 Лучшему работнику на данный момент.',inline=False)
@@ -1557,7 +1556,5 @@ async def info(message, id = None):
                 await message.channel.send(file = discord.File(fp = 'user_card.png'))
           except:
               await message.channel.send('```css\nПользователя не существует.```')
-  else:
-    await message.channel.send('оп ахах неловко вышло, у нас тут тех. работы <:ops:798301138633359400>')
         
 client.run(tt)
