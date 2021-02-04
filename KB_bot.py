@@ -1169,12 +1169,13 @@ async def set_rm(message,id=None):
                       
 @client.command()
 async def info(message, id = None):
+  if message.author.id == 414119169504575509:
     if id == 'badges':
       embed = discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),title=':clipboard: Обозначение значков')
       embed.add_field(name='Значки Staff:',value='<:owner:784812161959854120> Владельцу сервера.\n<:developer:785191301321719828> Людям, принявшим участие в разработке/улучшении персонального бота.\n<:moderator:785197651716866121> Уполномоченным на выдачу наказаний.\n🏆 Лучшему работнику на данный момент.',inline=False)
       embed.add_field(name='Пользовательские значки:',value='<:old:788850405308104765> Людям, которые внесли огромный вклад в развитие сервера.\n❓ — скоро.\n<:alliance:806275116999901184> Представителям союза каталога.\n<:helper:799908854795731004> Людям, которые оказывали помощь новичкам, отвечая на их различные вопросы в общем чате.\n<:secret:787360058328481812> Секретный значок.\n❓ — скоро.\n<:puzzle:799908854783016960> Предложившим большое количество дельных идей.\n‼️ Подавшему большое количество жалоб.\n<:review:799908854812377098> Оставившему рецензию серверу на 3-х мониторингах.\n`Примечание:` **[здесь](https://server-discord.com/604636579545219072)**, **[здесь](https://disboard.org/ru/server/604636579545219072)** и **[здесь](https://discord-server.com/ru/604636579545219072)**.\n<:activ:784808269667237910> Активному пользователю нашего сервера.',inline=False)
       embed.add_field(name='Значки-метки:',value='<:kk:788850405157240833> Представителям команды Каталога.\n<:booster:797134090594680942> Бустерам сервера.\n<:bot:784833842002657301> Ботам сервера.',inline=False)
-      embed.add_field(name='Значки ивентов:',value='🍬 Выдаётся в новогоднюю ночь 2021 года за найденные пасхалки. Существует до 2022 года.\n❓ — скоро.',inline=False)
+      embed.add_field(name='Значки ивентов:',value='🍬 Выдаётся в новогоднюю ночь 2021 года за найденные пасхалки. Существует до 2022 года.\n❤️ Победителю ивента на день влюблённых. Существует до конца мая 2021 года.',inline=False)
       embed.add_field(name='Примечания:',value='• Значков всего с учётом кастомных: `16+4`.\n• Кастомный значок возможен в случае больших заслуг перед Каталогом, а так же за 2 ваших буста.\n• Значки выдаются автоматизированной системой. Это значит, что нет необходимости выпрашивать их у администрации сервера.',inline=False)
       embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
       embed.set_thumbnail(url=message.guild.icon_url)
@@ -1205,7 +1206,7 @@ async def info(message, id = None):
               response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802897713330126868/card_helya.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
             else:
-              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802581229613350942/test.png', stream = True).content))
+              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806867010851962880/staff.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
             dol, otd, flag = 'Не указана', 'Отдел не указан', False
             if member.id == 414119169504575509:
@@ -1279,17 +1280,17 @@ async def info(message, id = None):
             if randch == 1:
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
             elif not member.premium_since is None:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/797145563191705630/booster.png', stream = True)
+              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867001330630676/booster.png', stream = True)
             elif 769916590686732319 in b:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/797134819993190430/partner_max.png', stream = True)
+              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867007156518932/max.png', stream = True)
             elif 622501691107049502 in b:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/797134824123924546/partner3.png', stream = True)
+              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867009064927282/pr3.png', stream = True)
             elif 622501656591990784 in b:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/797134827224301568/partner2.png', stream = True)
+              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867005503176734/gold.png', stream = True)
             elif 688654966675603491 in b:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/797092901150392350/partner1.png', stream = True)
+              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867012067917831/test_ivent.png', stream = True)
             else:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/797145078182838272/classical.png', stream = True)
+              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867004198748160/classical.png', stream = True)
             response = Image.open(io.BytesIO(response.content))
             idraw = ImageDraw.Draw(response)
             if 769916590686732319 in b or 622501691107049502 in b or 622501656591990784 in b or 688654966675603491 in b:
@@ -1347,6 +1348,16 @@ async def info(message, id = None):
             y_2021 = 155
           response.paste(st, (360, y_2021), st)
 
+          #14feb
+          if [i for i in my_feb2.find({'id':member.id})] == []:
+            feb = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806905242255097906/review.png', stream = True).content)).convert('RGBA')
+            response.paste(feb, (55, 517), feb)
+            idraw.text((100 , 520), f'Вы никого не любите? ;(', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 23))
+          else:
+            feb = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806296162889891890/review.png', stream = True).content)).convert('RGBA')
+            response.paste(feb, (55, 517), feb)
+            idraw.text((100 , 520), f'Любит {my_feb2.find({"id":member.id})[0]["kogo"]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 23))
+          
           #prioritetnostb
           net_zn = 0
           if member.id == message.guild.owner.id:
@@ -1513,7 +1524,7 @@ async def info(message, id = None):
               if randch == 1:
                 response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
               else:
-                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/797145078182838272/classical.png', stream = True)
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867004198748160/classical.png', stream = True)
               response = Image.open(io.BytesIO(response.content))
               idraw = ImageDraw.Draw(response)
               avatar = avatar.resize((212, 212), Image.ANTIALIAS)
@@ -1543,5 +1554,7 @@ async def info(message, id = None):
                 await message.channel.send(file = discord.File(fp = 'user_card.png'))
           except:
               await message.channel.send('```css\nПользователя не существует.```')
+  else:
+    await message.channel.send('оп ахах неловко вышло, у нас тут тех. работы <:ops:798301138633359400>')
         
 client.run(tt)
