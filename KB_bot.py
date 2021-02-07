@@ -1461,10 +1461,7 @@ async def info(message, id = None):
 
           if member.id == 394757049893912577:
             fat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-            response.paste(fat, (54, 100), fat)
-          elif member.id == 354958324355039233:
-            tig = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797198927673032734/rm.png', stream = True).content)).convert('RGBA')
-            response.paste(tig, (54, 100), tig)      
+            response.paste(fat, (54, 100), fat)   
           elif member.id == 713780299024039936:
             ang = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/797940366254800906/rm.png', stream = True).content)).convert('RGBA')
             response.paste(ang, (54, 100), ang)
@@ -1483,15 +1480,6 @@ async def info(message, id = None):
           elif member.id == 571006178444836875:
             leo = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799946949679120424/review.png', stream = True).content)).convert('RGBA')
             response.paste(leo, (54, 100), leo)
-          elif member.id == 735540766289690646:
-            nav = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/802870820925079572/review.png', stream = True).content)).convert('RGBA')
-            response.paste(nav, (54, 100), nav)
-          elif member.id == 631849405577691137:
-            bub = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/802871803369226260/review.png', stream = True).content)).convert('RGBA')
-            response.paste(bub, (54, 100), bub)
-          elif member.id == 583624731706523688:
-            expun = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/802899543137320970/review.png', stream = True).content)).convert('RGBA')
-            response.paste(expun, (54, 100), expun)
           elif not member.premium_since is None:
             boost = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797122464026198066/rm.png', stream = True).content)).convert('RGBA')
             response.paste(boost, (54, 100), boost)
