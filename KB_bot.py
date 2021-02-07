@@ -1209,7 +1209,7 @@ async def info(message, id = None):
               response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802897713330126868/card_helya.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
             elif member.id == 571006178444836875:
-              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807931821747601468/card_leo.png', stream = True).content))
+              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807932714950066176/cardo4ka.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
             else:
               response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806867010851962880/staff.png', stream = True).content))
