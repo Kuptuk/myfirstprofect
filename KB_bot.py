@@ -1205,7 +1205,7 @@ async def info(message, id = None):
             elif member.id == 713780299024039936:
               response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802574569457713152/test.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
-            elif member.id == 414119169504575509:
+            elif member.id == 735540766289690646:
               response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802897713330126868/card_helya.png', stream = True).content))
               idraw = ImageDraw.Draw(response)
             elif member.id == 571006178444836875:
