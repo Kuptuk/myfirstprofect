@@ -453,7 +453,7 @@ async def team(message):
     
     a = [i.mention for i in message.guild.get_role(686621891230040077).members]
     try:
-      embed.add_field(name=f"Отдел партнёрства: [{len(a)}]",value=((requests.get("https://catalogserverov.ml/stats/pm/all?type=list").text).replace("<br>","\n")))
+      embed.add_field(name=f"Отдел партнёрства: [{len(a)}]",value=('Тех. работы'))
     except:
       embed.add_field(name=f"Отдел партнёрства: [{len(a)}]",value=("\n".join(a)))
     c = [i.mention for i in message.guild.get_role(677397817966198788).members]
