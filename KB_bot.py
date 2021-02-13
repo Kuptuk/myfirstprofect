@@ -1310,12 +1310,12 @@ async def info(message, id = None):
               kolvo = dk.get(member.id) if dk.get(member.id) is not None else 0
               idraw.text((135, 440), f'Публикаций: {kolvo}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
               
-            try:
+            """try:
               aktiv = requests.get(f'https://catalogserverov.ml/stats?user={member.id}').text
             except:
               aktiv = '? сообщений|? минут'
             idraw.text((365, 360), f'Активность сегодня: {aktiv.split("|")[0]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            idraw.text((365, 400), f'Voice сегодня: {aktiv.split("|")[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((365, 400), f'Voice сегодня: {aktiv.split("|")[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))"""
             
           prioritet = -1
           ppz = [365, 405, 445, 485, 525, 565, 605, 645, 685, 725, 765, 805, 845, 885, 925, 965, 1005]
