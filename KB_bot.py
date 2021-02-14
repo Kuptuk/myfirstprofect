@@ -1310,12 +1310,12 @@ async def info(message, id = None):
               kolvo = dk.get(member.id) if dk.get(member.id) is not None else 0
               idraw.text((135, 440), f'Публикаций: {kolvo}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
               
-            """try:
-              aktiv = requests.get(f'https://catalogserverov.ml/stats?user={member.id}').text
+            try:
+              aktiv = requests.get(f'http://185.244.172.127/stats?user={member.id}').text
             except:
               aktiv = '? сообщений|? минут'
             idraw.text((365, 360), f'Активность сегодня: {aktiv.split("|")[0]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            idraw.text((365, 400), f'Voice сегодня: {aktiv.split("|")[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))"""
+            idraw.text((365, 400), f'Voice сегодня: {aktiv.split("|")[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             
           prioritet = -1
           ppz = [365, 405, 445, 485, 525, 565, 605, 645, 685, 725, 765, 805, 845, 885, 925, 965, 1005]
@@ -1457,6 +1457,13 @@ async def info(message, id = None):
             prioritet += 1
             candy = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119577951436810/rm.png', stream = True).content)).convert('RGBA')
             response.paste(candy, (ppz[prioritet], 205), candy)
+            net_zn += 1
+            
+          heart = await client.get_channel(764191031318937674).fetch_message(810449422328004628)
+          if str(member.id) in heart.content:
+            prioritet += 1
+            heart22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806296162889891890/review.png', stream = True).content)).convert('RGBA')
+            response.paste(heart22, (ppz[prioritet], 205), heart22)
             net_zn += 1
 
           if member.id == 394757049893912577:
