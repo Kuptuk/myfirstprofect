@@ -49,7 +49,8 @@ admins = [562561140786331650,414119169504575509,529044574660853761]
 
 @client.event
 async def on_ready():
-  await client.change_presence(status=discord.Status.dnd,activity=discord.Streaming(url='https://www.twitch.tv/catalogserverov',name=f"K.help | {str(datetime.datetime.utcnow()+datetime.timedelta(hours=3)).split()[1].split('.')[0][0:5]} [{len(client.get_guild(604636579545219072).members)}]"))
+  #await client.change_presence(status=discord.Status.dnd,activity=discord.Streaming(url='https://www.twitch.tv/catalogserverov',name=f"K.help | {str(datetime.datetime.utcnow()+datetime.timedelta(hours=3)).split()[1].split('.')[0][0:5]} [{len(client.get_guild(604636579545219072).members)}]"))
+  await client.change_presence(status=discord.Status.idle,activity=discord.Game(f"Как жёстко быть слитым девушкой за пару минут: урок от студента Оксфорда за 3к рублей в день"))
   msg = await client.get_channel(742757799645413378).history(limit=200).flatten()
   b = []
   for i in msg:
