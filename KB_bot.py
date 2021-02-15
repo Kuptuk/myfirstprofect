@@ -42,7 +42,7 @@ my_warn_kol_md = my_client.Catalog.warn_kol_md
 my_feb = my_client.feb.feb
 my_feb2 = my_client.feb.feb2
 
-client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
+client = commands.Bot(command_prefix = "11", intents = discord.Intents.all())
 client.remove_command("help")
 
 admins = [562561140786331650,414119169504575509,529044574660853761]
@@ -435,38 +435,100 @@ async def stats(message):
     await a.add_reaction('➡️')
           
 @client.command()
-async def team(message):
-    embed = discord.Embed(colour=discord.Colour(0x310000),title="Команда Каталога",description=f"Людей в команде: `{len([i.mention for i in message.guild.get_role(608994688078184478).members])}`",timestamp=datetime.datetime.utcnow())
-    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
-    
-    gp = [i.mention for i in message.guild.get_role(686639786672652363).members]
-    gp = 'Отсутствует.' if gp==[] else ':crown: ' + "\n".join(gp)
-    embed.add_field(name=f"Глава отдела партнёрства:",value=gp)
-    
-    gm = [i.mention for i in message.guild.get_role(800474182474268734).members]
-    gm = 'Отсутствует.' if gm==[] else '<a:black_fire:763424597369815042> ' + "\n".join(gm)
-    embed.add_field(name=f"Главный модератор:",value=gm)
-    
-    gt = [i.mention for i in message.guild.get_role(686639826308825089).members]
-    gt = 'Отсутствует.' if gt==[] else '<a:black_fire:763424597369815042> ' + "\n".join(gt)
-    embed.add_field(name=f"Глава отдела творчества:",value=gt)
-    
-    a = [i.mention for i in message.guild.get_role(686621891230040077).members]
-    try:
-      embed.add_field(name=f"Отдел партнёрства: [{len(a)}]",value=('Тех. работы'))
-    except:
-      embed.add_field(name=f"Отдел партнёрства: [{len(a)}]",value=("\n".join(a)))
-    c = [i.mention for i in message.guild.get_role(677397817966198788).members]
-    c2 = [i.mention for i in message.guild.get_role(765212719380037663).members]
-    embed.add_field(name=f"Модерация: [0]",value=('Отсутствует.')) if c == [] else embed.add_field(name=f"Модерация: [{len(c)}]",value=("\n".join(c)+f'\n\n**Мл. Модерация: [{len(c2)}]**\n' + "\n".join(c2)))
-    c = [i.mention for i in message.guild.get_role(686618397668147220).members]
-    embed.add_field(name=f"Отдел творчества: [0]",value=('Отсутствует.')) if c == [] else embed.add_field(name=f"Отдел творчества: [{len(c)}]",value=("\n".join(c)))
-    c = [i.mention for i in message.guild.get_role(757890413838467133).members]
-    embed.add_field(name=f"В отставке: [0]",value=('Отсутствует.')) if c == [] else embed.add_field(name=f"В отставке: [{len(c)}]",value=("\n".join(c)))
-                                                                                    
-    embed.add_field(name=f"Администраторы: [3]",value="<:crown:763415131622998046> <@414119169504575509>\n:crossed_swords: <@562561140786331650>\n<:PandeMiaa:775425060130652242> <@529044574660853761>")
-    await message.channel.send(embed=embed)
-    
+async def team(message,kl=None):
+  embeds = []
+  embed = discord.Embed(colour=discord.Colour(0x00b0f4),title="I. Команда Каталога | Нынешний состав",description=f"Людей в команде: `{len([i.mention for i in message.guild.get_role(608994688078184478).members])}`",timestamp=datetime.datetime.utcnow())
+  
+  a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(686639786672652363).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(686639786672652363).members])
+  embed.add_field(name=f"```Глава отдела партнёрства:```",value=('Отсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Глава отдела партнёрства:```",value=(a))
+  a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(800474182474268734).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(800474182474268734).members])
+  embed.add_field(name=f"```Главный модератор:```",value=('Отсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Глава отдела партнёрства:```",value=(a))
+  a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(686639826308825089).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(686639826308825089).members])
+  embed.add_field(name=f"```Глава отдела творчества:```",value=('Отсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Глава отдела партнёрства:```",value=(a))
+
+  a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(686621891230040077).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(686621891230040077).members])
+  embed.add_field(name=f"```Отдел партнёрства: [0]```",value=('**[Правила и важное](https://discord.com/channels/604636579545219072/714909100214845541)**\nОтсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Отдел партнёрства: [{len([i.name for i in message.guild.get_role(686621891230040077).members])}]```",value=(f'**[Правила и важное](https://discord.com/channels/604636579545219072/714909100214845541)**\n{a}'))
+  c = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(677397817966198788).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(677397817966198788).members])
+  c2 = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(765212719380037663).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(765212719380037663).members])
+  embed.add_field(name=f"```Модерация: [0]```",value=('**[Правила и наказания](https://discord.com/channels/604636579545219072/715130816480673872)**\nОтсутствует.')) if c == '```md\n```' or c == '' else embed.add_field(name=f"```Модерация: [{len([i.name for i in message.guild.get_role(677397817966198788).members])}]```",value=(f'**[Правила и наказания](https://discord.com/channels/604636579545219072/715130816480673872)**\n{c}\n\n**`Мл. Модерация: [{len([i.name for i in message.guild.get_role(765212719380037663).members])}]`**\n{c2}'))
+  a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(686618397668147220).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(686618397668147220).members])
+  embed.add_field(name=f"```Отдел творчества: [0]```",value=('**[Наброски](https://discord.com/channels/604636579545219072/686621337153699929)**\nОтсутствует.\n\n**`Навигация для команды:`**\n**[Рекрутерам](https://discord.com/channels/604636579545219072/776484522329374761)**\n**[Объявления](https://discord.com/channels/604636579545219072/619067194910703626)**\n**[Голосования](https://discord.com/channels/604636579545219072/632524443318616075)**\n**[Информация о ролях](https://discord.com/channels/604636579545219072/616656872703000587/802322890191274014)**\n**[Общие полномочия](https://discord.com/channels/604636579545219072/630432803942563840)**')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Отдел творчества: [{len([i.name for i in message.guild.get_role(686618397668147220).members])}]```",value=(f'**[Наброски](https://discord.com/channels/604636579545219072/686621337153699929)**\n{a}\n\n**`Навигация для команды:`**\n**[Рекрутерам](https://discord.com/channels/604636579545219072/776484522329374761)**\n**[Объявления](https://discord.com/channels/604636579545219072/619067194910703626)**\n**[Голосования](https://discord.com/channels/604636579545219072/632524443318616075)**\n**[Информация о ролях](https://discord.com/channels/604636579545219072/616656872703000587/802322890191274014)**\n**[Общие полномочия](https://discord.com/channels/604636579545219072/630432803942563840)**'))
+  a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(757890413838467133).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(757890413838467133).members])
+  embed.add_field(name=f"```В отставке: [0]```",value=('Отсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```В отставке: [{len([i.name for i in message.guild.get_role(757890413838467133).members])}]```",value=(a))
+
+  a = '```md\n' + '\n'.join([message.guild.get_member(i).name for i in admins]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([f'<@{i}>' for i in admins])
+  embed.add_field(name=f"```Администраторы: [0]```",value=('Отсутствуют.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Администраторы: [{len(admins)}]```",value=(a))
+  embeds.append(embed)
+  
+  mes = await client.get_channel(764191031318937674).fetch_message(764191228933046361)
+  s = ''
+  if kl == '-':
+    for i in mes.content.split('\n'):
+      try:
+        s += f'{message.guild.get_member(int(i.split("|")[0])).name} — {i.split("|")[1]}\n'
+      except:
+        pass
+    s = f'```md\n{s.replace(message.author.name,f"#{message.author.name}")}```'
+  else:
+    for i in mes.content.split('\n'):
+      try:
+        s += f'{message.guild.get_member(int(i.split("|")[0])).mention} — {i.split("|")[1]}\n'
+      except:
+        pass
+
+  embed = discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x254fc2, title='II. Команда Каталога | Даты принятий', description=s)
+  embeds.append(embed)
+  
+  mes = await client.get_channel(680089559341727826).history(limit=1).flatten()
+  mes = mes[0]
+  s = ''
+  if kl == '-':
+    for i in mes.content.split('\n'):
+      try:
+        s += f'{message.guild.get_member(int(i.split("|")[0])).name} — {i.split("|")[1]}\n'
+      except:
+        pass
+    s = f'```md\n{s.replace(message.author.name,f"#{message.author.name}")}```'
+  else:
+    for i in mes.content.split('\n'):
+      try:
+        s += f'{message.guild.get_member(int(i.split("|")[0])).mention} — {i.split("|")[1]}\n'
+      except:
+        pass
+  embed = discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x344d91, title='III. Команда Каталога | Отпуски сотрудников', description=f'**`Рабочие сокращения:`**\n• ПСЖ — покинул пост по собственному желанию.\n• БВВ — обязательное пояснение при снятии, значащее невозможность возвращения обратно в команду.\n• Понижение — приписывается в случае невыполнения представителем команды определённых обязанностей с последующим понижением до определённой должности.\n\n{s}')
+  embeds.append(embed)
+  
+  msg = await message.channel.send(embed=embeds[0])
+  page = Paginator(client, msg, only=message.author, use_more=False, embeds=embeds)
+  await page.start()
+
+@client.command()
+async def pms(message):
+  global date_pms
+  if 608600358570295307 in [role.id for role in message.author.roles] or message.author.id in admins:
+    if time.time()-date_pms >= 180:
+      date_pms = time.time()
+      s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, k = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+      msg = await message.channel.send(embed=discord.Embed(colour=0x310000, description='Для подсчёта такого большого количества данных необходимо некоторое время <:ops:798301138633359400> <a:Loading_Pixels:749672972079333497>'))
+      embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000, title='Статистика работы отдела партнёрства:')
+      for i in [i.id for i in message.guild.get_role(608600358570295307).members]:
+        try:
+          aktiv = requests.get(f'http://185.244.172.127/stats/pm/list?user={i}').text.split('||')
+          a1, a2 = aktiv[0].split('|'), aktiv[1].split('|')
+          key = 'md\n#' if message.author.id == i else 'py\n'
+          key2 = '#' if message.author.id == i else ''
+          embed.add_field(name=f'{message.guild.get_member(i).name}', value=f'```{key}{a1[0]}|{a1[1]}|{a1[2]}|{a1[3]}|{a1[4]}\n{key2}{a2[0]}|{a2[1]}|{a2[2]}|{a2[3]}|{a2[4]}```')
+          s1 += int(a1[0]); s2 += int(a1[1]); s3 += int(a1[2]); s4 += int(a1[3]); s5 += int(a1[4])
+          s6 += int(a2[0]); s7 += int(a2[1]); s8 += int(a2[2]); s9 += int(a2[3]); s10 += int(a2[4])
+        except:
+          k += 1
+      embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+      embed.description =f'**Навигация:**\n```py\n[За сегодня|В течение недели|От отчёта до отчёта|В течение месяца|За всё время]\n[За 24 часа|За 48 часов|За неделю|За 1 месяц|За 2 месяца]```\n**Количество записей, которые не вошли в подсчёт: `{k}`**\n\n**Общая статистика всех пиар-менеджеров:**\n```css\n[{s1} | {s2} ► {s3} ◄ {s4} | {s5}]\n[{s6} | {s7} ► {s8} ◄ {s9} | {s10}]```'
+      await msg.edit(embed=embed)
+    else:
+      otkat = f'Минут до отката команды: ~{int((180-(time.time()-date_pms))//60)}' if (180-(time.time()-date_pms))//60 != 0 else f'Секунд до отката команды: ~{int(180-(time.time()-date_pms))}'
+      await message.channel.send(embed=discord.Embed(colour=0x310000,description=f'```css\n[Данная команда имеет общую задержку в 3 минуты.]```\n```md\n#{otkat}```'))
+  
 @client.command()
 async def staff(message):
     if message.author.id in admins:
