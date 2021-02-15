@@ -263,11 +263,11 @@ async def ev(message,*command):
 async def help(message):
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов v1.0.1', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.emoji emoji|ID` — информация об эмодзи (только нашего сервера).\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.info badges` — обозначение значков.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера.\n`K.problem` — задать вопрос администрации сервера.\n`K.versions` — общедоступная команда для отслеживания версий команд в боте.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов v1.0.2', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.emoji emoji|ID` — информация об эмодзи (только нашего сервера).\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.info badges` — обозначение значков.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера [@упоминаниями].\n`K.team -` — состав Команды сервера [текстом].\n`K.problem` — задать вопрос администрации сервера.\n`K.versions` — общедоступная команда для отслеживания версий команд в боте.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     
-    embed2 = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов v1.0.1', description=f"**Страница 2. Команды для состава:**\n\n`K.staff` — административные команды.\n`K.moder` — команды для модераторов.\n`K.op` — команды для главы отдела партнёрства.\n`K.pm` — команды для пиар-менеджера.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed2 = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов v1.0.2', description=f"**Страница 2. Команды для состава:**\n\n`K.staff` — административные команды.\n`K.moder` — команды для модераторов.\n`K.op` — команды для главы отдела партнёрства.\n`K.pm` — команды для пиар-менеджера.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
     embed2.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed2.set_thumbnail(url=message.guild.icon_url)
     
@@ -280,8 +280,8 @@ async def help(message):
 async def versions(message):
   embed = discord.Embed(colour=0x310000, timestamp=datetime.datetime.utcnow(), description='`Примечание:` С 1 февраля 2021 года мы перешли на собственную систему контроля версий команд бота. Отныне намного проще стало следить за новейшими обновлениями бота.\nЗдесь отображаются только видимые изменения. Всё то, что касается мелких изменений/правок кода, здесь **__пропускается__**. ')
   embed.set_author(name='Список версий и изменений команд бота:', icon_url=message.guild.get_member(656029229749764126).avatar_url)
-  embed.add_field(name='`K.info`', value='`v2.0.0 [12.12.2020]` — Глобальное обновление с введением системы значков.\n`v2.9.9 [08.01.2021]` — Глобальный редизайн.\n`v3.0.0 [01.02.2021]` — Автоматически присвоенная версия.\n`v3.0.3 [04.02.2021]` — Редизайн к 14 февраля.\n`v3.0.4 [05.02.2021]` — Обновлён значок владельцу сервера союза.\n`v3.0.5 [06.02.2021]` — Обновление значков.', inline=False)
-  embed.add_field(name='`K.help`', value='`v1.0.0 [01.02.2021]` — Автоматически присвоенная версия.\n`v1.0.1 [04.02.2021]` — Новая команда в списке: `K.versions`.', inline=False)
+  embed.add_field(name='`K.info`', value='`v2.0.0 [12.12.2020]` — Глобальное обновление с введением системы значков.\n`v2.9.9 [08.01.2021]` — Глобальный редизайн.\n`v3.0.0 [01.02.2021]` — Автоматически присвоенная версия.\n`v3.0.3 [04.02.2021]` — Редизайн к 14 февраля.\n`v3.0.4 [05.02.2021]` — Обновлён значок владельцу сервера союза.\n`v3.0.5 [06.02.2021]` — Обновление значков.\n`v3.0.8 [16.02.2021]` — 4 значка-метки для партнёров.', inline=False)
+  embed.add_field(name='`K.help`', value='`v1.0.0 [01.02.2021]` — Автоматически присвоенная версия.\n`v1.0.1 [04.02.2021]` — Новая команда в списке: `K.versions`.\n`v1.0.2 [16.02.2021]` — Новая команда в списке: `K.team -`.', inline=False)
   embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
   await message.channel.send(embed=embed)
     
@@ -296,7 +296,7 @@ async def op(message):
 @client.command()
 async def pm(message):
   if 608600358570295307 in [role.id for role in message.author.roles] or message.author.id in admins:
-    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&608600358570295307>:**\n\n`K.addbl <URL> <причина>` — добавить сервер в чёрный список. Вложение обязательно!\n`K.bl` — просмотреть чёрный список серверов каталога.\n`K.np @user|ID` — выдать пользователю роль партнёра первого уровня.\n`K.rebukes` — просмотреть свои выговоры.")
+    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&608600358570295307>:**\n\n`K.addbl <URL> <причина>` — добавить сервер в чёрный список. Вложение обязательно!\n`K.bl` — просмотреть чёрный список серверов каталога.\n`K.np @user|ID` — выдать пользователю роль партнёра первого уровня.\n`K.rebukes` — просмотреть свои выговоры.\n`K.pms` — статистика работы пиар-менеджеров.")
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
