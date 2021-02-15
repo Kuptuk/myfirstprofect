@@ -10,6 +10,7 @@ from PIL import Image, ImageFilter, ImageDraw, ImageFont
 import requests
 import io
 from Cybernator import Paginator
+import time
 
 mm = os.environ.get("Mongo")
 tt = os.environ.get("TOKEN")
@@ -60,6 +61,8 @@ async def on_ready():
   global d
   global dk
   global kolpub
+  global date_pms
+  date_pms = time.time() - 180
   a = client.get_guild(604636579545219072).categories
   idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
   c, k, d, dk = [], [], {}, {}
