@@ -1472,8 +1472,8 @@ async def info(message, id = None):
           
           if str(mid) in ngl:
             prioritet += 1
-            ngl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/787359332891230238/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-            response.paste(ngl, (ppz[prioritet], 205), ngl)
+            ngl2 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/787359332891230238/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+            response.paste(ngl2, (ppz[prioritet], 205), ngl2)
             net_zn += 1
             
           if str(mid) in att:
