@@ -1272,299 +1272,297 @@ async def info(message, id = None):
       randch = random.randint(1,100)
       color = (255, 255, 255)
       try:
-          member = client.get_guild(604636579545219072).get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
-          mid = member.id
-          
-          avatar = requests.get(member.avatar_url, stream = True)
-          avatar = Image.open(io.BytesIO(avatar.content))
-          avatar = avatar.convert('RGBA')
+          async with message.typing():
+            member = client.get_guild(604636579545219072).get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+            mid = member.id
 
-          b = [role.id for role in member.roles]
-          msg2021 = await message.channel.send(embed=discord.Embed(colour=0x310000,description=f'**Пожалуйста, подождите, рисуем значки в замечательную карточку {member.mention} <:fox:610352379748941824>**'))
-          if 608994688078184478 in b and list(message.message.content)[-1] != '-':
-            if randch == 1:
-              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True).content))
-              idraw = ImageDraw.Draw(response)
-            elif mid == 713780299024039936:
-              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802574569457713152/test.png', stream = True).content))
-              idraw = ImageDraw.Draw(response)
-            elif mid == 735540766289690646:
-              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802897713330126868/card_helya.png', stream = True).content))
-              idraw = ImageDraw.Draw(response)
-            elif mid == 571006178444836875:
-              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807933906975719444/cardo4ka.png', stream = True).content))
-              idraw = ImageDraw.Draw(response)
+            avatar = requests.get(member.avatar_url, stream = True)
+            avatar = Image.open(io.BytesIO(avatar.content))
+            avatar = avatar.convert('RGBA')
+
+            b = [role.id for role in member.roles]
+            if 608994688078184478 in b and list(message.message.content)[-1] != '-':
+              if randch == 1:
+                response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True).content))
+                idraw = ImageDraw.Draw(response)
+              elif mid == 713780299024039936:
+                response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802574569457713152/test.png', stream = True).content))
+                idraw = ImageDraw.Draw(response)
+              elif mid == 735540766289690646:
+                response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802897713330126868/card_helya.png', stream = True).content))
+                idraw = ImageDraw.Draw(response)
+              elif mid == 571006178444836875:
+                response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807933906975719444/cardo4ka.png', stream = True).content))
+                idraw = ImageDraw.Draw(response)
+              else:
+                response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806867010851962880/staff.png', stream = True).content))
+                idraw = ImageDraw.Draw(response)
+              dol, otd, flag = 'Не указана', 'Отдел не указан', False
+              if mid == 414119169504575509:
+                dol = 'Разработчик'
+                otd = 'Административный отдел'
+                flag = True
+              elif 620955813850120192 in b:
+                dol = 'Администратор'
+                otd = 'Административный отдел'
+              elif 800474182474268734 in b:
+                dol = 'Главный Модератор'
+                otd = 'Административный отдел'
+              elif 686639786672652363 in b:
+                dol = 'Глава отдела партнерства'
+                otd = 'Отдел партнерства'
+              elif 686639826308825089 in b:
+                dol = 'Глава отдела творчества'
+                otd = 'Отдел творчества'
+              elif 608600358570295307 in b:
+                dol = 'Пиар-менеджер'
+                otd = 'Отдел партнерства'
+              elif 609043489841479700 in b:
+                dol = 'Дизайнер'
+                otd = 'Отдел творчества'
+              elif 677397817966198788 in b:
+                dol = 'аперативник'
+                otd = 'Отдел ОБТ "Модер"'
+              idraw.text((365, 380), f'{otd}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              idraw.text((365, 420), f'Должность: {dol}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+
+              msgs = await client.get_channel(764191031318937674).fetch_message(764191228933046361)
+              if str(mid) in msgs.content:
+                for i in msgs.content.split('\n'):
+                  a = i.split('|')
+                  if a[0] == str(mid):
+                    idraw.text((365, 460), f'В команде с {a[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                    break
+
+              warnow = 0
+              for item in my_warn_md.find():
+                if item['id'] == mid:
+                  warnow += 1
+              idraw.text((145 , 440), f'Выговоров: {warnow}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+
             else:
-              response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806867010851962880/staff.png', stream = True).content))
+              if randch == 1:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
+              elif not member.premium_since is None:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867001330630676/booster.png', stream = True)
+              elif 769916590686732319 in b:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867007156518932/max.png', stream = True)
+              elif 622501691107049502 in b:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867009064927282/pr3.png', stream = True)
+              elif 622501656591990784 in b:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867005503176734/gold.png', stream = True)
+              elif 688654966675603491 in b:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867012067917831/test_ivent.png', stream = True)
+              else:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867004198748160/classical.png', stream = True)
+              response = Image.open(io.BytesIO(response.content))
               idraw = ImageDraw.Draw(response)
-            dol, otd, flag = 'Не указана', 'Отдел не указан', False
-            if mid == 414119169504575509:
-              dol = 'Разработчик'
-              otd = 'Административный отдел'
-              flag = True
-            elif 620955813850120192 in b:
-              dol = 'Администратор'
-              otd = 'Административный отдел'
-            elif 800474182474268734 in b:
-              dol = 'Главный Модератор'
-              otd = 'Административный отдел'
-            elif 686639786672652363 in b:
-              dol = 'Глава отдела партнерства'
-              otd = 'Отдел партнерства'
-            elif 686639826308825089 in b:
-              dol = 'Глава отдела творчества'
-              otd = 'Отдел творчества'
-            elif 608600358570295307 in b:
-              dol = 'Пиар-менеджер'
-              otd = 'Отдел партнерства'
-            elif 609043489841479700 in b:
-              dol = 'Дизайнер'
-              otd = 'Отдел творчества'
-            elif 677397817966198788 in b:
-              dol = 'аперативник'
-              otd = 'Отдел ОБТ "Модер"'
-            idraw.text((365, 380), f'{otd}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            idraw.text((365, 420), f'Должность: {dol}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            
-            msgs = await client.get_channel(764191031318937674).fetch_message(764191228933046361)
-            if str(mid) in msgs.content:
-              for i in msgs.content.split('\n'):
-                a = i.split('|')
-                if a[0] == str(mid):
-                  idraw.text((365, 460), f'В команде с {a[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-                  break
+              if 769916590686732319 in b or 622501691107049502 in b or 622501656591990784 in b or 688654966675603491 in b:
+                idraw.text((365, 440), f'Дата последнего обновления:', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                if d.get(mid) is not None:
+                  datet = d.get(mid).split('.')[0].split()[0].split('-')
+                  datet2 = d.get(mid).split('.')[0].split()[1]
+                  idraw.text((365, 480), f'{datet[2]} {sp[int(datet[1])]} {datet[0]} года в {datet2}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                else:
+                  idraw.text((365, 480), f'Неизвестна', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                kolvo = dk.get(mid) if dk.get(mid) is not None else 0
+                idraw.text((135, 440), f'Публикаций: {kolvo}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+
+              try:
+                aktiv = requests.get(f'http://185.244.172.127/stats?user={mid}').text
+              except:
+                aktiv = '? сообщений|? минут'
+              idraw.text((365, 360), f'Активность сегодня: {aktiv.split("|")[0]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              idraw.text((365, 400), f'Voice сегодня: {aktiv.split("|")[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+
+            prioritet = -1
+            ppz = [365, 405, 445, 485, 525, 565, 605, 645, 685, 725, 765, 805, 845, 885, 925, 965, 1005]
+            avatar = avatar.resize((212, 212), Image.ANTIALIAS)
+            response.paste(avatar, (118, 169))
+            idraw.text((400, 150), f'{member}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+            a = str(member.created_at).split()[0].split('-')
+            idraw.text((365 , 260), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            a2 = str(member.joined_at).split()[0].split('-')
+            idraw.text((365, 300), f'Дата вступления: {a2[2]} {sp[int(a2[1])]} {a2[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
 
             warnow = 0
-            for item in my_warn_md.find():
+            for item in my_warn.find():
               if item['id'] == mid:
                 warnow += 1
-            idraw.text((145 , 440), f'Выговоров: {warnow}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((100 , 400), f'Предупреждений: {warnow}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
 
-          else:
-            if randch == 1:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
-            elif not member.premium_since is None:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867001330630676/booster.png', stream = True)
-            elif 769916590686732319 in b:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867007156518932/max.png', stream = True)
-            elif 622501691107049502 in b:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867009064927282/pr3.png', stream = True)
-            elif 622501656591990784 in b:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867005503176734/gold.png', stream = True)
-            elif 688654966675603491 in b:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867012067917831/test_ivent.png', stream = True)
+            if str(member.status) == 'offline':
+              st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784799364014276608/work4_79.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
+              y_2021 = 155
+            elif member.is_on_mobile():
+              if str(member.status) == 'online':
+                st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784741708964560906/t1.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
+              elif str(member.status) == 'idle':
+                st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784741713007869972/t2.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
+              elif str(member.status) == 'dnd':
+                st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784741716804239370/t3.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
+              y_2021 = 150
             else:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867004198748160/classical.png', stream = True)
-            response = Image.open(io.BytesIO(response.content))
-            idraw = ImageDraw.Draw(response)
-            if 769916590686732319 in b or 622501691107049502 in b or 622501656591990784 in b or 688654966675603491 in b:
-              idraw.text((365, 440), f'Дата последнего обновления:', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-              if d.get(mid) is not None:
-                datet = d.get(mid).split('.')[0].split()[0].split('-')
-                datet2 = d.get(mid).split('.')[0].split()[1]
-                idraw.text((365, 480), f'{datet[2]} {sp[int(datet[1])]} {datet[0]} года в {datet2}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-              else:
-                idraw.text((365, 480), f'Неизвестна', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-              kolvo = dk.get(mid) if dk.get(mid) is not None else 0
-              idraw.text((135, 440), f'Публикаций: {kolvo}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-              
-            try:
-              aktiv = requests.get(f'http://185.244.172.127/stats?user={mid}').text
-            except:
-              aktiv = '? сообщений|? минут'
-            idraw.text((365, 360), f'Активность сегодня: {aktiv.split("|")[0]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            idraw.text((365, 400), f'Voice сегодня: {aktiv.split("|")[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            
-          prioritet = -1
-          ppz = [365, 405, 445, 485, 525, 565, 605, 645, 685, 725, 765, 805, 845, 885, 925, 965, 1005]
-          avatar = avatar.resize((212, 212), Image.ANTIALIAS)
-          response.paste(avatar, (118, 169))
-          idraw.text((400, 150), f'{member}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
-          a = str(member.created_at).split()[0].split('-')
-          idraw.text((365 , 260), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-          a2 = str(member.joined_at).split()[0].split('-')
-          idraw.text((365, 300), f'Дата вступления: {a2[2]} {sp[int(a2[1])]} {a2[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-          
-          warnow = 0
-          for item in my_warn.find():
-            if item['id'] == mid:
-              warnow += 1
-          idraw.text((100 , 400), f'Предупреждений: {warnow}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-          
-          if str(member.status) == 'offline':
-            st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784799364014276608/work4_79.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
-            y_2021 = 155
-          elif member.is_on_mobile():
-            if str(member.status) == 'online':
-              st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784741708964560906/t1.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
-            elif str(member.status) == 'idle':
-              st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784741713007869972/t2.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
-            elif str(member.status) == 'dnd':
-              st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784741716804239370/t3.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
-            y_2021 = 150
-          else:
-            if str(member.status) == 'online':
-              st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784799369160425502/work11.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
-            elif str(member.status) == 'idle':
-              st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784799375640494110/work12.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
-            elif str(member.status) == 'dnd':
-              st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784799380418723850/work31.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
-            y_2021 = 155
-          response.paste(st, (360, y_2021), st)
+              if str(member.status) == 'online':
+                st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784799369160425502/work11.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
+              elif str(member.status) == 'idle':
+                st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784799375640494110/work12.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
+              elif str(member.status) == 'dnd':
+                st = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784799380418723850/work31.png', stream = True).content)).convert('RGBA').resize((40, 40), Image.ANTIALIAS)
+              y_2021 = 155
+            response.paste(st, (360, y_2021), st)
 
-          #14feb
-          if [i for i in my_feb2.find({'id':mid})] == []:
-            feb = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806905242255097906/review.png', stream = True).content)).convert('RGBA')
-            response.paste(feb, (55, 517), feb)
-            idraw.text((100 , 520), f'Вы никого не любите? ;(', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 23))
-          else:
-            feb = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806296162889891890/review.png', stream = True).content)).convert('RGBA')
-            response.paste(feb, (55, 517), feb)
-            idraw.text((100 , 520), f'Любит {my_feb2.find({"id":mid})[0]["kogo"]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 23))
-          
-          #prioritetnostb
-          net_zn = 0
-          if mid == message.guild.owner.id:
-            prioritet += 1
-            crown = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784811138671575121/owner.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-            response.paste(crown, (ppz[prioritet], 205), crown)
-            net_zn += 1
+            #14feb
+            if [i for i in my_feb2.find({'id':mid})] == []:
+              feb = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806905242255097906/review.png', stream = True).content)).convert('RGBA')
+              response.paste(feb, (55, 517), feb)
+              idraw.text((100 , 520), f'Вы никого не любите? ;(', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 23))
+            else:
+              feb = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806296162889891890/review.png', stream = True).content)).convert('RGBA')
+              response.paste(feb, (55, 517), feb)
+              idraw.text((100 , 520), f'Любит {my_feb2.find({"id":mid})[0]["kogo"]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 23))
 
-          if str(mid) in msgbots:
-            prioritet += 1
-            dev = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785183136362659880/developer.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-            response.paste(dev, (ppz[prioritet], 205), dev)
-            net_zn += 1
-            
-          if str(mid) in bag:
-            prioritet += 1
-            bag22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807343608868110406/review.png', stream = True).content)).convert('RGBA')
-            response.paste(bag22, (ppz[prioritet], 205), bag22)
-            net_zn += 1
-            
-          if str(mid) in medal22:
-            prioritet += 1
-            medal = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/788847715420209222/i_dont_know_what_is_it_say_plz.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-            response.paste(medal, (ppz[prioritet], 205), medal)
-            net_zn += 1
-            
-          if str(mid) in souz:
-            prioritet += 1
-            allia = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807310152801845358/-3.png', stream = True).content)).convert('RGBA')
-            response.paste(allia, (ppz[prioritet], 205), allia)
-            net_zn += 1
-                
-          if str(mid) in help:
-            prioritet += 1
-            help22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910232079466537/helper_1.png', stream = True).content)).convert('RGBA')
-            response.paste(help22, (ppz[prioritet], 205), help22)
-            net_zn += 1
-              
-          try:
-            msg = await client.get_channel(784815029118828548).history(limit=1).flatten()
-            if str(mid) in msg[0].content:
+            #prioritetnostb
+            net_zn = 0
+            if mid == message.guild.owner.id:
               prioritet += 1
-              rm = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/796115970003173436/rm.png', stream = True).content)).convert('RGBA')
-              response.paste(rm, (ppz[prioritet], 205), rm)
+              crown = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784811138671575121/owner.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+              response.paste(crown, (ppz[prioritet], 205), crown)
               net_zn += 1
-          except:
-            pass
-          
-          if str(mid) in ngl:
-            prioritet += 1
-            ngl2 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/787359332891230238/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-            response.paste(ngl2, (ppz[prioritet], 205), ngl2)
-            net_zn += 1
-            
-          if str(mid) in att:
-            prioritet += 1
-            att22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807346321487953970/review.png', stream = True).content)).convert('RGBA')
-            response.paste(att22, (ppz[prioritet], 205), att22)
-            net_zn += 1
-          
-          if str(mid) in ideas:
-            prioritet += 1
-            id22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910224001106000/puzzle.png', stream = True).content)).convert('RGBA')
-            response.paste(id22, (ppz[prioritet], 205), id22)
-            net_zn += 1
-            
-          if str(mid) in bang:
-            prioritet += 1
-            bg22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119556178935848/rm.png', stream = True).content)).convert('RGBA')
-            response.paste(bg22, (ppz[prioritet], 205), bg22)
-            net_zn += 1
-            
-          if str(mid) in msgotz:
-            prioritet += 1
-            cotz = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910237448175626/review.png', stream = True).content)).convert('RGBA')
-            response.paste(cotz, (ppz[prioritet], 205), cotz)
-            net_zn += 1
-            
-          if 688654966675603491 in b or 622501656591990784 in b or 622501691107049502 in b or 769916590686732319 in b:
-            if 688654966675603491 in b:
-              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015500712509490/6.png', stream = True).content)).convert('RGBA')
-            elif 622501656591990784 in b:
-              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015502381187092/34.png', stream = True).content)).convert('RGBA')
-            elif 622501691107049502 in b:
-              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015503648784424/41.png', stream = True).content)).convert('RGBA')
-            elif 769916590686732319 in b:
-              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015504348708914/52.png', stream = True).content)).convert('RGBA')
-            prioritet += 1
-            response.paste(znpart, (ppz[prioritet], 205), znpart)
-            net_zn += 1
-          
-          if str(mid) in candys:
-            prioritet += 1
-            candy = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119577951436810/rm.png', stream = True).content)).convert('RGBA')
-            response.paste(candy, (ppz[prioritet], 205), candy)
-            net_zn += 1
-            
-          if str(mid) in heart:
-            prioritet += 1
-            heart22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806296162889891890/review.png', stream = True).content)).convert('RGBA')
-            response.paste(heart22, (ppz[prioritet], 205), heart22)
-            net_zn += 1
 
-          if mid == 394757049893912577:
-            fat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-            response.paste(fat, (54, 100), fat)   
-          elif mid == 713780299024039936:
-            ang = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/797940366254800906/rm.png', stream = True).content)).convert('RGBA')
-            response.paste(ang, (54, 100), ang)
-          elif mid == 346263496394276867:
-            nef = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/800773662453530644/review.png', stream = True).content)).convert('RGBA')
-            response.paste(nef, (54, 100), nef)
-          elif mid == 357518684723478540:
-            mox = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/803224903620362260/review.png', stream = True).content)).convert('RGBA')
-            response.paste(mox, (54, 100), mox)
-          elif mid == 722394482515116072:
-            gof = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/803001131185733632/review.png', stream = True).content)).convert('RGBA')
-            response.paste(gof, (54, 100), gof)
-          elif mid == 420506181627412501:
-            rez = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/806622139972583485/review.png', stream = True).content)).convert('RGBA')
-            response.paste(rez, (54, 100), rez)
-          elif mid == 571006178444836875:
-            leo = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799946949679120424/review.png', stream = True).content)).convert('RGBA')
-            response.paste(leo, (54, 100), leo)
-          elif not member.premium_since is None:
-            boost = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797122464026198066/rm.png', stream = True).content)).convert('RGBA')
-            response.paste(boost, (54, 100), boost)
-          if not member.premium_since is None:
-            idraw.text((100 , 102), f'{member.top_role.name}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-            
-          if net_zn == 0:
-            idraw.text((365 , 200), f'У вас пока нет ни одного значка ;(', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-          
-          if randch == 1:
-            gl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786978327420076062/glitchon.png', stream = True).content)).convert('RGBA')
-            response.paste(gl, (0, 0), gl)
-            response.save('user_card.png')
-            await message.channel.send(content='О̵͌́й̶̿̒.̵̅͛.̵̯̃.̶̊̿ ̵̇̚В̷̒̀ӹ̸́̈ ̸̍͝с̷͐͐л̷͒̊о̵͑̌м̶̐̿ӓ̶́͐л̸̒̍и̸͂̚ ̶͌͘б̶̍̾о̷̇̈́т̴̋̓а̶̎͊ ',file = discord.File(fp = 'user_card.png'))
-            await msg2021.delete()
-          else:
-            response.save('user_card.png')
-            await message.channel.send(file = discord.File(fp = 'user_card.png'))
-            await msg2021.delete()
+            if str(mid) in msgbots:
+              prioritet += 1
+              dev = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785183136362659880/developer.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+              response.paste(dev, (ppz[prioritet], 205), dev)
+              net_zn += 1
+
+            if str(mid) in bag:
+              prioritet += 1
+              bag22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807343608868110406/review.png', stream = True).content)).convert('RGBA')
+              response.paste(bag22, (ppz[prioritet], 205), bag22)
+              net_zn += 1
+
+            if str(mid) in medal22:
+              prioritet += 1
+              medal = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/788847715420209222/i_dont_know_what_is_it_say_plz.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+              response.paste(medal, (ppz[prioritet], 205), medal)
+              net_zn += 1
+
+            if str(mid) in souz:
+              prioritet += 1
+              allia = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807310152801845358/-3.png', stream = True).content)).convert('RGBA')
+              response.paste(allia, (ppz[prioritet], 205), allia)
+              net_zn += 1
+
+            if str(mid) in help:
+              prioritet += 1
+              help22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910232079466537/helper_1.png', stream = True).content)).convert('RGBA')
+              response.paste(help22, (ppz[prioritet], 205), help22)
+              net_zn += 1
+
+            try:
+              msg = await client.get_channel(784815029118828548).history(limit=1).flatten()
+              if str(mid) in msg[0].content:
+                prioritet += 1
+                rm = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/796115970003173436/rm.png', stream = True).content)).convert('RGBA')
+                response.paste(rm, (ppz[prioritet], 205), rm)
+                net_zn += 1
+            except:
+              pass
+
+            if str(mid) in ngl:
+              prioritet += 1
+              ngl2 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/787359332891230238/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+              response.paste(ngl2, (ppz[prioritet], 205), ngl2)
+              net_zn += 1
+
+            if str(mid) in att:
+              prioritet += 1
+              att22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807346321487953970/review.png', stream = True).content)).convert('RGBA')
+              response.paste(att22, (ppz[prioritet], 205), att22)
+              net_zn += 1
+
+            if str(mid) in ideas:
+              prioritet += 1
+              id22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910224001106000/puzzle.png', stream = True).content)).convert('RGBA')
+              response.paste(id22, (ppz[prioritet], 205), id22)
+              net_zn += 1
+
+            if str(mid) in bang:
+              prioritet += 1
+              bg22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119556178935848/rm.png', stream = True).content)).convert('RGBA')
+              response.paste(bg22, (ppz[prioritet], 205), bg22)
+              net_zn += 1
+
+            if str(mid) in msgotz:
+              prioritet += 1
+              cotz = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910237448175626/review.png', stream = True).content)).convert('RGBA')
+              response.paste(cotz, (ppz[prioritet], 205), cotz)
+              net_zn += 1
+
+            if 688654966675603491 in b or 622501656591990784 in b or 622501691107049502 in b or 769916590686732319 in b:
+              if 688654966675603491 in b:
+                znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015500712509490/6.png', stream = True).content)).convert('RGBA')
+              elif 622501656591990784 in b:
+                znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015502381187092/34.png', stream = True).content)).convert('RGBA')
+              elif 622501691107049502 in b:
+                znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015503648784424/41.png', stream = True).content)).convert('RGBA')
+              elif 769916590686732319 in b:
+                znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015504348708914/52.png', stream = True).content)).convert('RGBA')
+              prioritet += 1
+              response.paste(znpart, (ppz[prioritet], 205), znpart)
+              net_zn += 1
+
+            if str(mid) in candys:
+              prioritet += 1
+              candy = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119577951436810/rm.png', stream = True).content)).convert('RGBA')
+              response.paste(candy, (ppz[prioritet], 205), candy)
+              net_zn += 1
+
+            if str(mid) in heart:
+              prioritet += 1
+              heart22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806296162889891890/review.png', stream = True).content)).convert('RGBA')
+              response.paste(heart22, (ppz[prioritet], 205), heart22)
+              net_zn += 1
+
+            if mid == 394757049893912577:
+              fat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+              response.paste(fat, (54, 100), fat)   
+            elif mid == 713780299024039936:
+              ang = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/797940366254800906/rm.png', stream = True).content)).convert('RGBA')
+              response.paste(ang, (54, 100), ang)
+            elif mid == 346263496394276867:
+              nef = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/800773662453530644/review.png', stream = True).content)).convert('RGBA')
+              response.paste(nef, (54, 100), nef)
+            elif mid == 357518684723478540:
+              mox = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/803224903620362260/review.png', stream = True).content)).convert('RGBA')
+              response.paste(mox, (54, 100), mox)
+            elif mid == 722394482515116072:
+              gof = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/803001131185733632/review.png', stream = True).content)).convert('RGBA')
+              response.paste(gof, (54, 100), gof)
+            elif mid == 420506181627412501:
+              rez = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/806622139972583485/review.png', stream = True).content)).convert('RGBA')
+              response.paste(rez, (54, 100), rez)
+            elif mid == 571006178444836875:
+              leo = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/799946949679120424/review.png', stream = True).content)).convert('RGBA')
+              response.paste(leo, (54, 100), leo)
+            elif not member.premium_since is None:
+              boost = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797122464026198066/rm.png', stream = True).content)).convert('RGBA')
+              response.paste(boost, (54, 100), boost)
+            if not member.premium_since is None:
+              idraw.text((100 , 102), f'{member.top_role.name}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+
+            if net_zn == 0:
+              idraw.text((365 , 200), f'У вас пока нет ни одного значка ;(', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+
+            if randch == 1:
+              gl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786978327420076062/glitchon.png', stream = True).content)).convert('RGBA')
+              response.paste(gl, (0, 0), gl)
+              response.save('user_card.png')
+              await message.channel.send(content='О̵͌́й̶̿̒.̵̅͛.̵̯̃.̶̊̿ ̵̇̚В̷̒̀ӹ̸́̈ ̸̍͝с̷͐͐л̷͒̊о̵͑̌м̶̐̿ӓ̶́͐л̸̒̍и̸͂̚ ̶͌͘б̶̍̾о̷̇̈́т̴̋̓а̶̎͊ ',file = discord.File(fp = 'user_card.png'))
+            else:
+              response.save('user_card.png')
+              await message.channel.send(file = discord.File(fp = 'user_card.png'))
 
       except:
           try:
