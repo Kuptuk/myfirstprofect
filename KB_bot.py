@@ -84,6 +84,22 @@ async def on_ready():
                 dk.update({men[0].id:dk.get(men[0].id)+1})
               else:
                 dk.update({men[0].id:dk.get(men[0].id)+1})
+
+  #for cards
+  global msgbots; global bag; global medal22; global souz; global help; global ngl; global att; global ideas; global bang; global msgotz; global candys; global heart
+  msgbots = await client.get_channel(764191031318937674).fetch_message(785189856988627004); msgbots = msgbots.content
+  bag = await client.get_channel(764191031318937674).fetch_message(807351505455022160); bag = bag.content
+  medal22 = await client.get_channel(764191031318937674).fetch_message(788848844980092989); medal22 = medal22.content
+  souz = await client.get_channel(764191031318937674).fetch_message(793762809396985866); souz = souz.content
+  help = await client.get_channel(764191031318937674).fetch_message(799910635206868992); help = help.content
+  ngl = await client.get_channel(764191031318937674).fetch_message(787339282951569420); ngl = ngl.content
+  att = await client.get_channel(764191031318937674).fetch_message(807351517581017099); att = att.content
+  ideas = await client.get_channel(764191031318937674).fetch_message(785203816785903667); ideas = ideas.content
+  bang = await client.get_channel(764191031318937674).fetch_message(786738663433437244); bang = bang.content
+  msgotz = await client.get_channel(764191031318937674).fetch_message(782330900746076202); msgotz = msgotz.content
+  candys = await client.get_channel(764191031318937674).fetch_message(790310798895480833); candys = candys.content
+  heart = await client.get_channel(764191031318937674).fetch_message(810449422328004628); heart = heart.content
+                                                                                    
   await client.get_channel(728932829026844672).send('```css\n[Данные обновлены, бот перезапущен].```')
     
 @client.event
@@ -1251,6 +1267,7 @@ async def info(message, id = None):
     else:
       if id is None or id == '-':
         id = str(message.author.id)
+      global msgbots; global bag; global medal22; global souz; global help; global ngl; global att; global ideas; global bang; global msgotz; global candys; global heart
       sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
       randch = random.randint(1,100)
       color = (255, 255, 255)
@@ -1413,36 +1430,31 @@ async def info(message, id = None):
             response.paste(crown, (ppz[prioritet], 205), crown)
             net_zn += 1
 
-          msgbots = await client.get_channel(764191031318937674).fetch_message(785189856988627004)
-          if str(mid) in msgbots.content:
+          if str(mid) in msgbots:
             prioritet += 1
             dev = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785183136362659880/developer.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(dev, (ppz[prioritet], 205), dev)
             net_zn += 1
             
-          bag = await client.get_channel(764191031318937674).fetch_message(807351505455022160)
-          if str(mid) in bag.content:
+          if str(mid) in bag:
             prioritet += 1
             bag22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807343608868110406/review.png', stream = True).content)).convert('RGBA')
             response.paste(bag22, (ppz[prioritet], 205), bag22)
             net_zn += 1
             
-          medal22 = await client.get_channel(764191031318937674).fetch_message(788848844980092989)
-          if str(mid) in medal22.content:
+          if str(mid) in medal22:
             prioritet += 1
             medal = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/788847715420209222/i_dont_know_what_is_it_say_plz.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(medal, (ppz[prioritet], 205), medal)
             net_zn += 1
             
-          souz = await client.get_channel(764191031318937674).fetch_message(793762809396985866)
-          if str(mid) in souz.content:
+          if str(mid) in souz:
             prioritet += 1
             allia = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807310152801845358/-3.png', stream = True).content)).convert('RGBA')
             response.paste(allia, (ppz[prioritet], 205), allia)
             net_zn += 1
                 
-          help = await client.get_channel(764191031318937674).fetch_message(799910635206868992)
-          if str(mid) in help.content:
+          if str(mid) in help:
             prioritet += 1
             help22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910232079466537/helper_1.png', stream = True).content)).convert('RGBA')
             response.paste(help22, (ppz[prioritet], 205), help22)
@@ -1458,36 +1470,31 @@ async def info(message, id = None):
           except:
             pass
           
-          ngl = await client.get_channel(764191031318937674).fetch_message(787339282951569420)
-          if str(mid) in ngl.content:
+          if str(mid) in ngl:
             prioritet += 1
             ngl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/787359332891230238/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(ngl, (ppz[prioritet], 205), ngl)
             net_zn += 1
             
-          att = await client.get_channel(764191031318937674).fetch_message(807351517581017099)
-          if str(mid) in att.content:
+          if str(mid) in att:
             prioritet += 1
             att22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807346321487953970/review.png', stream = True).content)).convert('RGBA')
             response.paste(att22, (ppz[prioritet], 205), att22)
             net_zn += 1
           
-          ideas = await client.get_channel(764191031318937674).fetch_message(785203816785903667)
-          if str(mid) in ideas.content:
+          if str(mid) in ideas:
             prioritet += 1
             id22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910224001106000/puzzle.png', stream = True).content)).convert('RGBA')
             response.paste(id22, (ppz[prioritet], 205), id22)
             net_zn += 1
             
-          bang = await client.get_channel(764191031318937674).fetch_message(786738663433437244)
-          if str(mid) in bang.content:
+          if str(mid) in bang:
             prioritet += 1
             bg22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119556178935848/rm.png', stream = True).content)).convert('RGBA')
             response.paste(bg22, (ppz[prioritet], 205), bg22)
             net_zn += 1
             
-          msgotz = await client.get_channel(764191031318937674).fetch_message(782330900746076202)
-          if str(mid) in msgotz.content:
+          if str(mid) in msgotz:
             prioritet += 1
             cotz = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910237448175626/review.png', stream = True).content)).convert('RGBA')
             response.paste(cotz, (ppz[prioritet], 205), cotz)
@@ -1506,15 +1513,13 @@ async def info(message, id = None):
             response.paste(znpart, (ppz[prioritet], 205), znpart)
             net_zn += 1
           
-          candys = await client.get_channel(764191031318937674).fetch_message(790310798895480833)
-          if str(mid) in candys.content:
+          if str(mid) in candys:
             prioritet += 1
             candy = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119577951436810/rm.png', stream = True).content)).convert('RGBA')
             response.paste(candy, (ppz[prioritet], 205), candy)
             net_zn += 1
             
-          heart = await client.get_channel(764191031318937674).fetch_message(810449422328004628)
-          if str(mid) in heart.content:
+          if str(mid) in heart:
             prioritet += 1
             heart22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806296162889891890/review.png', stream = True).content)).convert('RGBA')
             response.paste(heart22, (ppz[prioritet], 205), heart22)
