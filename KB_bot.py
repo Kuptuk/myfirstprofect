@@ -1362,6 +1362,8 @@ async def info(message, id = None):
             else:
               if randch == 1:
                 response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
+              elif mid == 357518684723478540:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/812249880084873216/card_moxxie1.png', stream = True)
               elif not member.premium_since is None:
                 response = requests.get('https://media.discordapp.net/attachments/689800301468713106/806867001330630676/booster.png', stream = True)
               elif 769916590686732319 in b:
