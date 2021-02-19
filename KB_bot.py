@@ -1877,14 +1877,14 @@ async def infopoll(message, id = None):
               elif 677397817966198788 in b:
                 dol = 'аперативник'
                 otd = 'Отдел ОБТ "Модер"'
-              idraw.text((365, 313), f'{otd}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-              idraw.text((365, 353), f'Должность: {dol}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              idraw.text((365, 333), f'{otd}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              idraw.text((365, 373), f'Должность: {dol}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
 
               if str(mid) in msgs:
                 for i in msgs.split('\n'):
                   a = i.split('|')
                   if a[0] == str(mid):
-                    idraw.text((365, 393), f'В команде с {a[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                    idraw.text((365, 373), f'В команде с {a[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
                     break
 
               warnow = 0
@@ -1938,9 +1938,9 @@ async def infopoll(message, id = None):
             response.paste(avatar, (118, 182))
             idraw.text((400, 163), f'{member}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
             a = str(member.created_at).split()[0].split('-')
-            idraw.text((365 , 193), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((365 , 213), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             a2 = str(member.joined_at).split()[0].split('-')
-            idraw.text((365, 233), f'Дата вступления: {a2[2]} {sp[int(a2[1])]} {a2[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((365, 253), f'Дата вступления: {a2[2]} {sp[int(a2[1])]} {a2[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
 
             warnow = 0
             for item in my_warn.find():
