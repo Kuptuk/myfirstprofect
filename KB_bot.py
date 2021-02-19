@@ -1884,7 +1884,7 @@ async def infopoll(message, id = None):
                 for i in msgs.split('\n'):
                   a = i.split('|')
                   if a[0] == str(mid):
-                    idraw.text((365, 373), f'В команде с {a[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                    idraw.text((365, 413), f'В команде с {a[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
                     break
 
               warnow = 0
