@@ -1444,7 +1444,7 @@ async def epms(message):
     </html>
     """
     msg = email.message.Message()
-    msg['Subject'] = 'Partnership Department Statistics'
+    msg['Subject'] = f'Partnership Department Statistics {str(datetime.datetime.utcnow()+datetime.timedelta(hours=3)).split()[1].split(".")[0]}'
 
     msg['From'] = 'catalogserverov@gmail.com'
     msg['To'] = komy
