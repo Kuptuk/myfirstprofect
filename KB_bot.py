@@ -139,13 +139,13 @@ async def on_message(message):
     await message.author.remove_roles(message.guild.get_role(648271372585533441),reason=f'Автомодерация: время мута истекло.')
     await message.author.add_roles(message.guild.get_role(648271372585533441),reason=f'Автомодерация: был заткнут навсегда.')
   elif message.channel.id == 740651083533254717:
-    if "K.problem" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins:
+    if "K.problem" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins and message.author.id != 665120789913403422:
       await message.delete()
       embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=discord.Colour(0x310000),description=f'Ваше сообщение в канале <#740651083533254717> следующего содержания: `{message.content}` было удалено по причине оффтопа.\nПросьба ознакомиться с **[закреплённым информационным сообщением](https://discord.com/channels/604636579545219072/740651083533254717/744485922258681896).**')
       embed.set_footer(text='С уважением, Команда Каталога!',icon_url=message.guild.icon_url)
       await message.author.send(embed=embed)
   elif message.channel.id == 678666229661171724:
-    if "K.suggest" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins:
+    if "K.suggest" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins and message.author.id != 665120789913403422:
       await message.delete()
       embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=discord.Colour(0x310000),description=f'Ваше сообщение в канале <#678666229661171724> следующего содержания: `{message.content}` было удалено по причине оффтопа.\nПросьба ознакомиться с **[закреплённым информационным сообщением](https://discord.com/channels/604636579545219072/678666229661171724/732206889110339655).**')
       embed.set_footer(text='С уважением, Команда Каталога!',icon_url=message.guild.icon_url)
