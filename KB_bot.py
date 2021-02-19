@@ -1630,14 +1630,14 @@ async def info(message, id = None):
             response.paste(st, (360, y_2021), st)
 
             #14feb
-            if [i for i in my_feb2.find({'id':mid})] == []:
+            """if [i for i in my_feb2.find({'id':mid})] == []:
               feb = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806905242255097906/review.png', stream = True).content)).convert('RGBA')
               response.paste(feb, (55, 517), feb)
               idraw.text((100 , 520), f'Вы никого не любите? ;(', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 23))
             else:
               feb = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806296162889891890/review.png', stream = True).content)).convert('RGBA')
               response.paste(feb, (55, 517), feb)
-              idraw.text((100 , 520), f'Любит {my_feb2.find({"id":mid})[0]["kogo"]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 23))
+              idraw.text((100 , 520), f'Любит {my_feb2.find({"id":mid})[0]["kogo"]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 23))"""
 
             #prioritetnostb
             net_zn = 0
