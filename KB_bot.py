@@ -1198,7 +1198,7 @@ async def problem(message, *, quest=None):
         
 @client.command()
 async def answer(message, num=None, *, txt=None):
-  if message.author.id in admins:
+  if message.author.id in admins or message.author.id == 571006178444836875:
     await message.message.delete()
     my_cursor = my_cp2.find()
     for item in my_cursor:
