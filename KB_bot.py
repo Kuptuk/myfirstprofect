@@ -49,7 +49,7 @@ my_feb2 = my_client.feb.feb2
 client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
 client.remove_command("help")
 
-admins = [562561140786331650,414119169504575509,529044574660853761,571006178444836875]
+admins = [562561140786331650,414119169504575509,529044574660853761]
 
 @client.event
 async def on_ready():
@@ -545,13 +545,13 @@ async def pms(message):
       otkat = f'Минут до отката команды: ~{int((180-(time.time()-date_pms))//60)}' if (180-(time.time()-date_pms))//60 != 0 else f'Секунд до отката команды: ~{int(180-(time.time()-date_pms))}'
       await message.channel.send(embed=discord.Embed(colour=0x310000,description=f'```css\n[Данная команда имеет общую задержку в 3 минуты.]```\n```md\n#{otkat}```'))
   
-"""@client.command()
+@client.command()
 async def staff(message):
     if message.author.id in admins:
       embed=discord.Embed(timestamp=datetime.datetime.utcnow(),description="**Команды для <@&620955813850120192>:**\n\n`K.say #channel|ID текст` — отправить текст определённого содержания в предназначеный канал.\n`K.clear n` — удалить n сообщений в канале.\n`K.disable` — отключить основные каналы (применять только на случай рейда)\n`K.enable` — включить все основные каналы (применять только на случай рейда)\n`K.approve Номер (+/-) Текст` — принять/отклонить предложение\n`K.iban @user|ID Причина` — добавить в чс идей пользователя\n`K.iunban @user|ID` — убрать из чс идей пользователя\n`K.ibans` — посмотреть чс идей\n`K.answer номер|текст` — ответить на вопрос пользователя\n`K.rebuke @user|ID reason` — выдать выговор.\n`K.unrebuke №случая` — снять выговор.\n`K.rebukes @user|ID` — просмотреть выговоры.\n\n`K.cont url` — предоставить файл с контентом сообщения по ссылке на него.")
       embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
       embed.set_thumbnail(url=message.guild.icon_url)
-      await message.channel.send(embed=embed)"""
+      await message.channel.send(embed=embed)
         
 @client.command()
 async def moder(message):
