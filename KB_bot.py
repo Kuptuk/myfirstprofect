@@ -415,32 +415,7 @@ async def unban(message, id=None, *, reason=None):
 @client.command()
 async def stat(message):
     await message.channel.send('Такой команды не существует. Возможно, вы имели в виду **`K.stats`**.')
-        
-@client.command()
-async def kick(message,id,reason=None):
-    try:
-        if 677397817966198788 in [role.id for role in message.author.roles] or 620955813850120192 in [role.id for role in message.author.roles]:
-            try:
-                a = message.guild.get_member(int(id))
-            except:
-                a = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
-            if 608994688078184478 in [a.id for a in a.roles]:
-                embed=discord.Embed(colour=discord.Colour.red(), description="Вы не можете забанить данного пользователя.")
-                embed.set_author(name=message.author, icon_url=message.author.avatar_url)
-            else:
-                await a.kick(reason=reason)
-                embed=discord.Embed(colour=discord.Colour.green(),description=str(a) + " был забанен.")
-                embed.set_author(name=message.author, icon_url=message.author.avatar_url)
-            await message.channel.send(embed=embed)
-        else:
-            embed=discord.Embed(colour=discord.Colour.red(),description="У вас нет прав.")
-            embed.set_author(name=message.author, icon_url=message.author.avatar_url)
-            await message.channel.send(embed=embed)
-    except:
-        embed=discord.Embed(colour=discord.Colour.red(),description="Ошибка выполнения.")
-        embed.set_author(name=message.author, icon_url=message.author.avatar_url)
-        await message.channel.send(embed=embed)
-    
+
 @client.command()
 async def stats(message):
     gg = client.get_guild(604636579545219072)
