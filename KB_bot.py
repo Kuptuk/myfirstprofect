@@ -1570,7 +1570,7 @@ async def info(message, id = None):
             try:
               idraw.text((365, 260), f'{aktiv.split("|")[2]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             except:
-              idraw.text((365, 260), 'Был в сети: ?', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              idraw.text((365, 260), 'В сети: ?', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             a = str(member.created_at).split()[0].split('-')
             idraw.text((365 , 300), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             a2 = str(member.joined_at).split()[0].split('-')
