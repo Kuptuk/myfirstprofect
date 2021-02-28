@@ -1468,10 +1468,7 @@ async def info(message, id = None):
             avatar = Image.open(io.BytesIO(avatar.content))
             avatar = avatar.convert('RGBA')
 
-            try:
-              aktiv = requests.get(f'http://185.244.172.127/stats?user={mid}').text
-            except:
-              aktiv = '? сообщений|? минут|Неизвестно'
+            aktiv = requests.get(f'http://185.244.172.127/stats?user={mid}').text
 
             b = [role.id for role in member.roles]
             if 608994688078184478 in b and list(message.message.content)[-1] != '-':
@@ -1558,15 +1555,22 @@ async def info(message, id = None):
                   idraw.text((55, 515), f'Последнее обновление: неизвестно', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
                 kolvo = dk.get(mid) if dk.get(mid) is not None else 0
                 idraw.text((135, 430), f'Публикаций: {kolvo}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-              idraw.text((365, 400), f'Активность сегодня: {aktiv.split("|")[0]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
-              idraw.text((365, 440), f'Voice сегодня: {aktiv.split("|")[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              try:
+                idraw.text((365, 400), f'Активность сегодня: {aktiv.split("|")[0]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                idraw.text((365, 440), f'Voice сегодня: {aktiv.split("|")[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+              except:
+                idraw.text((365, 400), f'Активность сегодня: ?', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+                idraw.text((365, 440), f'Voice сегодня: ?', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
 
             prioritet = -1
             ppz = [365, 405, 445, 485, 525, 565, 605, 645, 685, 725, 765, 805, 845, 885, 925, 965, 1005]
             avatar = avatar.resize((212, 212), Image.ANTIALIAS)
             response.paste(avatar, (118, 169))
             idraw.text((400, 150), f'{member}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
-            idraw.text((365, 260), f'{aktiv.split("|")[2]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            try:
+              idraw.text((365, 260), f'{aktiv.split("|")[2]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            except:
+              idraw.text((365, 260), 'Был в сети: ?', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             a = str(member.created_at).split()[0].split('-')
             idraw.text((365 , 300), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             a2 = str(member.joined_at).split()[0].split('-')
