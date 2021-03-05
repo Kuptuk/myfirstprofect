@@ -132,7 +132,7 @@ async def on_message(message):
     embed.set_author(name=message.author, icon_url=message.author.avatar_url)
     embed.set_footer(text=message.author.id)
     await client.get_channel(790287251343015986).send(embed=embed)
-  elif '.gg' in message.content and message.channel.category.id == 604636579545219073 and message.channel.id != 699306241981415424:
+  elif '.gg' in message.content and message.channel.category.id == 604636579545219073 and message.channel.id != 699306241981415424 and not message.author.id in admins and not 816386551222763561 in [role.id for role in message.author.roles]:
     await message.delete()
     my_mute.delete_one({'id':message.author.id})
     my_mute.insert_one({"id":message.author.id, "data":datetime.datetime.utcnow() + datetime.timedelta(hours=99999)})
