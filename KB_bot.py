@@ -1157,6 +1157,28 @@ async def approve(message, num=None, arg=None, *, txt=None):
         break
                 
 @client.command()
+async def answer(message, num=None, *, txt=None):
+  if message.author.id in admins or 816386551222763561 in [role.id for role in message.author.roles]:
+    await message.message.delete()
+    my_cursor = my_cp2.find()
+    for item in my_cursor:
+      if item["Num"] == int(num):
+        user = await client.fetch_user(item['id'])
+        who = f'администратора {message.author.name} <:developer:785191301321719828>' if message.author.id in admins else f'Support Team {message.author.name} <:Support:816800431249555498>'
+        embed = discord.Embed(colour=discord.Colour.green(),title=f'Вопрос №{num} решён',description=item["text"])
+        embed.set_author(name=f'{user} | {user.id}', icon_url=user.avatar_url)
+        embed.add_field(name=f'Ответ от {who}', value=txt)
+        sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+        a = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split()[0].split('-')
+        embed.set_footer(text=f'Вопрос решён {a[2]} {sp[int(a[1])]} {a[0]} года в {str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split()[1].split(".")[0]}.\nID: {message.author.id}',icon_url=message.author.avatar_url)
+        msg = await client.get_channel(740651083533254717).fetch_message(item['msg_id'])
+        if message.author.id in admins:
+          await msg.edit(embed=embed)
+        elif str(msg.created_at).split()[0] == str(datetime.datetime.utcnow()).split()[0]:
+          await msg.edit(embed=embed)
+        break
+
+@client.command()
 async def problem(message, *, quest=None):
     if message.channel.id != 740651083533254717:
       embed = discord.Embed(description='**[Канал для вопросов](https://discord.com/channels/604636579545219072/740651083533254717)**')
@@ -1166,27 +1188,10 @@ async def problem(message, *, quest=None):
     else:
         await message.message.delete()
         embed=discord.Embed(title=f'Вопрос №{str(my_cp.find()[0]["Number"])}',description=quest)
-        embed.set_author(name=message.author, icon_url=message.author.avatar_url)
+        embed.set_author(name=f'{message.author} | {message.author.id}', icon_url=message.author.avatar_url)
         a = await message.channel.send(embed=embed)
         my_cp2.insert_one({"id":message.author.id, "Num":my_cp.find()[0]["Number"], "text":quest, "msg_id":a.id})
         my_cp.update_one({"Number":my_cp.find()[0]["Number"]},{"$set":{"Number":my_cp.find()[0]["Number"] + 1}})
-        
-@client.command()
-async def answer(message, num=None, *, txt=None):
-  if message.author.id in admins:
-    await message.message.delete()
-    my_cursor = my_cp2.find()
-    for item in my_cursor:
-      if item["Num"] == int(num):
-        user = await client.fetch_user(item['id'])
-        who = 'владельца сервера' if message.author.id == 414119169504575509 else 'администратора'
-        embed = discord.Embed(colour=discord.Colour.green(),title=f'Вопрос №{num} решён',description=item["text"])
-        embed.set_author(name=user, icon_url=user.avatar_url)
-        embed.add_field(name=f'Ответ от {who} {message.author.name}', value=txt)
-        embed.set_footer(text=f'Вопрос решён {str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(".")[0])}',icon_url=message.author.avatar_url)
-        msg = await client.get_channel(740651083533254717).fetch_message(item['msg_id'])
-        await msg.edit(embed=embed)
-        break
                 
 @client.command()
 async def iban(message,id=None,*reason):
