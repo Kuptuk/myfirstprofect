@@ -89,10 +89,11 @@ async def on_ready():
                 dk.update({men[0].id:dk.get(men[0].id)+1})
 
   #for cards_badges
-  global msgbots; global bag; global medal22; global souz; global help; global rm22; global ngl; global att; global ideas; global bang; global msgotz; global candys; global heart; global msgs
+  global msgbots; global bag; global medal22; global medal_chat_users; global souz; global help; global rm22; global ngl; global att; global ideas; global bang; global msgotz; global candys; global heart; global msgs
   msgbots = await client.get_channel(764191031318937674).fetch_message(785189856988627004); msgbots = msgbots.content
   bag = await client.get_channel(764191031318937674).fetch_message(807351505455022160); bag = bag.content
   medal22 = await client.get_channel(764191031318937674).fetch_message(788848844980092989); medal22 = medal22.content
+  medal_chat_users = await client.get_channel(764191031318937674).fetch_message(817427831460986891); medal_chat_users = medal_chat_users.content
   souz = await client.get_channel(764191031318937674).fetch_message(793762809396985866); souz = souz.content
   help = await client.get_channel(764191031318937674).fetch_message(799910635206868992); help = help.content
   rm22 = await client.get_channel(764191031318937674).fetch_message(812211556317921290); rm22 = rm22.content
@@ -106,11 +107,12 @@ async def on_ready():
   msgs = await client.get_channel(764191031318937674).fetch_message(764191228933046361); msgs = msgs.content
   
   #for cards_img
-  global crown; global dev; global bag22; global medal; global allia; global help22; global rm; global ngl2; global att22; global id22; global bg22; global cotz; global candy; global heart22
+  global crown; global dev; global bag22; global medal; global medal_chat; global allia; global help22; global rm; global ngl2; global att22; global id22; global bg22; global cotz; global candy; global heart22; global support
   crown = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784811138671575121/owner.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
   dev = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785183136362659880/developer.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
   bag22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807343608868110406/review.png', stream = True).content)).convert('RGBA')
   medal = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/814131510361587762/medal.png', stream = True).content)).convert('RGBA')
+  medal_chat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/817425102671970304/333333.png', stream = True).content)).convert('RGBA')
   allia = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807310152801845358/-3.png', stream = True).content)).convert('RGBA')
   help22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910232079466537/helper_1.png', stream = True).content)).convert('RGBA')
   rm = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/796115970003173436/rm.png', stream = True).content)).convert('RGBA')
@@ -121,6 +123,7 @@ async def on_ready():
   cotz = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910237448175626/review.png', stream = True).content)).convert('RGBA')
   candy = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119577951436810/rm.png', stream = True).content)).convert('RGBA')
   heart22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806296162889891890/review.png', stream = True).content)).convert('RGBA')
+  support = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/817425097752707072/-1.png', stream = True).content)).convert('RGBA')
 
   global ticket_key
   for i in await client.get_channel(816385807958802522).history(limit=100).flatten():
@@ -152,7 +155,7 @@ async def on_message(message):
     await message.author.remove_roles(message.guild.get_role(648271372585533441),reason=f'Автомодерация: время мута истекло.')
     await message.author.add_roles(message.guild.get_role(648271372585533441),reason=f'Автомодерация: был заткнут навсегда.')
   elif message.channel.id == 740651083533254717:
-    if "K.problem" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins and message.author.id != 665120789913403422:
+    if "K.problem" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins and message.author.id != 665120789913403422 and not 816386551222763561 in [role.id for role in message.author.roles]:
       await message.delete()
       embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=discord.Colour(0x310000),description=f'Ваше сообщение в канале <#740651083533254717> следующего содержания: `{message.content}` было удалено по причине оффтопа.\nПросьба ознакомиться с **[закреплённым информационным сообщением](https://discord.com/channels/604636579545219072/740651083533254717/744485922258681896).**')
       embed.set_footer(text='С уважением, Команда Каталога!',icon_url=message.guild.icon_url)
@@ -468,20 +471,23 @@ async def team(message,kl=None):
   a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(686639786672652363).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(686639786672652363).members])
   embed.add_field(name=f"```Глава отдела партнёрства:```",value=('Отсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Глава отдела партнёрства:```",value=(a))
   a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(800474182474268734).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(800474182474268734).members])
-  embed.add_field(name=f"```Главный модератор:```",value=('Отсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Главный модератор:```",value=(a))
-  a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(686639826308825089).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(686639826308825089).members])
-  embed.add_field(name=f"```Глава отдела творчества:```",value=('Отсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Глава отдела творчества:```",value=(a))
+  embed.add_field(name=f"```Главный Модератор:```",value=('Отсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Главный Модератор:```",value=(a))
+  a = '```md\n#PandeMiaa```' if kl == '-' else '<@529044574660853761>'
+  embed.add_field(name=f"```Глава Support Team:```",value=(a))
 
   a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(686621891230040077).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(686621891230040077).members])
   embed.add_field(name=f"```Отдел партнёрства: [0]```",value=('**[Правила и важное](https://discord.com/channels/604636579545219072/714909100214845541)**\nОтсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Отдел партнёрства: [{len([i.name for i in message.guild.get_role(686621891230040077).members])}]```",value=(f'**[Правила и важное](https://discord.com/channels/604636579545219072/714909100214845541)**\n{a}'))
   c = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(677397817966198788).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(677397817966198788).members])
   c2 = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(765212719380037663).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(765212719380037663).members])
   embed.add_field(name=f"```Модерация: [0]```",value=('**[Правила и наказания](https://discord.com/channels/604636579545219072/715130816480673872)**\nОтсутствует.')) if c == '```md\n```' or c == '' else embed.add_field(name=f"```Модерация: [{len([i.name for i in message.guild.get_role(677397817966198788).members])}]```",value=(f'**[Правила и наказания](https://discord.com/channels/604636579545219072/715130816480673872)**\n{c}\n\n**`Мл. Модерация: [{len([i.name for i in message.guild.get_role(765212719380037663).members])}]`**\n{c2}'))
-  a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(686618397668147220).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(686618397668147220).members])
-  embed.add_field(name=f"```Отдел творчества: [0]```",value=('**[Наброски](https://discord.com/channels/604636579545219072/686621337153699929)**\nОтсутствует.\n\n**`Навигация для команды:`**\n**[Рекрутерам](https://discord.com/channels/604636579545219072/776484522329374761)**\n**[Объявления](https://discord.com/channels/604636579545219072/619067194910703626)**\n**[Голосования](https://discord.com/channels/604636579545219072/632524443318616075)**\n**[Информация о ролях](https://discord.com/channels/604636579545219072/616656872703000587/802322890191274014)**\n**[Общие полномочия](https://discord.com/channels/604636579545219072/630432803942563840)**')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Отдел творчества: [{len([i.name for i in message.guild.get_role(686618397668147220).members])}]```",value=(f'**[Наброски](https://discord.com/channels/604636579545219072/686621337153699929)**\n{a}\n\n**`Навигация для команды:`**\n**[Рекрутерам](https://discord.com/channels/604636579545219072/776484522329374761)**\n**[Объявления](https://discord.com/channels/604636579545219072/619067194910703626)**\n**[Голосования](https://discord.com/channels/604636579545219072/632524443318616075)**\n**[Информация о ролях](https://discord.com/channels/604636579545219072/616656872703000587/802322890191274014)**\n**[Общие полномочия](https://discord.com/channels/604636579545219072/630432803942563840)**'))
+  a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(816386551222763561).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(816386551222763561).members])
+  embed.add_field(name=f"```Отдел творчества: [0]```",value=('**[Support info](https://discord.com/channels/604636579545219072/816805410379137024) | [Тикеты](https://discord.com/channels/604636579545219072/816385807958802522)**\nОтсутствует.\n\n**`Навигация для команды:`**\n**[Рекрутерам](https://discord.com/channels/604636579545219072/776484522329374761)**\n**[Объявления](https://discord.com/channels/604636579545219072/619067194910703626)**\n**[Голосования](https://discord.com/channels/604636579545219072/632524443318616075)**\n**[Информация о ролях](https://discord.com/channels/604636579545219072/616656872703000587/802322890191274014)**\n**[Общие полномочия](https://discord.com/channels/604636579545219072/630432803942563840)**')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Отдел творчества: [{len([i.name for i in message.guild.get_role(816386551222763561).members])}]```",value=(f'**[Support info](https://discord.com/channels/604636579545219072/816805410379137024) | [Тикеты](https://discord.com/channels/604636579545219072/816385807958802522)**\n{a}\n\n**`Навигация для команды:`**\n**[Рекрутерам](https://discord.com/channels/604636579545219072/776484522329374761)**\n**[Объявления](https://discord.com/channels/604636579545219072/619067194910703626)**\n**[Голосования](https://discord.com/channels/604636579545219072/632524443318616075)**\n**[Информация о ролях](https://discord.com/channels/604636579545219072/616656872703000587/802322890191274014)**\n**[Общие полномочия](https://discord.com/channels/604636579545219072/630432803942563840)**'))
   a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(757890413838467133).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(757890413838467133).members])
   embed.add_field(name=f"```В отставке: [0]```",value=('Отсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```В отставке: [{len([i.name for i in message.guild.get_role(757890413838467133).members])}]```",value=(a))
 
+  a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(686618397668147220).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(686618397668147220).members])
+  embed.add_field(name=f"```Дизайнеры: [0]```",value=('**[Наброски](https://discord.com/channels/604636579545219072/686621337153699929)**\nОтсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Дизайнеры: [{len([i.name for i in message.guild.get_role(686618397668147220).members])}]```",value=(f'**[Наброски](https://discord.com/channels/604636579545219072/686621337153699929)**\n{a}'))
+  
   a = '```md\n' + '\n'.join([message.guild.get_member(i).name for i in admins]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([f'<@{i}>' for i in admins])
   embed.add_field(name=f"```Администраторы: [0]```",value=('Отсутствуют.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Администраторы: [{len(admins)}]```",value=(a))
   embeds.append(embed)
@@ -1516,20 +1522,20 @@ async def epms(message):
 async def info(message, id = None):
     if id == 'badges':
       embed = discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),title=':clipboard: Обозначение значков v3.1.1')
-      embed.add_field(name='Значки Staff:',value='<:owner:784812161959854120> Владельцу сервера.\n<:developer:785191301321719828> Людям, принявшим участие в разработке/улучшении персонального бота.\n🏆 Лучшему работнику на данный момент.',inline=False)
-      embed.add_field(name='Пользовательские значки 1:',value='<:KC_bug_hunter:807347751641022486> Людям, нашедшим баги в боте <@656029229749764126> с последующим информированием разработчика <@414119169504575509> в личных сообщениях.\n`Примечание:` имея данный значок, открывается возможность быть приглашённым на закрытое BETA-тестирование нововведений бота. При замечании определённого бага несколькими пользователями, только первый получит значок.\n<:medal:814131867397783562> Людям, которые внесли огромный вклад в развитие сервера.\n<:alliance:807310319852585051> Представителям союза каталога.\n<:helper:799908854795731004> Людям, которые оказывали помощь новичкам, отвечая на их различные вопросы в общем чате.\n`Примечание:` помните, что вы можете лишиться значка за проявленную халатность.\n<:secret:787360058328481812> Секретный значок.',inline=False)
+      embed.add_field(name='Значки Staff:',value='<:owner:784812161959854120> Владельцу сервера.\n<:developer:785191301321719828> Людям, принявшим участие в разработке/улучшении персонального бота.\n<:Support:816800431249555498> Представителям Support Team.\n🏆 Лучшему работнику на данный момент.',inline=False)
+      embed.add_field(name='Пользовательские значки 1:',value='<:KC_bug_hunter:807347751641022486> Людям, нашедшим баги в боте <@656029229749764126> с последующим информированием разработчика <@414119169504575509> в личных сообщениях.\n`Примечание:` имея данный значок, открывается возможность быть приглашённым на закрытое BETA-тестирование нововведений бота. При замечании определённого бага несколькими пользователями, только первый получит значок.\n<:medal:814131867397783562> Людям, которые внесли огромный вклад в развитие сервера.\n<:medal_chat:817408266635444315> Людям, которые значительно повышают активность в голосовых и текстовых каналах посредством поднятия определённых тем, интереса положением дел других людей\n<:alliance:807310319852585051> Представителям союза каталога.\n<:helper:799908854795731004> Людям, которые оказывали помощь новичкам, отвечая на их различные вопросы в общем чате.\n`Примечание:` помните, что вы можете лишиться значка за проявленную халатность.\n<:secret:787360058328481812> Секретный значок.',inline=False)
       embed.add_field(name='Пользовательские значки 2:',value='<:Attentive:807347751700004926> Нашли определённые несостыковки в информационных сообщениях? Сообщите администрации проекта и получите значок за внимательность.\n`Примечание:` значок распространяется на пользователей, что нашли определённые несостыковки в конкретном случае первыми.\n<:puzzle:799908854783016960> Предложившим большое количество дельных идей.\n‼️ Подавшему большое количество жалоб.\n<:review:799908854812377098> Оставившему рецензию серверу на 3-х мониторингах.\n`Примечание:` **[здесь](https://server-discord.com/604636579545219072)** и **[здесь](https://discord-server.com/ru/604636579545219072)**.',inline=False)
       embed.add_field(name='Значки-метки:',value='<:booster:797134090594680942> Бустерам сервера.\n<:p1:811016319607504936> Партнёру 1-го уровня.\n<:p2:811016319234605107> Партнёру 2-го уровня.\n<:p3:811016319716950046> Партнёру 3-го уровня.\n<:pmax:811016319238406175> Партнёру уровня MAX.',inline=False)
       embed.add_field(name='Значки ивентов:',value='🍬 Выдаётся в новогоднюю ночь 2021 года за найденные пасхалки. Существует до 2022 года.\n❤️ Победителю ивента на день влюблённых. Существует до конца мая 2021 года.',inline=False)
-      embed.add_field(name='Примечания:',value='• Значков всего без учёта кастомных: `15`.\n• Кастомный значок возможен в случае больших заслуг перед Каталогом, а так же за 2 ваших буста.\n• Значки выдаются автоматизированной системой. Это значит, что нет необходимости выпрашивать их у администрации сервера.\n• 🏆 <:puzzle:799908854783016960> <:review:799908854812377098> <:secret:787360058328481812> <:helper:799908854795731004> <:Attentive:807347751700004926> ‼️ убраны на переосмысление.',inline=False)
+      embed.add_field(name='Примечания:',value='• Значков всего без учёта кастомных: `xx`.\n• Кастомный значок возможен в случае больших заслуг перед Каталогом, а так же за 2 ваших буста.\n• Значки выдаются автоматизированной системой. Это значит, что нет необходимости выпрашивать их у администрации сервера.\n• 🏆 <:puzzle:799908854783016960> <:review:799908854812377098> <:secret:787360058328481812> <:helper:799908854795731004> <:Attentive:807347751700004926> ‼️ убраны на переосмысление.',inline=False)
       embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
       embed.set_thumbnail(url=message.guild.icon_url)
       await message.channel.send(embed=embed)
     else:
       if id is None or id == '-':
         id = str(message.author.id)
-      global msgbots; global bag; global medal22; global souz; global help; global rm22; global ngl; global att; global ideas; global bang; global msgotz; global candys; global heart; global msgs
-      global crown; global dev; global bag22; global medal; global allia; global help22; global rm; global ngl2; global att22; global id22; global bg22; global cotz; global candy; global heart22
+      global msgbots; global bag; global medal22; global medal_chat_users; global souz; global help; global rm22; global ngl; global att; global ideas; global bang; global msgotz; global candys; global heart; global msgs
+      global crown; global dev; global bag22; global medal; global medal_chat; global allia; global help22; global rm; global ngl2; global att22; global id22; global bg22; global cotz; global candy; global heart22; global support
       sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
       randch = random.randint(1,100)
       color = (255, 255, 255)
@@ -1695,41 +1701,45 @@ async def info(message, id = None):
               response.paste(medal, (ppz[prioritet], 205), medal)
               net_zn += 1
 
+            if str(mid) in medal_chat_users:
+              prioritet += 1
+              response.paste(medal_chat, (ppz[prioritet], 205), medal_chat)
+              net_zn += 1
+
             if str(mid) in souz:
               prioritet += 1
               response.paste(allia, (ppz[prioritet], 205), allia)
+              net_zn += 1
+
+            if 816386551222763561 in b:
+              prioritet += 1
+              response.paste(support, (ppz[prioritet], 205), support)
               net_zn += 1
 
             """if str(mid) in help:
               prioritet += 1
               response.paste(help22, (ppz[prioritet], 205), help22)
               net_zn += 1
-
             if str(mid) in rm22:
               prioritet += 1
               response.paste(rm, (ppz[prioritet], 205), rm)
               net_zn += 1
-
             if str(mid) in ngl:
               prioritet += 1
               response.paste(ngl2, (ppz[prioritet], 205), ngl2)
               net_zn += 1
-
             if str(mid) in att:
               prioritet += 1
               response.paste(att22, (ppz[prioritet], 205), att22)
               net_zn += 1
-
             if str(mid) in ideas:
               prioritet += 1
               response.paste(id22, (ppz[prioritet], 205), id22)
               net_zn += 1
-
             if str(mid) in bang:
               prioritet += 1
               response.paste(bg22, (ppz[prioritet], 205), bg22)
               net_zn += 1
-
             if str(mid) in msgotz:
               prioritet += 1
               response.paste(cotz, (ppz[prioritet], 205), cotz)
