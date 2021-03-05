@@ -121,7 +121,17 @@ async def on_ready():
   cotz = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910237448175626/review.png', stream = True).content)).convert('RGBA')
   candy = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119577951436810/rm.png', stream = True).content)).convert('RGBA')
   heart22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806296162889891890/review.png', stream = True).content)).convert('RGBA')
-                                                                                    
+
+  global ticket_key
+  for i in await client.get_channel(816385807958802522).history(limit=100).flatten():
+    try:
+      ticket_key = int(i.content.split('\n')[0].split('|')[1])
+      break
+    except:
+      pass
+  else:
+    ticket_key = 0
+
   await client.get_channel(728932829026844672).send('```css\n[Данные обновлены, бот перезапущен].```')
     
 @client.event
@@ -1192,6 +1202,65 @@ async def problem(message, *, quest=None):
         a = await message.channel.send(embed=embed)
         my_cp2.insert_one({"id":message.author.id, "Num":my_cp.find()[0]["Number"], "text":quest, "msg_id":a.id})
         my_cp.update_one({"Number":my_cp.find()[0]["Number"]},{"$set":{"Number":my_cp.find()[0]["Number"] + 1}})
+                            
+@client.command()
+async def ticket(message, id=None, arg=None, *, txt=None):
+  if message.author.id in admins or 816386551222763561 in [role.id for role in message.author.roles]:
+    if id is None:
+      await message.channel.send(embed=discord.Embed(colour=0, description='```css\n[Вы не указали пользователя, от которого подаётся запрос.]```'))
+    elif arg is None:
+      await message.channel.send(embed=discord.Embed(colour=0, description='```css\n[Вы не указали аргумент вышестоящего, к которому подаётся запрос.]```'))
+    elif txt is None:
+      await message.channel.send(embed=discord.Embed(colour=0, description='```css\n[Вы не указали мотив запроса.]```'))
+    elif arg != '-gop' and arg != '-gm' and arg != '-a' and arg != '-h22':
+      await message.channel.send(embed=discord.Embed(colour=0, description='```css\n[Введённого аргумента не существует.]```'))
+    else:
+      try:
+        id = int(id.replace("!", "").replace("@","").replace("<","").replace(">",""))
+        member = await client.fetch_user(id)
+        arg = '<@&686639786672652363>' if arg == '-gop' else '<@&800474182474268734>' if arg == '-gm' else '<@&620955813850120192>' if arg == '-a' else '<@&620955813850120192> <@414119169504575509>'
+        embed = discord.Embed(colour=0, description=f'```md\n#Мотив запроса:```{txt}')
+        embed.set_author(name=f'Тикет от {message.author} | {message.author.id}', icon_url=message.author.avatar_url)
+        global ticket_key; ticket_key += 1
+        await client.get_channel(816385807958802522).send(content=f'{arg}|{ticket_key}\n**От пользователя:** {member.mention} | `{member.id}` | {member}', embed=embed)
+        await message.channel.send(embed=discord.Embed(colour=0, description=f'Тикет успешно создан и передан на рассмотрение {arg}'))        
+      except:
+        await message.channel.send(embed=discord.Embed(colour=0, description='```css\n[Указанного пользователя не существует, либо запрос слишком велик.]```'))
+
+@client.command()
+async def tanswer(message, num=None, *, txt=None):
+  await message.message.delete()
+  b = [role.id for role in message.author.roles]
+  if message.author.id in admins or 686639786672652363 in b or 800474182474268734 in b:
+    if num is None:
+      await message.channel.send(embed=discord.Embed(colour=0, description='```css\n[Вы не указали номер тикета.]```'))
+    elif txt is None:
+      await message.channel.send(embed=discord.Embed(colour=0, description='```css\n[Вы не указали ответ на тикет.]```'))
+    else:
+      for i in await client.get_channel(816385807958802522).history(limit=100).flatten():
+        try:
+          if int(i.content.split('\n')[0].split('|')[1]) == int(num) and (i.raw_role_mentions[0] in b or message.author.id in admins):
+            if txt.split()[-1] == '-s':
+              member = await client.fetch_user(int(i.content.split('`')[1]))
+              try:
+                msg = await member.send(embed=i.embeds[0])
+                key_send_ticket = '<:Check_from_Helen22:760820919265656842>'
+              except:
+                key_send_ticket = ':x:'
+            else:
+              key_send_ticket = '—'
+            e = i.embeds[0]
+            e.clear_fields()
+            e.color = 0x3d0936
+            e.add_field(name=f'`Ответ от {message.author} | {message.author.id}:` {key_send_ticket}', value=txt.replace('-s', ''))
+            sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+            a = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split()[0].split('-')
+            e.set_footer(text=f'Тикет закрыт {a[2]} {sp[int(a[1])]} {a[0]} года в {str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split()[1].split(".")[0]}', icon_url=message.author.avatar_url)
+            await i.edit(embed=e)
+            await msg.edit(embed=e)
+            break
+        except:
+          pass
                 
 @client.command()
 async def iban(message,id=None,*reason):
