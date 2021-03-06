@@ -1320,20 +1320,27 @@ async def ibans(message):
     await message.channel.send(embed=embed)
      
 @client.command()
-async def epms(message):
-  msg = await client.get_channel(784815029118828548).fetch_message(812318331452784641)
-  if str(message.author.id) in msg.content:
-    for i in msg.content.split('\n'):
-      if i.split('|')[0] == str(message.author.id):
-        komy = i.split('|')[1]
-        break
-        
-    aktiv = requests.get(f'https://catalogserverov.ml/stats/pm/all').text.split('{')[-1].split('}')[0].replace('"','').split(',')
-    s, k = '', 1
-    for i in aktiv:
-      s += f"{k}. {await client.fetch_user(int(i.split(':')[0]))} [{i.split(':')[0]}] — {i.split(':')[1]}<br>"
-      k += 1
-
+async def Email(message, arg=None, komy=None):
+  await message.message.delete()
+  if message.author.id in admins or message.author.id == 735540766289690646:
+    if arg is None:
+      await message.channel.send('```css\n[Вы не указали аргумент отправки.]```')
+    elif komy is None:
+      await message.channel.send('```css\n[Вы не указали получателя.]```')
+    elif arg == 'pms':        
+      aktiv = requests.get(f'https://catalogserverov.ml/stats/pm/all').text.split('{')[-1].split('}')[0].replace('"','').split(',')
+      s, k = 'Доброго времени суток.<br><br>Актуальная информация касательно статистики отдела партнёрства находится ниже.<br><br>Статистика отдела партнёрства за последние 2 дня с момента отчёта:<br>', 1
+      for i in aktiv:
+        s += f"{k}. {await client.fetch_user(int(i.split(':')[0]))} [{i.split(':')[0]}] — {i.split(':')[1]}<br>"
+        k += 1
+      s += '<br>Примечание: в данном списке пропущены все пиар-менеджеры, количество партнёрств которых не превышает 0.<br><br>С уважением,<br>Support Team Каталог Серверов.'
+      Theme = f'Partnership Department Statistics {str(datetime.datetime.utcnow()+datetime.timedelta(hours=3)).split()[1].split(".")[0]}'
+    elif arg == 'unban':
+      s = 'Доброго времени суток.<br><br>Мы получили запрос на обжалование Вашей блокировки на сервере Каталог Серверов.<br><br>Наша уполномоченная команда свяжется с Вами сразу же после того, как проверит всю предоставленную информацию и подтвердит факт выданной блокировки, если таковая присутствует.<br><br>Благодарим Вас за вынужденные ожидания.<br><br>С уважением,<br>Support Team Каталог Серверов.'
+      Theme = f'Обжалование блокировки {str(datetime.datetime.utcnow()+datetime.timedelta(hours=3)).split()[1].split(".")[0]}'
+    elif arg == 'design':
+      s = 'Доброго времени суток.<br><br>Мы получили запрос на Ваше вступление в команду дизайнеров проекта Каталог Серверов.<br><br>Наша уполномоченная команда свяжется с Вами сразу же после того, как ознакомится с предоставленной информацией и проведёт оценку Ваших прикреплённых работ.<br><br>Благодарим Вас за вынужденные ожидания.<br><br>С уважением,<br>Support Team Каталог Серверов.'
+      Theme = f'Заявка на дизайнера {str(datetime.datetime.utcnow()+datetime.timedelta(hours=3)).split()[1].split(".")[0]}'
     email_content = """
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -1440,10 +1447,10 @@ async def epms(message):
                       <td align="center" valign="top" style="padding:0;Margin:0;width:560px"> 
                        <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
                          <tr> 
-                          <td align="center" style="padding:0;Margin:0;font-size:0px"><a href="https://discord.gg/nKPdC9V"><img class="adapt-img" src="https://media.discordapp.net/attachments/689800301468713106/812280031493357578/81ce63471202ee60.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="560"></td> 
+                          <td align="center" style="padding:0;Margin:0;font-size:0px"><a href="https://discord.gg/nKPdC9V"><img class="adapt-img" src="https://media.discordapp.net/attachments/767656142285176843/817651448875057182/172_20210204223139.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="560"></td> 
                          </tr> 
                          <tr>
-                          <td align="center" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:verdana, geneva, sans-serif;line-height:21px;color:#333333;text-align:left">Доброго времени суток, """+message.author.name+""".<br><br>Вами была запрошена актуальная информация касательно статистики отдела партнёрства.&nbsp;<br><br></p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:verdana, geneva, sans-serif;line-height:21px;color:#333333">Статистика отдела партнёрства за последние 2 дня с момента отчёта:<br>"""+s+"""</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:verdana, geneva, sans-serif;line-height:21px;color:#333333;text-align:left"><br>Примечание: в данном списке пропущены все пиар-менеджеры, количество партнёрств которых не превышает 0.<br><br>С уважением,<br>Support Каталог Серверов.<br></p></td> 
+                          <td align="center" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:verdana, geneva, sans-serif;line-height:21px;color:#333333;text-align:left">"""+s+"""</p></td> 
                          </tr> 
                        </table></td> 
                      </tr> 
@@ -1499,7 +1506,7 @@ async def epms(message):
     </html>
     """
     msg = email.message.Message()
-    msg['Subject'] = f'Partnership Department Statistics {str(datetime.datetime.utcnow()+datetime.timedelta(hours=3)).split()[1].split(".")[0]}'
+    msg['Subject'] = Theme
 
     msg['From'] = 'catalogserverov@gmail.com'
     msg['To'] = komy
@@ -1513,10 +1520,7 @@ async def epms(message):
 
     s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
     
-    await message.channel.send(f'```md\n#Статистика отдела партнёрства была отправлена на почтовый адрес, владельцем которого является {message.author}.```')
-    
-  else:
-    await message.channel.send('```css\n[Недостаточно прав для предоставления статистики на привязанный электронный адрес].```')
+    await message.channel.send(f'```md\n#Сообщение аргумента {arg} было отправлено на почтовый адрес {"*"*(len(komy)//4)}{komy[len(komy)//4-1::]}.```')
                       
 @client.command()
 async def info(message, id = None):
