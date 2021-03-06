@@ -383,7 +383,7 @@ async def ban(message, id=None, *, reason=None):
               if reason is None:
                 reason = 'Причина не указана.'
               try:
-                embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000,description=f'Вы были забанены на сервере Каталог Серверов по причине `{reason}` модератором `{message.author.name}`. Если Вы считаете, что наказание было выдано необоснованно, у Вас есть возможность его обжаловать **[здесь](https://forms.gle/Ph7VjA86zQSy2crh9)**.')
+                embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000,description=f'Вы были забанены на сервере Каталог Серверов по причине `{reason}` модератором `{message.author.name}`. Если Вы считаете, что наказание было выдано необоснованно, у Вас есть возможность его обжаловать **[здесь](https://forms.gle/PSC8smGWMBZR7f6m8)**.')
                 embed.set_thumbnail(url=message.guild.icon_url)
                 embed.set_footer(text='С уважением, Команда Каталога!')
                 await a.send(embed=embed)
