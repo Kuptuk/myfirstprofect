@@ -1225,7 +1225,8 @@ async def ticket(message, id=None, arg=None, *, txt=None):
         id = int(id.replace("!", "").replace("@","").replace("<","").replace(">",""))
         member = await client.fetch_user(id)
         arg = '<@&686639786672652363>' if arg == '-gop' else '<@&800474182474268734>' if arg == '-gm' else '<@&620955813850120192>' if arg == '-a' else '<@&620955813850120192> <@414119169504575509>'
-        embed = discord.Embed(colour=0, description=f'```md\n#Мотив запроса:```{txt}')
+        embed = discord.Embed(colour=0x70392f, description=f'```md\n#Мотив запроса:```{txt}')
+        embed.add_field(name='```Статус тикета:```', value='❗ Не начинал рассматриваться.', inline=False)
         embed.set_author(name=f'Тикет от {message.author} | {message.author.id}', icon_url=message.author.avatar_url)
         global ticket_key; ticket_key += 1
         await client.get_channel(816385807958802522).send(content=f'{arg}|{ticket_key}\n**От пользователя:** {member.mention} | `{member.id}` | {member}', embed=embed)
@@ -1257,11 +1258,18 @@ async def tanswer(message, num=None, *, txt=None):
               key_send_ticket = '—'
             e = i.embeds[0]
             e.clear_fields()
-            e.color = 0x3d0936
-            e.add_field(name=f'`Ответ от {message.author} | {message.author.id}:` {key_send_ticket}', value=txt.replace('-s', ''))
+            if txt.split()[0] == '-ok':
+              e.color = 0x234a36
+              foot_text = '✔️ Тикет закрыт'
+              e.add_field(name='```Статус тикета:```', value='\✔️ Рассмотрен.', inline=False)
+            else:
+              e.color = 0xffff01
+              foot_text = '🕒 На рассмотрении от'
+              e.add_field(name='```Статус тикета:```', value='\🕒 На рассмотрении.', inline=False)
+            e.add_field(name=f'`Ответ от {message.author} | {message.author.id}:` {key_send_ticket}', value=txt.replace('-s', '').replace('-ok',''))
             sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
             a = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split()[0].split('-')
-            e.set_footer(text=f'Тикет закрыт {a[2]} {sp[int(a[1])]} {a[0]} года в {str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split()[1].split(".")[0]}', icon_url=message.author.avatar_url)
+            e.set_footer(text=f'{foot_text} {a[2]} {sp[int(a[1])]} {a[0]} года в {str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split()[1].split(".")[0]}', icon_url=message.author.avatar_url)
             await i.edit(embed=e)
             await msg.edit(embed=e)
             break
