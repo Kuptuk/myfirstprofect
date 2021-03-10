@@ -13,6 +13,9 @@ from Cybernator import Paginator
 import time
 import smtplib
 import email.message
+import traceback
+import contextlib
+import textwrap
 
 mm = os.environ.get("Mongo")
 tt = os.environ.get("TOKEN")
@@ -292,29 +295,43 @@ async def ping(message):
   if message.author.id in admins:
     await message.send(f'Pong! `{round(client.latency * 1000)}ms`')
   
-@client.command() 
-async def ev(message,*command):
-  if message.author.id == 414119169504575509 or message.author.id == 529044574660853761:
-    await message.message.delete()
-    command = " ".join(command)
-    res = eval(command)
-    if inspect.isawaitable(res): 
-      res = str(await res)
-    else:
-      res = str(res)
-    if len(res) >= 2000:
-      f = open(f'{message.author}.txt', 'w')
-      f.write(res)
-      f.close()
-      await message.channel.send(content='Результат вывода слишком большой.',file = discord.File(fp = f'{message.author}.txt'))
-    else:
-      await message.channel.send(embed=discord.Embed(description=f'```diff\n- {res}```'))
+@client.command()
+async def ev(ctx, *, txt):
+    if ctx.author.id == 414119169504575509:
+        if txt.startswith('```') and txt.endswith('```'):
+            txt = '\n'.join(txt.split('\n')[1:][:-3])
+    
+        local_variables = {
+            'discord': discord,
+            'commands': commands,
+            'bot': client,
+            'ctx': ctx,
+            'channel': ctx.channel,
+            'author': ctx.author,
+            'guild': ctx.guild,
+            'message': ctx.message
+        }
+
+        stdout = io.StringIO()
+
+        try:
+            with contextlib.redirect_stdout(stdout):
+                exec(
+                    f'async def func():\n{textwrap.indent(txt, "    ")}', local_variables
+                )
+
+                obj = await local_variables['func']()
+                result = f'{stdout.getvalue()}\n-- {obj}\n'
+        except Exception as e:
+            result = ''.join(traceback.format_exception(e, e, e.__traceback__))
+
+        await ctx.channel.send(embed=discord.Embed(description='```py\n' + result + '```', colour=0x000001, timestamp=datetime.datetime.utcnow()).set_footer(text=ctx.author.name, icon_url=ctx.author.avatar_url))
     
 @client.command()
 async def help(message):
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов v1.0.2', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.emoji emoji|ID` — информация об эмодзи (только нашего сервера).\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.info badges` — обозначение значков.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера [@упоминаниями].\n`K.team -` — состав Команды сервера [текстом].\n`K.problem` — задать вопрос администрации сервера.\n`K.versions` — общедоступная команда для отслеживания версий команд в боте.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов v1.0.2', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.emoji emoji|ID` — информация об эмодзи (только нашего сервера).\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.info badges` — обозначение значков.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера [@упоминаниями].\n`K.team -` — состав Команды сервера [текстом].\n`K.problem` — задать вопрос администрации сервера.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     
