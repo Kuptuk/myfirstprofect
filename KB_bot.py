@@ -67,8 +67,8 @@ async def on_ready():
   global d
   global dk
   global kolpub
-  global date_pms
-  date_pms = time.time() - 180
+  global date_pms; date_pms = time.time() - 180
+  global active_kd; active_kd = time.time() - 1200
   a = client.get_guild(604636579545219072).categories
   idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
   c, k, d, dk = [], [], {}, {}
@@ -1283,7 +1283,39 @@ async def tanswer(message, num=None, *, txt=None):
             break
         except:
           pass
-                
+
+@client.command()
+async def active(message, id=None, arg=None, *, reason=None):
+    b = [role.id for role in message.author.roles]
+    if message.author.id in admins or 816386551222763561 in b or 765212719380037663 in b or 677397817966198788 in b or 800474182474268734 in b:
+        global active_kd
+        if time.time()-active_kd >= 1200:
+            if id is None:
+                await message.channel.send(embed=discord.Embed(description='```diff\n- Вы не указали пользователя.```'))
+            elif arg is None:
+                await message.channel.send(embed=discord.Embed(description='```diff\n- Вы не указали аргумент (+/-).```'))
+            elif arg != '+' and arg != '-':
+                await message.channel.send(embed=discord.Embed(description='```diff\n- Аргументом может выступать только + или -.```'))
+            elif reason is None:
+                await message.channel.send(embed=discord.Embed(description='```diff\n- Вы не указали причину.```'))
+            else:
+                try:
+                    member = message.guild.get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+                    if arg == '-' and not 619013112531517501 in [role.id for role in member.roles]:
+                        await message.message.add_reaction('❌')
+                    else:
+                        if arg == '+':
+                            await member.add_roles(message.guild.get_role(619013112531517501), reason=f'{message.author.name}: {reason}')
+                        else:
+                            await member.remove_roles(message.guild.get_role(619013112531517501), reason=f'{message.author.name}: {reason}')
+                        await message.message.add_reaction('<:Check_from_Helen22:760820919265656842>')
+                        active_kd = time.time()
+                except:
+                    await message.channel.send(embed=discord.Embed(description='```diff\n- Пользователя не существует.```'))
+        else:
+            otkat = f'Минут до отката команды: ~{int((1200-(time.time()-active_kd))//60)}' if (1200-(time.time()-active_kd))//60 != 0 else f'Секунд до отката команды: ~{int(1200-(time.time()-active_kd))}'
+            await message.channel.send(embed=discord.Embed(colour=0x310000,description=f'```css\n[Данная команда имеет общую задержку в 20 минут.]```\n```md\n#{otkat}```'))
+
 @client.command()
 async def iban(message,id=None,*reason):
   if message.author.id in admins:
