@@ -1605,17 +1605,17 @@ async def info(message, id = None):
             b = [role.id for role in member.roles]
             if 608994688078184478 in b and list(message.message.content)[-1] != '-':
               if randch == 1:
-                response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True).content))
-                idraw = ImageDraw.Draw(response)
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
               elif mid == 713780299024039936:
-                response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/818019776135036938/card_angelina_2.png', stream = True).content))
-                idraw = ImageDraw.Draw(response)
-              elif mid == 571006178444836875:
-                response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807933906975719444/cardo4ka.png', stream = True).content))
-                idraw = ImageDraw.Draw(response)
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/818019776135036938/card_angelina_2.png', stream = True)
+              elif mid == 529044574660853761:
+                response = requests.get('https://media.discordapp.net/attachments/787176959900647454/819952940638666832/glitch_2021-3-12_17-19-57.jpg', stream = True)
+              elif mid in [414119169504575509, 562561140786331650]:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/819962677312225290/catalog_card1.png', stream = True)
               else:
-                response = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/802581229613350942/test.png', stream = True).content))
-                idraw = ImageDraw.Draw(response)
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/802581229613350942/test.png', stream = True)
+              response = Image.open(io.BytesIO(response.content))
+              idraw = ImageDraw.Draw(response)
               dol, otd, flag = 'Не указана', 'Отдел не указан', False
               if mid == 414119169504575509:
                 dol = 'Разработчик'
@@ -1659,8 +1659,8 @@ async def info(message, id = None):
                 response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
               elif mid == 357518684723478540:
                 response = requests.get('https://media.discordapp.net/attachments/689800301468713106/812249880084873216/card_moxxie1.png', stream = True)
-              elif mid == 414119169504575509:
-                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/812252851077382164/card_helya.png', stream = True)
+              elif mid == 571006178444836875:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/807933906975719444/cardo4ka.png', stream = True)
               elif not member.premium_since is None:
                 response = requests.get('https://media.discordapp.net/attachments/689800301468713106/797145563191705630/booster.png', stream = True)
               elif 769916590686732319 in b:
@@ -1672,7 +1672,7 @@ async def info(message, id = None):
               elif 688654966675603491 in b:
                 response = requests.get('https://media.discordapp.net/attachments/689800301468713106/797092901150392350/partner1.png', stream = True)
               else:
-                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/797145078182838272/classical.png', stream = True)
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/819962677055979520/catalog_card1_test.png', stream = True)
               response = Image.open(io.BytesIO(response.content))
               idraw = ImageDraw.Draw(response)
               if 769916590686732319 in b or 622501691107049502 in b or 622501656591990784 in b or 688654966675603491 in b:
