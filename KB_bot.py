@@ -1589,7 +1589,6 @@ async def info(message, id = None):
       global msgbots; global bag; global medal22; global medal_chat_users; global souz; global help; global rm22; global ngl; global att; global ideas; global bang; global msgotz; global candys; global heart; global msgs
       global crown; global dev; global bag22; global medal; global medal_chat; global allia; global help22; global rm; global ngl2; global att22; global id22; global bg22; global cotz; global candy; global heart22; global support
       sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-      randch = random.randint(1,100)
       color = (255, 255, 255)
       try:
           async with message.typing():
@@ -1604,9 +1603,7 @@ async def info(message, id = None):
 
             b = [role.id for role in member.roles]
             if 608994688078184478 in b and list(message.message.content)[-1] != '-':
-              if randch == 1:
-                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
-              elif mid == 713780299024039936:
+              if mid == 713780299024039936:
                 response = requests.get('https://media.discordapp.net/attachments/689800301468713106/818019776135036938/card_angelina_2.png', stream = True)
               elif mid == 529044574660853761:
                 response = requests.get('https://media.discordapp.net/attachments/787176959900647454/819952940638666832/glitch_2021-3-12_17-19-57.jpg', stream = True)
@@ -1655,8 +1652,8 @@ async def info(message, id = None):
               idraw.text((145 , 430), f'Выговоров: {len([i for i in my_warn_md.find({"id":mid})])}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
 
             else:
-              if randch == 1:
-                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
+              if message.author.id == 394757049893912577 and 'png' in message.message.content:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/820008119286759465/file.png', stream = True)
               elif mid == 357518684723478540:
                 response = requests.get('https://media.discordapp.net/attachments/689800301468713106/812249880084873216/card_moxxie1.png', stream = True)
               elif mid == 571006178444836875:
@@ -1850,26 +1847,16 @@ async def info(message, id = None):
             if net_zn == 0:
               idraw.text((365 , 200), f'У вас пока нет ни одного значка ;(', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
 
-            if randch == 1:
-              gl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786978327420076062/glitchon.png', stream = True).content)).convert('RGBA')
-              response.paste(gl, (0, 0), gl)
-              response.save('user_card.png')
-              await message.channel.send(content='О̵͌́й̶̿̒.̵̅͛.̵̯̃.̶̊̿ ̵̇̚В̷̒̀ӹ̸́̈ ̸̍͝с̷͐͐л̷͒̊о̵͑̌м̶̐̿ӓ̶́͐л̸̒̍и̸͂̚ ̶͌͘б̶̍̾о̷̇̈́т̴̋̓а̶̎͊ ',file = discord.File(fp = 'user_card.png'))
-            else:
-              response.save('user_card.png')
-              await message.channel.send(file = discord.File(fp = 'user_card.png'))
+            response.save('user_card.png')
+            await message.channel.send(file = discord.File(fp = 'user_card.png'))
 
       except:
           try:
-              randch = random.randint(1,100)
               member = await client.fetch_user(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
               avatar = requests.get(member.avatar_url, stream = True)
               avatar = Image.open(io.BytesIO(avatar.content))
               avatar = avatar.convert('RGBA')
-              if randch == 1:
-                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/784744502048063499/glitch.png', stream = True)
-              else:
-                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/797145078182838272/classical.png', stream = True)
+              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/819962677055979520/catalog_card1_test.png', stream = True)
               response = Image.open(io.BytesIO(response.content))
               idraw = ImageDraw.Draw(response)
               avatar = avatar.resize((212, 212), Image.ANTIALIAS)
@@ -1889,14 +1876,8 @@ async def info(message, id = None):
               except:
                 idraw.text((365 , 260), 'Пользователь не забанен.', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
 
-              if randch == 1:
-                gl = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/786978327420076062/glitchon.png', stream = True).content)).convert('RGBA')
-                response.paste(gl, (0, 0), gl)
-                response.save('user_card.png')
-                await message.channel.send(content='О̵͌́й̶̿̒.̵̅͛.̵̯̃.̶̊̿ ̵̇̚В̷̒̀ӹ̸́̈ ̸̍͝с̷͐͐л̷͒̊о̵͑̌м̶̐̿ӓ̶́͐л̸̒̍и̸͂̚ ̶͌͘б̶̍̾о̷̇̈́т̴̋̓а̶̎͊ ',file = discord.File(fp = 'user_card.png'))
-              else:
-                response.save('user_card.png')
-                await message.channel.send(file = discord.File(fp = 'user_card.png'))
+              response.save('user_card.png')
+              await message.channel.send(file = discord.File(fp = 'user_card.png'))
           except:
               await message.channel.send('```css\nПользователя не существует.```')
 
