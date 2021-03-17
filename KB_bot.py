@@ -1604,11 +1604,11 @@ async def info(message, id = None):
             b = [role.id for role in member.roles]
             if 608994688078184478 in b and list(message.message.content)[-1] != '-':
               if mid == 713780299024039936:
-                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/821771328548896860/card_angelina_v3.png', stream = True)
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/821772685192331304/card_angelina_v3.png', stream = True)
               elif mid == 529044574660853761:
                 response = requests.get('https://media.discordapp.net/attachments/787176959900647454/819952940638666832/glitch_2021-3-12_17-19-57.jpg', stream = True)
               elif mid == 722394482515116072:
-                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/821771358614323240/goffit.png', stream = True)
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/821772686224916480/goffit.png', stream = True)
               elif mid in [414119169504575509, 562561140786331650]:
                 response = requests.get('https://media.discordapp.net/attachments/689800301468713106/819962677312225290/catalog_card1.png', stream = True)
               else:
