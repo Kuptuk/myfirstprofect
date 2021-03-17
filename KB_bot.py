@@ -68,7 +68,7 @@ async def on_ready():
   global dk
   global kolpub
   global date_pms; date_pms = time.time() - 180
-  global active_kd; active_kd = time.time() - 1200
+  global active_kd; active_kd = time.time() - 300
   a = client.get_guild(604636579545219072).categories
   idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
   c, k, d, dk = [], [], {}, {}
@@ -1289,7 +1289,7 @@ async def active(message, id=None, arg=None, *, reason=None):
     b = [role.id for role in message.author.roles]
     if message.author.id in admins or 816386551222763561 in b or 765212719380037663 in b or 677397817966198788 in b or 800474182474268734 in b:
         global active_kd
-        if time.time()-active_kd >= 1200:
+        if time.time()-active_kd >= 300:
             if id is None:
                 await message.channel.send(embed=discord.Embed(description='```diff\n- Вы не указали пользователя.```'))
             elif arg is None:
@@ -1313,8 +1313,8 @@ async def active(message, id=None, arg=None, *, reason=None):
                 except:
                     await message.channel.send(embed=discord.Embed(description='```diff\n- Пользователя не существует.```'))
         else:
-            otkat = f'Минут до отката команды: ~{int((1200-(time.time()-active_kd))//60)}' if (1200-(time.time()-active_kd))//60 != 0 else f'Секунд до отката команды: ~{int(1200-(time.time()-active_kd))}'
-            await message.channel.send(embed=discord.Embed(colour=0x310000,description=f'```css\n[Данная команда имеет общую задержку в 20 минут.]```\n```md\n#{otkat}```'))
+            otkat = f'Минут до отката команды: ~{int((300-(time.time()-active_kd))//60)}' if (300-(time.time()-active_kd))//60 != 0 else f'Секунд до отката команды: ~{int(300-(time.time()-active_kd))}'
+            await message.channel.send(embed=discord.Embed(colour=0x310000,description=f'```css\n[Данная команда имеет общую задержку в 5 минут.]```\n```md\n#{otkat}```'))
 
 @client.command()
 async def iban(message,id=None,*reason):
@@ -1604,9 +1604,11 @@ async def info(message, id = None):
             b = [role.id for role in member.roles]
             if 608994688078184478 in b and list(message.message.content)[-1] != '-':
               if mid == 713780299024039936:
-                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/818019776135036938/card_angelina_2.png', stream = True)
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/821771328548896860/card_angelina_v3.png', stream = True)
               elif mid == 529044574660853761:
                 response = requests.get('https://media.discordapp.net/attachments/787176959900647454/819952940638666832/glitch_2021-3-12_17-19-57.jpg', stream = True)
+              elif mid == 722394482515116072:
+                response = requests.get('https://media.discordapp.net/attachments/689800301468713106/821771358614323240/goffit.png', stream = True)
               elif mid in [414119169504575509, 562561140786331650]:
                 response = requests.get('https://media.discordapp.net/attachments/689800301468713106/819962677312225290/catalog_card1.png', stream = True)
               else:
