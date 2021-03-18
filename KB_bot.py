@@ -297,7 +297,7 @@ async def ping(message):
   
 @client.command()
 async def ev(ctx, *, txt):
-    if ctx.author.id == 414119169504575509:
+    if ctx.author.id == 414119169504575509 or ctx.author.id == 529044574660853761:
         if txt.startswith('```') and txt.endswith('```'):
             txt = '\n'.join(txt.split('\n')[1:][:-3])
     
