@@ -528,9 +528,9 @@ async def on_raw_reaction_add(payload):
               while key_log.get(payload.message_id) == 9 and i != 4:
                   await msg_c.add_reaction(emojis[i])
                   i += 1
-          elif payload.channel_id == id_chn_jb and payload.emoji.id == 822423843163078668 and mods.get(payload.message_id)[0] == payload.user_id and mods_type.get(payload.message_id)[2]:
+          elif payload.channel_id == id_chn_jb and payload.emoji.id == 822423843163078668 and mods.get(payload.message_id)[0] == payload.user_id and not mods_type.get(payload.message_id)[2] == '123':
               msg_c = msg_arch.get(payload.message_id)
-              mods_type.update({payload.message_id:[None, 0, False]})
+              mods_type.update({payload.message_id:[None, 0, '123']})
               member = mods.get(payload.message_id)[2]
               posl_date, s, embeds, k, ss_s, spisok = '', '', [], 0, {}, []
               sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
