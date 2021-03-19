@@ -53,6 +53,7 @@ client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
 client.remove_command("help")
 
 admins = [562561140786331650,414119169504575509,529044574660853761]
+id_chn_jb = 819618523076624385
 
 @client.event
 async def on_ready():
@@ -69,6 +70,10 @@ async def on_ready():
   global kolpub
   global date_pms; date_pms = time.time() - 180
   global active_kd; active_kd = time.time() - 300
+  global mods; mods = {}
+  global mods2; mods2 = {}
+  global mods_type; mods_type = {}
+  global key; key = 0
   a = client.get_guild(604636579545219072).categories
   idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
   c, k, d, dk = [], [], {}, {}
