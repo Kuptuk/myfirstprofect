@@ -53,6 +53,7 @@ client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
 client.remove_command("help")
 
 admins = [562561140786331650,414119169504575509,529044574660853761]
+id_chn_jb = 819618523076624385
 
 @client.event
 async def on_ready():
@@ -69,6 +70,14 @@ async def on_ready():
   global kolpub
   global date_pms; date_pms = time.time() - 180
   global active_kd; active_kd = time.time() - 300
+                                                                                    
+  global mods; mods = {}
+  global mods2; mods2 = {}
+  global mods_type; mods_type = {}
+  global check_pay; check_pay = []
+  global key_log; key_log = {}
+  global msg_arch; msg_arch = {}
+                                                                                    
   a = client.get_guild(604636579545219072).categories
   idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
   c, k, d, dk = [], [], {}, {}
@@ -143,6 +152,14 @@ async def on_ready():
 @client.event
 async def on_message(message):
   idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
+  if message.channel.id == id_chn_jb:
+    if 677397817966198788 in [role.id for role in message.role_mentions]:
+      try:
+        intruder = await client.fetch_user(int(message.content.split('\n')[1].replace('.',' ').replace('<',' ').replace('>',' ').replace('@',' ').replace('!',' ').split()[-1]))
+        reason = message.content.split("\n")[2]
+        await message.add_reaction('<:developer:785191301321719828>')
+      except:
+        pass
   if message.guild is None:
     embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description=message.content)
     embed.set_author(name=message.author, icon_url=message.author.avatar_url)
@@ -249,7 +266,309 @@ async def on_raw_reaction_add(payload):
       await mes.remove_reaction('🎲',payload.member)
       await mes.remove_reaction('🏕️',payload.member)
       await mes.remove_reaction('🧩',payload.member)
-  
+  elif payload.channel_id == id_chn_jb:
+      if 677397817966198788 in [role.id for role in gg.get_member(payload.user_id).roles] or payload.user_id in admins:
+          global mods; global mod2; global mods_type; global check_pay; global key_log
+          if payload.channel_id == id_chn_jb and payload.emoji.id == 785191301321719828 and not payload.message_id in check_pay:
+              check_pay.append(payload.message_id)
+              msg_r = await client.get_channel(id_chn_jb).fetch_message(payload.message_id)
+              await msg_r.clear_reactions()
+              mod_r = await client.fetch_user(payload.user_id)
+              intruder = await client.fetch_user(int(msg_r.content.split('\n')[1].replace('.',' ').replace('<',' ').replace('>',' ').replace('@',' ').replace('!',' ').split()[-1]))
+              reason = msg_r.content.split("\n")[2].replace('1.', '').replace('2.', '').replace('3.', '').replace('4.', '').replace('5.', '')
+              msg_new = await msg_r.reply(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Главное меню]', description=f'```css\n[Нарушитель]:```{intruder.mention} `[{intruder.id}]` | {intruder}\n```css\n[Пользовательская причина]:```{reason}\n```md\n#Альтернативная мера наказания:```<:no:819634947756916810> — Передать другому модератору.\n<:ban:819620281139462165> — Бан.\n<:mute:819620281643302912> — Мут.\n<:warn:819620282187644999> — Предупреждение.\n<:otkaz:819631424789413969> — Выдать отказ.\n<:warns:822423843163078668> — Предупреждения пользователя.').set_footer(text=f'Ответственный за жалобу {mod_r}', icon_url=mod_r.avatar_url))
+              key_log.update({msg_new.id:0})
+              mods.update({msg_new.id:[payload.user_id, msg_r.jump_url, intruder, reason, mod_r, msg_r]})
+              mods_type.update({msg_new.id:[None, 0, True]})
+              msg_arch.update({msg_new.id:msg_new})
+              i, emojis = 0, ['<:no:819634947756916810>', '<:ban:819620281139462165>', '<:mute:819620281643302912>', '<:warn:819620282187644999>', '<:otkaz:819631424789413969>', '<:warns:822423843163078668>']
+              while key_log.get(msg_new.id) == 0 and i != 6:
+                  await msg_new.add_reaction(emojis[i])
+                  i += 1
+          elif payload.channel_id == id_chn_jb and payload.emoji.id == 819634947756916810 and mods.get(payload.message_id)[0] == payload.user_id:
+              check_pay.remove(mods.get(payload.message_id)[5].id)
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.delete()
+              await mods.get(payload.message_id)[5].add_reaction('<:developer:785191301321719828>')
+          elif payload.channel_id == id_chn_jb and (payload.emoji.id == 819639758871461909 or payload.emoji.id == 822131145026043984) and mods.get(payload.message_id)[0] == payload.user_id:
+              key_log.update({payload.message_id:1})
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.clear_reactions()
+              await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Главное меню]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```md\n#Альтернативная мера наказания:```<:no:819634947756916810> — Передать другому модератору.\n<:ban:819620281139462165> — Бан.\n<:mute:819620281643302912> — Мут.\n<:warn:819620282187644999> — Предупреждение.\n<:otkaz:819631424789413969> — Выдать отказ.\n<:warns:822423843163078668> — Предупреждения пользователя.').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+              i, emojis = 0, ['<:no:819634947756916810>', '<:ban:819620281139462165>', '<:mute:819620281643302912>', '<:warn:819620282187644999>', '<:otkaz:819631424789413969>', '<:warns:822423843163078668>']
+              while key_log.get(payload.message_id) == 1 and i != 6:
+                  await msg_c.add_reaction(emojis[i])
+                  i += 1
+          elif payload.channel_id == id_chn_jb and (payload.emoji.id == 819620281139462165 or payload.emoji.id == 819642889855696926) and mods.get(payload.message_id)[0] == payload.user_id:
+              key_log.update({payload.message_id:2})
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.clear_reactions()
+              await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Причина бана]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```py\n"Популярные причины для банов":```<:zero_ban:819621518522843177> — Пользовательская причина.\n<:one_ban:819621518433583125> — Пиар в лс и/или на сервере.\n<:two_ban:819621518752874556> — Рейдер.\n<:three_ban:819621518929166346> — Крашер.\n<:four_ban:819621518862057502> — Рассылка.\n<:five_ban:819621518434631751> — Многократное нарушение правил.').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+              mods_type.update({payload.message_id:['ban', 0, False]})
+              i, emojis = 0, ['<:back:819639758871461909>', '<:zero_ban:819621518522843177>', '<:one_ban:819621518433583125>', '<:two_ban:819621518752874556>', '<:three_ban:819621518929166346>', '<:four_ban:819621518862057502>', '<:five_ban:819621518434631751>', '<:otkaz:819631424789413969>', '<:no:819634947756916810>']
+              while key_log.get(payload.message_id) == 2 and i != 9:
+                  await msg_c.add_reaction(emojis[i])
+                  i += 1
+          elif payload.channel_id == id_chn_jb and mods.get(payload.message_id)[0] == payload.user_id and (payload.emoji.id == 819621518522843177 or payload.emoji.id == 819621518433583125 or payload.emoji.id == 819621518752874556 or payload.emoji.id == 819621518929166346 or payload.emoji.id == 819621518862057502 or payload.emoji.id == 819621518434631751):
+              key_log.update({payload.message_id:3})
+              if payload.emoji.id == 819621518522843177:
+                  reason_b = mods.get(payload.message_id)[3]
+              elif payload.emoji.id == 819621518433583125:
+                  reason_b = 'пиар в лс и/или на серверах.'
+              elif payload.emoji.id == 819621518752874556:
+                  reason_b = 'рейдер.'
+              elif payload.emoji.id == 819621518929166346:
+                  reason_b = 'крашер.'
+              elif payload.emoji.id == 819621518862057502:
+                  reason_b = 'несогласованная рассылка.'
+              elif payload.emoji.id == 819621518434631751:
+                  reason_b = 'многократное нарушение правил.'
+              mods2.update({payload.message_id:reason_b})
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.clear_reactions()
+              await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Подтверждение бана]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```diff\n- Подтверждение:```Вы уверены, что хотите забанить пользователя {mods.get(payload.message_id)[2].mention} по причине `{reason_b}`?').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+              i, emojis = 0, ['<:yes_warn:819692933489754122>', '<:no:819642889855696926>', '<:Home:822131145026043984>', '<:no:819634947756916810>']
+              while key_log.get(payload.message_id) == 3 and i != 4:
+                  await msg_c.add_reaction(emojis[i])
+                  i += 1
+          elif payload.channel_id == id_chn_jb and payload.emoji.id == 819631424789413969 and mods.get(payload.message_id)[0] == payload.user_id:
+              key_log.update({payload.message_id:4})
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.clear_reactions()
+              await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Отказ в жалобе]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```py\n"Причина для отказа":```<:one_otkaz:819647171430973480> — Нет нарушений.\n<:two_otkaz:819647200229064775> — Не по форме.\n<:three_otkaz:819654562276704328> — Доказательства устарели/обрезаны.').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+              i, emojis = 0, ['<:back:819639758871461909>', '<:one_otkaz:819647171430973480>', '<:two_otkaz:819647200229064775>', '<:three_otkaz:819654562276704328>', '<:no:819634947756916810>']
+              while key_log.get(payload.message_id) == 4 and i != 5:
+                  await msg_c.add_reaction(emojis[i])
+                  i += 1
+          elif payload.channel_id == id_chn_jb and mods.get(payload.message_id)[0] == payload.user_id and (payload.emoji.id == 819647171430973480 or payload.emoji.id == 819647200229064775 or payload.emoji.id == 819654562276704328):
+              key_log.update({payload.message_id:5})
+              if payload.emoji.id == 819647171430973480:
+                  reason_b = 'нет нарушений.'
+              elif payload.emoji.id == 819647200229064775:
+                  reason_b = 'не по форме.'
+              elif payload.emoji.id == 819654562276704328:
+                  reason_b = 'доказательства устарели/обрезаны.'
+              mods2.update({payload.message_id:reason_b})
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.clear_reactions()
+              await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Подтверждение отказа]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```diff\n- Подтверждение:```Вы уверены, что хотите отказать в жалобе по причине `{reason_b}`?').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+              i, emojis = 0, ['<:yes_otkaz:819662713147883620>', '<:nootkaz:819631424789413969>', '<:Home:822131145026043984>', '<:no:819634947756916810>']
+              while key_log.get(payload.message_id) == 5 and i != 4:
+                  await msg_c.add_reaction(emojis[i])
+                  i += 1
+          elif payload.channel_id == id_chn_jb and payload.emoji.id == 819662713147883620 and mods.get(payload.message_id)[0] == payload.user_id:
+              key_log.update({payload.message_id:-1})
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.clear_reactions()
+              reason_b = mods2.get(payload.message_id)
+              await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Меры приняты]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```diff\n- Принял меры:```{mods.get(payload.message_id)[4].mention} | `[{mods.get(payload.message_id)[4].id}]` | {mods.get(payload.message_id)[4]}\n> В жалобе отказано.\n> `Причина:` {reason_b}').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+              await mods.get(payload.message_id)[5].add_reaction('<:nootkaz:819631424789413969>')
+          elif payload.channel_id == id_chn_jb and (payload.emoji.id == 819620282187644999 or payload.emoji.id == 819691331672735815  or payload.emoji.id == 819692972870205460 or payload.emoji.id == 819620281643302912) and mods.get(payload.message_id)[0] == payload.user_id:
+              key_log.update({payload.message_id:6})
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.clear_reactions()
+              if payload.emoji.id == 819620281643302912:
+                  mods_type.update({payload.message_id:['mute', 0, False]})
+                  pnmd = 'Панель модератора [Причина мута (раздел)]'
+              elif payload.emoji.id == 819620282187644999:
+                  mods_type.update({payload.message_id:['warn', 0, False]})
+                  pnmd = 'Панель модератора [Причина предупреждения (раздел)]'
+              else:
+                  pnmd = 'Панель модератора [Причина мута (раздел)]' if mods_type.get(payload.message_id)[0] == 'mute' else 'Панель модератора [Причина предупреждения (раздел)]'
+              await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=pnmd, description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```py\n"Выберите раздел нарушения":```<:zero_warn:819678029004406785> — Пользовательская причина.\n<:one_warn:820222062035468333> — Основные принципы и положение.\n<:three_warn:819675568890839070> — Правила общения и поведения.\n<:four_warn:819675568617422849> — Правила личного характера.').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+              i, emojis = 0, ['<:back:819639758871461909>', '<:zero_warn:819678029004406785>', '<:one_warn:820222062035468333>', '<:three_warn:819675568890839070>', '<:four_warn:819675568617422849>', '<:otkaz:819631424789413969>', '<:no:819634947756916810>', '<:no:819634947756916810>']
+              while key_log.get(payload.message_id) == 6 and i != 7:
+                  await msg_c.add_reaction(emojis[i])
+                  i += 1
+          elif payload.channel_id == id_chn_jb and mods.get(payload.message_id)[0] == payload.user_id and (payload.emoji.id == 820225738858561576 or payload.emoji.id == 820222062035468333 or payload.emoji.id == 819675568890839070 or payload.emoji.id == 819675568617422849):
+              key_log.update({payload.message_id:7})
+              if payload.emoji.id != 820225738858561576:
+                  if payload.emoji.id == 820222062035468333:
+                      reason_b = '1.'
+                  elif payload.emoji.id == 819675568890839070:
+                      reason_b = '3.'
+                  elif payload.emoji.id == 819675568617422849:
+                      reason_b = '4.'
+                  mods2.update({payload.message_id:reason_b})
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.clear_reactions()
+              pnmd = 'Панель модератора [Причина мута (пункт)]' if mods_type.get(payload.message_id)[0] == 'mute' else 'Панель модератора [Причина предупреждения (пункт)]'
+              await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=pnmd, description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```py\n"Выберите пункт нарушения":```').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+              i, emojis = 0, ['<:back_warn:819691331672735815>', '<:one_pred:819689230892138547>', '<:two_pred:819689230913241128>', '<:three_pred:819689230896595014>', '<:four_pred:819689230899871746>', '<:five_pred:819689230879686656>', '<:six_pred:819689230892662864>', '<:seven_pred:819689231412756560>', '<:eight_pred:819689231366619156>', '<:nine_pred:819689231395848242>', '<:otkaz:819631424789413969>', '<:Home:822131145026043984>', '<:no:819634947756916810>']
+              while key_log.get(payload.message_id) == 7 and i != 14:
+                  await msg_c.add_reaction(emojis[i])
+                  i += 1
+          elif payload.channel_id == id_chn_jb and mods.get(payload.message_id)[0] == payload.user_id and payload.emoji.id in [819689230892138547, 819689230913241128, 819689230896595014, 819689230899871746, 819689230879686656, 819689230892662864, 819689231412756560, 819689231366619156, 819689231395848242, 819678029004406785]:
+              key_log.update({payload.message_id:8})
+              if payload.emoji.id == 819678029004406785:
+                  mods2.update({payload.message_id:mods.get(payload.message_id)[3]})
+                  emmo_back = '<:back_warn:819691331672735815>'
+              else:
+                  emmo_back = '<:back_mute_pow:820225738858561576>'
+                  if payload.emoji.id == 819689230892138547:
+                      reason_b = '1'
+                  elif payload.emoji.id == 819689230913241128:
+                      reason_b = '2'
+                  elif payload.emoji.id == 819689230896595014:
+                      reason_b = '3'
+                  elif payload.emoji.id == 819689230899871746:
+                      reason_b = '4'
+                  elif payload.emoji.id == 819689230879686656:
+                      reason_b = '5'
+                  elif payload.emoji.id == 819689230892662864:
+                      reason_b = '6'
+                  elif payload.emoji.id == 819689231412756560:
+                      reason_b = '7'
+                  elif payload.emoji.id == 819689231366619156:
+                      reason_b = '8'
+                  elif payload.emoji.id == 819689231395848242:
+                      reason_b = '9'
+                  mods2.update({payload.message_id:(mods2.get(payload.message_id)[0:2] + reason_b)})
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.clear_reactions()
+              if mods_type.get(payload.message_id)[0] == 'warn':
+                  await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Подтверждение предупреждения]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```diff\n- Подтверждение:```Вы уверены, что хотите предупредить пользователя по причине `{mods2.get(payload.message_id)}`?').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+                  i, emojis = 0, ['<:yes_warn:819692933489754122>', '<:no_warn:819692972870205460>', '<:Home:822131145026043984>', '<:no:819634947756916810>']
+                  while key_log.get(payload.message_id) == 8 and i != 4:
+                      await msg_c.add_reaction(emojis[i])
+                      i += 1
+              else:
+                  await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Степень мута]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```py\n"Выберите степень мута":```<:zero_mute:819909390047510528> — Перманентный мут.\n<:one_mute:819909390026145872>-<:nine_mute:819909390160363581> — 2^(1-9) часов.').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+                  i, emojis = 0, [emmo_back, '<:zero_mute:819909390047510528>', '<:one_mute:819909390026145872>', '<:two_mute:819909389694664705>', '<:three_mute:819909390060093480>', '<:four_mute:819909390155907072>', '<:five_mute:819909390253162496>', '<:six_mute:819909390442299413>', '<:seven_mute:819909390315683840>', '<:eight_mute:819909390000848899>', '<:nine_mute:819909390160363581>', '<:otkaz:819631424789413969>', '<:Home:822131145026043984>', '<:no:819634947756916810>']
+                  while key_log.get(payload.message_id) == 8 and i != 14:
+                      await msg_c.add_reaction(emojis[i])
+                      i += 1
+          elif payload.channel_id == id_chn_jb and payload.emoji.id == 819692933489754122 and mods.get(payload.message_id)[0] == payload.user_id:
+              key_log.update({payload.message_id:-1})
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.clear_reactions()
+              member = mods.get(payload.message_id)[2]
+              reason = f'{mods2.get(payload.message_id)} [Панель]'
+              moderator = await client.fetch_user(payload.user_id)
+              guild_kc = client.get_guild(604636579545219072)
+              if mods_type.get(payload.message_id)[0] == 'warn':
+                  all = my_warn_kol.find()[0]["all"]+1
+                  count = 0
+                  for item in my_warn.find():
+                      if item['id'] == member.id:
+                          for j in my_warn.find():
+                              if j['id'] == member.id:
+                                  count += 1
+                          my_warn.insert_one({"id":member.id, "number_warn":count+1, "mod_id":payload.user_id, "reason":reason, "all": all, "data":str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0])})
+                          break
+                  else:
+                      my_warn.insert_one({"id":member.id, "number_warn":1, "mod_id":payload.user_id, "reason":reason, "all":all, "data":str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split('.')[0])})
+                  my_warn_kol.update_one({"id":1},{"$set":{"all":all}})
+                  await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Меры приняты]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```diff\n- Принял меры:```{mods.get(payload.message_id)[4].mention} | `[{mods.get(payload.message_id)[4].id}]` | {mods.get(payload.message_id)[4]}\n> **Пользователь `{member}` получил предупреждение `№{count+1}:`**\n```py\nID: {member.id}\nСлучай: {all}\nПричина: {reason}```').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+                  embed=discord.Embed(colour=0x310000, description = f'**Вы получили предупреждение `№{count+1}:`**\n```py\nСлучай: {all}\nПричина: {reason}```❗ С правилами можно ознакомиться **[здесь](https://discord.com/channels/604636579545219072/642171728273080330/699328371783630988).**',timestamp=datetime.datetime.utcnow())
+                  embed.set_author(name='Нарушения пользовательского соглашения', icon_url=guild_kc.icon_url)
+                  embed.set_footer(text=f'Предупреждение от {moderator.name}',icon_url=moderator.avatar_url)
+                  try:
+                      await member.send(embed=embed)
+                  except:
+                      pass
+              elif mods_type.get(payload.message_id)[0] == 'mute':
+                  time = mods_type.get(payload.message_id)[1]
+                  my_mute.delete_one({'id':member.id})
+                  my_mute.insert_one({"id":member.id, "data":datetime.datetime.utcnow() + datetime.timedelta(hours=time)})
+                  await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Меры приняты]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```diff\n- Принял меры:```{mods.get(payload.message_id)[4].mention} | `[{mods.get(payload.message_id)[4].id}]` | {mods.get(payload.message_id)[4]}\n> Пользователь `{member}` был заткнут на `{time}ч.` по причине: `{reason}`').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+                  member = guild_kc.get_member(member.id)
+                  try:
+                      await member.remove_roles(guild_kc.get_role(648271372585533441),reason=f'{moderator.name}: Время мута истекло.')
+                      await member.add_roles(guild_kc.get_role(648271372585533441),reason=f'{moderator.name}: Был заткнут на {time}ч. ({reason})')
+                  except:
+                      pass
+              else:
+                  if member.id in [i22.id for i22 in client.get_guild(604636579545219072).get_role(608994688078184478).members]:
+                      await msg_c.clear_reactions()
+                      await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Меры приняты]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```diff\n- Примечания:```**Представителя Команды Каталога невозможно забанить.**').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+                  else:
+                      try:
+                          embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000,description=f'Вы были забанены на сервере Каталог Серверов по причине `{reason}` модератором `{message.author.name}`. Если Вы считаете, что наказание было выдано необоснованно, у Вас есть возможность его обжаловать **[здесь](https://forms.gle/Ph7VjA86zQSy2crh9)**.')
+                          embed.set_thumbnail(url=guild_kc.icon_url)
+                          embed.set_footer(text='С уважением, Команда Каталога!')
+                          await member.send(embed=embed)
+                          inf = 'Форма обжалования была доставлена нарушителю.'
+                      except:
+                          inf = 'Форма обжалования не была доставлена нарушителю.'
+                      try:
+                          await guild_kc.ban(user=member, reason=f'{mods.get(payload.message_id)[4].name}: {reason}', delete_message_days=0)
+                          await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Меры приняты]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```diff\n- Принял меры:```{mods.get(payload.message_id)[4].mention} | `[{mods.get(payload.message_id)[4].id}]` | {mods.get(payload.message_id)[4]}\n> `Причина:` {reason}\n> {inf}').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+                      except:
+                          await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Меры приняты]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```diff\n- Примечания:```**Этого пользователя невозможно забанить.**').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+              await mods.get(payload.message_id)[5].add_reaction('<:Check_from_Helen22:819642494479368273>')
+          elif payload.channel_id == id_chn_jb and mods.get(payload.message_id)[0] == payload.user_id and payload.emoji.id in [819909390047510528, 819909390026145872, 819909389694664705, 819909390060093480, 819909390155907072, 819909390253162496, 819909390442299413, 819909390315683840, 819909390000848899, 819909390160363581]:
+              key_log.update({payload.message_id:9})
+              if payload.emoji.id == 819909390047510528:
+                  tms = 26
+              elif payload.emoji.id == 819909390026145872:
+                  tms = 1
+              elif payload.emoji.id == 819909389694664705:
+                  tms = 2
+              elif payload.emoji.id == 819909390060093480:
+                  tms = 3
+              elif payload.emoji.id == 819909390155907072:
+                  tms = 4
+              elif payload.emoji.id == 819909390253162496:
+                  tms = 5
+              elif payload.emoji.id == 819909390442299413:
+                  tms = 6
+              elif payload.emoji.id == 819909390315683840:
+                  tms = 7
+              elif payload.emoji.id == 819909390000848899:
+                  tms = 8
+              elif payload.emoji.id == 819909390160363581:
+                  tms = 9
+              tms = 2 ** tms
+              mods_type.update({payload.message_id:['mute', tms, False]})
+              msg_c = msg_arch.get(payload.message_id)
+              await msg_c.clear_reactions()
+              await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Подтверждение мута]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```diff\n- Подтверждение:```Вы уверены, что хотите замутить пользователя по причине `{mods2.get(payload.message_id)}` на `{tms}ч.` ?').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
+              i, emojis = 0, ['<:yes_warn:819692933489754122>', '<:no_mute:819692972870205460>', '<:Home:822131145026043984>', '<:no:819634947756916810>']
+              while key_log.get(payload.message_id) == 9 and i != 4:
+                  await msg_c.add_reaction(emojis[i])
+                  i += 1
+          elif payload.channel_id == id_chn_jb and payload.emoji.id == 822423843163078668 and mods.get(payload.message_id)[0] == payload.user_id and mods_type.get(payload.message_id)[2]:
+              msg_c = msg_arch.get(payload.message_id)
+              mods_type.update({payload.message_id:[None, 0, False]})
+              member = mods.get(payload.message_id)[2]
+              posl_date, s, embeds, k, ss_s, spisok = '', '', [], 0, {}, []
+              sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+              for item in [i for i in my_warn.find({'id':member.id})]:
+                  namember = await client.fetch_user(item["mod_id"])
+                  if item["data"].split()[0] != posl_date:
+                      ss_s.update({posl_date:spisok})
+                      posl_date = item["data"].split()[0]
+                      spisok = f'`Случай №{item["all"]}:` {item["reason"]}\n`Mod:` {namember}\n'
+                  else:
+                      spisok += f'`Случай №{item["all"]}:` {item["reason"]}\n`Mod:` {namember}\n'
+              ss_s.update({posl_date:spisok})
+              del ss_s['']
+              for key, value in ss_s.items():
+                  txt = key.split()[0].split('-')
+                  s += f'```css\n[{txt[2]} {sp[int(txt[1])]} {txt[0]} года]```{value}'
+                  k += 1
+                  if k == 5:
+                      embed = discord.Embed(colour=discord.Colour(0x310000),description=f'**Предупреждения пользователя `{member}:`**{s}',timestamp=datetime.datetime.utcnow())
+                      embed.set_footer(text=f'По запросу {mods.get(payload.message_id)[4]}',icon_url=mods.get(payload.message_id)[4].avatar_url)
+                      embed.set_author(name='Нарушения пользовательского соглашения [Панель]', icon_url=gg.icon_url)
+                      embeds.append(embed)
+                      k = 0
+                      s = ''
+              if k != 0:
+                  embed = discord.Embed(colour=discord.Colour(0x310000),description=f'**Предупреждения пользователя `{member}:`**{s}',timestamp=datetime.datetime.utcnow())
+                  embed.set_footer(text=f'По запросу {mods.get(payload.message_id)[4]}',icon_url=mods.get(payload.message_id)[4].avatar_url)
+                  embed.set_author(name='Нарушения пользовательского соглашения [Панель]', icon_url=gg.icon_url)
+                  embeds.append(embed)
+              if embeds == []:
+                  await client.get_channel(id_chn_jb).send(embed=discord.Embed(colour=0x310000, description=f'```css\n[У пользователя {member} предупреждения отсутствуют.]```').set_author(name='Нарушения пользовательского соглашения [Панель]', icon_url=gg.icon_url))
+              elif len(embeds) == 1:
+                  await client.get_channel(id_chn_jb).send(embed=embeds[0])
+              else:
+                  msg = await client.get_channel(id_chn_jb).send(embed=embeds[0])
+                  page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=True, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=mods.get(payload.message_id)[4], use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
+                  await page.start()
+                                                                                    
 @client.event
 async def on_raw_reaction_remove(payload):
   gg = client.get_guild(604636579545219072)
