@@ -148,6 +148,10 @@ async def on_ready():
 @client.event
 async def on_message(message):
   idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
+  if message.channel.id == id_chn_jb:
+        if 677397817966198788 in [role.id for role in message.role_mentions]:
+            await message.add_reaction('<:developer:785191301321719828>')
+    await client.process_commands(message)
   if message.guild is None:
     embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description=message.content)
     embed.set_author(name=message.author, icon_url=message.author.avatar_url)
