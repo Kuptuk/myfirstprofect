@@ -53,7 +53,7 @@ client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
 client.remove_command("help")
 
 admins = [562561140786331650,414119169504575509,529044574660853761]
-id_chn_jb = 728932829026844672
+id_chn_jb = 819618523076624385
 
 @client.event
 async def on_ready():
