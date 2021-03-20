@@ -799,14 +799,13 @@ async def team(message,kl=None):
   embed.add_field(name=f"```Глава отдела партнёрства:```",value=('Отсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Глава отдела партнёрства:```",value=(a))
   a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(800474182474268734).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(800474182474268734).members])
   embed.add_field(name=f"```Главный Модератор:```",value=('Отсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Главный Модератор:```",value=(a))
-  a = '```md\n#PandeMiaa```' if kl == '-' else '<@529044574660853761>'
+  a = '```md\nPandeMiaa```' if kl == '-' else '<@529044574660853761>'
   embed.add_field(name=f"```Глава Support Team:```",value=(a))
 
   a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(686621891230040077).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(686621891230040077).members])
   embed.add_field(name=f"```Отдел партнёрства: [0]```",value=('**[Правила и важное](https://discord.com/channels/604636579545219072/714909100214845541)**\nОтсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Отдел партнёрства: [{len([i.name for i in message.guild.get_role(686621891230040077).members])}]```",value=(f'**[Правила и важное](https://discord.com/channels/604636579545219072/714909100214845541)**\n{a}'))
   c = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(677397817966198788).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(677397817966198788).members])
-  c2 = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(765212719380037663).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(765212719380037663).members])
-  embed.add_field(name=f"```Модерация: [0]```",value=('**[Правила и наказания](https://discord.com/channels/604636579545219072/715130816480673872)**\nОтсутствует.')) if c == '```md\n```' or c == '' else embed.add_field(name=f"```Модерация: [{len([i.name for i in message.guild.get_role(677397817966198788).members])}]```",value=(f'**[Правила и наказания](https://discord.com/channels/604636579545219072/715130816480673872)**\n{c}\n\n**`Мл. Модерация: [{len([i.name for i in message.guild.get_role(765212719380037663).members])}]`**\n{c2}'))
+  embed.add_field(name=f"```Модерация: [0]```",value=('**[Правила и наказания](https://discord.com/channels/604636579545219072/715130816480673872)**\nОтсутствует.')) if c == '```md\n```' or c == '' else embed.add_field(name=f"```Модерация: [{len([i.name for i in message.guild.get_role(677397817966198788).members])}]```",value=(f'**[Правила и наказания](https://discord.com/channels/604636579545219072/715130816480673872)**\n{c}'))
   a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(816386551222763561).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(816386551222763561).members])
   embed.add_field(name=f"```Support Team: [0]```",value=('**[Support info](https://discord.com/channels/604636579545219072/816805410379137024) | [Тикеты](https://discord.com/channels/604636579545219072/816385807958802522)**\nОтсутствует.\n\n**`Навигация для команды:`**\n**[Рекрутерам](https://discord.com/channels/604636579545219072/776484522329374761)**\n**[Новинки и анонсы](https://discord.com/channels/604636579545219072/818037038854176819)**\n**[Объявления и опросы](https://discord.com/channels/604636579545219072/619067194910703626)**\n**[Информация о ролях](https://discord.com/channels/604636579545219072/616656872703000587/802322890191274014)**\n**[Общие полномочия](https://discord.com/channels/604636579545219072/630432803942563840)**')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Support Team: [{len([i.name for i in message.guild.get_role(816386551222763561).members])}]```",value=(f'**[Support info](https://discord.com/channels/604636579545219072/816805410379137024) | [Тикеты](https://discord.com/channels/604636579545219072/816385807958802522)**\n{a}\n\n**`Навигация для команды:`**\n**[Рекрутерам](https://discord.com/channels/604636579545219072/776484522329374761)**\n**[Новинки и анонсы](https://discord.com/channels/604636579545219072/818037038854176819)**\n**[Объявления и опросы](https://discord.com/channels/604636579545219072/619067194910703626)**\n**[Информация о ролях](https://discord.com/channels/604636579545219072/616656872703000587/802322890191274014)**\n**[Общие полномочия](https://discord.com/channels/604636579545219072/630432803942563840)**'))
   a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(757890413838467133).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(757890413838467133).members])
@@ -858,7 +857,7 @@ async def team(message,kl=None):
   embeds.append(embed)
   
   msg = await message.channel.send(embed=embeds[0])
-  page = Paginator(client, msg, only=message.author, use_more=False, embeds=embeds)
+  page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=True, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
   await page.start()
 
 @client.command()
@@ -1111,15 +1110,14 @@ async def warns(message, id=None):
   if flag:
     posl_date, s, embeds, k, ss_s, spisok = '', '', [], 0, {}, []
     sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-    for item in my_warn.find():
-      if item['id'] == member.id:
+    for item in [i for i in my_warn.find({'id':member.id})]:
         namember = await client.fetch_user(item["mod_id"])
         if item["data"].split()[0] != posl_date:
-          ss_s.update({posl_date:spisok})
-          posl_date = item["data"].split()[0]
-          spisok = f'`Случай №{item["all"]}:` {item["reason"]}\n`Mod:` {namember}\n'
+            ss_s.update({posl_date:spisok})
+            posl_date = item["data"].split()[0]
+            spisok = f'`Случай №{item["all"]}:` {item["reason"]}\n`Mod:` {namember}\n'
         else:
-          spisok += f'`Случай №{item["all"]}:` {item["reason"]}\n`Mod:` {namember}\n'
+            spisok += f'`Случай №{item["all"]}:` {item["reason"]}\n`Mod:` {namember}\n'
     ss_s.update({posl_date:spisok})
     del ss_s['']
     for key, value in ss_s.items():
@@ -1144,7 +1142,7 @@ async def warns(message, id=None):
       await message.channel.send(embed=embeds[0])
     else:
       msg = await message.channel.send(embed=embeds[0])
-      page = Paginator(client, msg, only=message.author, use_more=False, embeds=embeds)
+      page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=True, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
       await page.start()
       
 @client.command()
