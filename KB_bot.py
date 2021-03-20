@@ -67,9 +67,11 @@ async def on_ready():
   await client.get_channel(690827050033872937).send('https://discord.gg/nKPdC9V')
   global d
   global dk
+  global d_url
   global kolpub
   global date_pms; date_pms = time.time() - 180
   global active_kd; active_kd = time.time() - 300
+  global np_kd; np_kd = {}
                                                                                     
   global mods; mods = {}
   global mods2; mods2 = {}
@@ -94,9 +96,11 @@ async def on_ready():
               if d.get(men[0].id) is None:
                 d.update({men[0].id:str(kk.created_at + datetime.timedelta(hours=3))})
                 dk.update({men[0].id:1})
+                d_url.update({men[0].id:kk.jump_url})
               elif d.get(men[0].id)<str(kk.created_at + datetime.timedelta(hours=3)):
                 d.update({men[0].id:str(kk.created_at + datetime.timedelta(hours=3))})
                 dk.update({men[0].id:dk.get(men[0].id)+1})
+                d_url.update({men[0].id:kk.jump_url})
               else:
                 dk.update({men[0].id:dk.get(men[0].id)+1})
 
@@ -197,6 +201,7 @@ async def on_message(message):
     men = message.mentions
     if men != []:
       d.update({men[0].id:str(message.created_at + datetime.timedelta(hours=3))})
+      d_url.update({men[0].id:kk.jump_url})
       if dk.get(men[0].id) is None:
         dk.update({men[0].id:1})
       else:
@@ -1012,21 +1017,60 @@ async def modstats(message,data1=None,data2=None):
       await message.channel.send(embed=embed)
 
 @client.command()
-async def np(message, id=None):
+async def np(message, arg=None, id=None):
   b = [role.id for role in message.author.roles]
   if message.author.id in admins or 686621891230040077 in b:
-    if id is None:
+    if arg is None:
+      await message.channel.send('```css\nВы не указали аргумент.```')
+    elif arg != '+' and arg != '-':
+      await message.channel.send('```css\nАргументом может выступать только +/-.```')
+    elif id is None:
       await message.channel.send('```css\nВы не указали id пользователя.```')
     else:
       try:
         member = client.get_guild(604636579545219072).get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
-        if member == message.author:
-          await message.channel.send('```css\nВы не можете выдать роль самому себе.```')
-        elif 688654966675603491 in [role.id for role in member.roles]:
-          await message.channel.send(f'```css\nРоли пользователя {member} НЕ были изменены.```')
+        embed = discord.Embed(colour=0xb7bcd8, timestamp=datetime.datetime.utcnow())
+        embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+        if arg == '+':
+          global d; global dk; global d_url
+          sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+          if 688654966675603491 in [role.id for role in member.roles]:
+            avr = '<@&688654966675603491>'
+          elif 622501656591990784 in [role.id for role in member.roles]:
+            avr = '<@&622501656591990784>'
+          elif 622501691107049502 in [role.id for role in member.roles]:
+            avr = '<@&622501691107049502>'
+          elif 769916590686732319 in [role.id for role in member.roles]:
+            avr = '<@&769916590686732319>'
+          else:
+            avr = False
+          if not avr:
+            await member.add_roles(message.guild.get_role(688654966675603491),reason=f'{message.author.name}: Новый партнёр.')
+            embed.description = f'Пользователю {member} `[{member.id}]` успешна выдана роль <@&688654966675603491>.'
+          else:
+            embed.description = f'Роль партнёра первого уровня не была добавлена, т.к. пользователь {member} `[{member.id}]` уже имеет роль {avr}.'
+          kolvo = dk.get(member.id) if dk.get(member.id) is not None else 0
+          embed.description += f'\n\n**`Публикаций:` {kolvo}**'
+          if d.get(member.id) is not None:
+            datet = d.get(member.id).split('.')[0].split()[0].split('-')
+            datet2 = d.get(member.id).split('.')[0].split()[1]
+            embed.description += f'\n**[Последняя публикация]({d_url.get(member.id)})**: {datet[2]} {sp[int(datet[1])]} {datet[0]} года в {datet2}'
+          else:
+            embed.description += f'\n**[Последняя публикация]({d_url.get(member.id)})**: неизвестно.'
+          await message.channel.send(embed=embed)
         else:
-          await member.add_roles(message.guild.get_role(688654966675603491),reason=f'{message.author.name}: Новый партнёр.')
-          await message.channel.send(f'```css\nРоли пользователя {member} были изменены.```')
+          global np_kd
+          if np_kd.get(message.author.id) is None or time.time() - np_kd.get(message.author.id) >= 600:
+            if 688654966675603491 in [role.id for role in member.roles]:
+              await member.remove_roles(message.guild.get_role(688654966675603491),reason=f'{message.author.name}: Партнёрство разорвано.')
+              embed.description = f'С пользователя {member} `[{member.id}]` успешна снята роль <@&688654966675603491>.'
+              np_kd.update({message.author.id:time.time()})
+            else:
+              embed.description = f'Роль партнёра первого уровня не была снята, т.к. у пользователя {member} `[{member.id}]` она отсутствует.'
+            await message.channel.send(embed=embed)
+          else:
+            otkat = f'Минут до отката команды: ~{int((600-(time.time()-np_kd.get(message.author.id)))//60)}' if (600-(time.time()-np_kd.get(message.author.id)))//60 != 0 else f'Секунд до отката команды: ~{int(600-(time.time()-np_kd.get(message.author.id)))}'
+            await message.channel.send(embed=discord.Embed(colour=0x310000,description=f'```css\n[Данная команда имеет пользовательскую задержку в 10 минут.]```\n```md\n#{otkat}```'))
       except:
         await message.channel.send('```css\nПользователя не существует.```')
     
