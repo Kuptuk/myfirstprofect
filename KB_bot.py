@@ -201,7 +201,7 @@ async def on_message(message):
     men = message.mentions
     if men != []:
       d.update({men[0].id:str(message.created_at + datetime.timedelta(hours=3))})
-      d_url.update({men[0].id:kk.jump_url})
+      d_url.update({men[0].id:message.jump_url})
       if dk.get(men[0].id) is None:
         dk.update({men[0].id:1})
       else:
