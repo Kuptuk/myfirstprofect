@@ -679,7 +679,7 @@ async def op(message):
 @client.command()
 async def pm(message):
   if 608600358570295307 in [role.id for role in message.author.roles] or message.author.id in admins:
-    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&608600358570295307>:**\n\n`K.addbl <URL> <причина>` — добавить сервер в чёрный список. Вложение обязательно!\n`K.bl` — просмотреть чёрный список серверов каталога.\n`K.np @user|ID` — выдать пользователю роль партнёра первого уровня.\n`K.rebukes` — просмотреть свои выговоры.\n`K.pms` — статистика работы пиар-менеджеров.")
+    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&608600358570295307>:**\n\n`K.addbl <URL> <причина>` — добавить сервер в чёрный список. Вложение обязательно!\n`K.bl` — просмотреть чёрный список серверов каталога.\n`K.np +/- @user|ID` — выдать/снять пользователю роль партнёра первого уровня.\n`K.rebukes` — просмотреть свои выговоры.\n`K.pms` — статистика работы пиар-менеджеров.")
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
