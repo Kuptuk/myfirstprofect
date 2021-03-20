@@ -82,7 +82,7 @@ async def on_ready():
                                                                                     
   a = client.get_guild(604636579545219072).categories
   idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
-  c, k, d, dk = [], [], {}, {}
+  c, k, d, dk, d_url = [], [], {}, {}, {}
   kolpub = 0
   for i in a:
     if i.id in idd:
