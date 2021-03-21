@@ -489,7 +489,7 @@ async def on_raw_reaction_add(payload):
                       await msg_c.edit(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x36393f, title=f'Панель модератора [Меры приняты]', description=f'```css\n[Нарушитель]:```{mods.get(payload.message_id)[2].mention} | `[{mods.get(payload.message_id)[2].id}]` | {mods.get(payload.message_id)[2]}\n```css\n[Пользовательская причина]:```{mods.get(payload.message_id)[3]}\n```diff\n- Примечания:```**Представителя Команды Каталога невозможно забанить.**').set_footer(text=f'Ответственный за жалобу {mods.get(payload.message_id)[4]}', icon_url=mods.get(payload.message_id)[4].avatar_url))
                   else:
                       try:
-                          embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000,description=f'Вы были забанены на сервере Каталог Серверов по причине `{reason}` модератором `{message.author.name}`. Если Вы считаете, что наказание было выдано необоснованно, у Вас есть возможность его обжаловать **[здесь](https://forms.gle/Ph7VjA86zQSy2crh9)**.')
+                          embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000,description=f'Вы были забанены на сервере Каталог Серверов по причине `{reason}` модератором `{mods.get(payload.message_id)[4].name}`. Если Вы считаете, что наказание было выдано необоснованно, у Вас есть возможность его обжаловать **[здесь](https://forms.gle/PSC8smGWMBZR7f6m8)**.')
                           embed.set_thumbnail(url=guild_kc.icon_url)
                           embed.set_footer(text='С уважением, Команда Каталога!')
                           await member.send(embed=embed)
