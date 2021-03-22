@@ -633,7 +633,9 @@ async def ev(ctx, *, txt):
             'channel': ctx.channel,
             'author': ctx.author,
             'guild': ctx.guild,
-            'message': ctx.message
+            'message': ctx.message,
+            'datetime': datetime,
+            'db': my_client
         }
 
         stdout = io.StringIO()
