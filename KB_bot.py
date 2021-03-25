@@ -1971,6 +1971,8 @@ async def info(message, id = None):
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/821772685192331304/card_angelina_v3.png', stream = True)
             elif mid == 529044574660853761:
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/812252851077382164/card_helya.png', stream = True)
+            elif mid == 735540766289690646:
+              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/824763878621577266/card_navintas_v2.png', stream = True)
             elif mid == 346263496394276867:
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/822158050642493460/card_nefik22_v2.4.png', stream = True)
             elif mid == 420506181627412501:
