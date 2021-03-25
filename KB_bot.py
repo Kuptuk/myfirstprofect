@@ -16,6 +16,7 @@ import email.message
 import traceback
 import contextlib
 import textwrap
+from unicodedata import normalize
 
 mm = os.environ.get("Mongo")
 tt = os.environ.get("TOKEN")
@@ -2057,7 +2058,7 @@ async def info(message, id = None):
           ppz = [365, 405, 445, 485, 525, 565, 605, 645, 685, 725, 765, 805, 845, 885, 925, 965, 1005]
           avatar = avatar.resize((212, 212), Image.ANTIALIAS)
           response.paste(avatar, (118, 169))
-          idraw.text((400, 150), f'{member}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+          idraw.text((400, 150), normalize('NFKD', str(member)).encode('ascii', 'ignore').decode('ascii'), color, font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
           try:
             idraw.text((365, 260), f'{aktiv.split("|")[2]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
           except:
@@ -2227,7 +2228,7 @@ async def info(message, id = None):
             avatar = avatar.resize((212, 212), Image.ANTIALIAS)
             response.paste(avatar, (119, 171, 331, 383))
             a = str(member.created_at).split()[0].split('-')
-            idraw.text((365, 150), f'{member}', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+            idraw.text((365, 150), normalize('NFKD', str(member)).encode('ascii', 'ignore').decode('ascii'), (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
             idraw.text((365, 220), f'Дата создания: {a[2]} {sp[int(a[1])]} {a[0]} года', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             idraw.text((95 , 440), 'Пользователь отсутствует на сервере. Функции ограничены.', (255, 255, 255), font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
             try:
