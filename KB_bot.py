@@ -168,7 +168,7 @@ async def on_message(message):
         await message.add_reaction('<:developer:785191301321719828>')
       except:
         pass
-  elif (message.guild is None or message.guild.id == dm_guild.id) and message.author.id != 665120789913403422:
+  elif (message.guild is None or message.guild.id == dm_guild.id) and message.author.id != 656029229749764126:
         if not message.guild is None and message.guild.id == dm_guild.id and '--a' in message.content:
             await message.channel.edit(category=dm_guild.categories[1])
         else:            
