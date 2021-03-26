@@ -654,6 +654,24 @@ async def on_raw_reaction_remove(payload):
 async def ping(message):
   if message.author.id in admins:
     await message.send(f'Pong! `{round(client.latency * 1000)}ms`')
+                                                                                    
+@client.command()
+async def dm(message, id = None):
+    if message.author.id in admins:
+        if id is None:
+            await message.channel.send(embed=discord.Embed(colour=0x2f3136, description='Вы не указали пользователя.'))
+        else:
+            try:
+                a = await client.fetch_user(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+                for i in dm_guild.channels:
+                    if str(a.id) == i.name:
+                        await message.channel.send(embed=discord.Embed(colour=0x2f3136, description=f'**[Диалог](https://discord.com/channels/822949304255119421/{i.id})** с пользователем {a} `[{a.id}]` уже существует.'))
+                        break
+                else:
+                    c = await dm_guild.create_text_channel(name=a.id, category=dm_guild.categories[0], reason=f'Новое обращение от {a}.')
+                    await message.channel.send(embed=discord.Embed(colour=0x2f3136, description=f'**[Диалог](https://discord.com/channels/822949304255119421/{c.id})** с пользователем {a} `[{a.id}]` успешно открыт.'))
+            except:
+                await message.channel.send(embed=discord.Embed(colour=0x2f3136, description='Указанного пользователя не существует.'))
   
 @client.command()
 async def ev(ctx, *, txt):
