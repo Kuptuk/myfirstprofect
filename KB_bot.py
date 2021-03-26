@@ -81,6 +81,9 @@ async def on_ready():
   global key_log; key_log = {}
   global msg_arch; msg_arch = {}
                                                                                     
+  global dm_date; dm_date = ['key', 'янв.,', 'фев.,', 'мар.,', 'апр.,', 'май,', 'июн.,', 'июл.,', 'авг.,', 'сен.', 'окт.,', 'ноя.,', 'дек.,']
+  global dm_guild; dm_guild = client.get_guild(822949304255119421)
+                                                                                    
   a = client.get_guild(604636579545219072).categories
   idd = [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]
   c, k, d, dk, d_url = [], [], {}, {}, {}
@@ -165,11 +168,43 @@ async def on_message(message):
         await message.add_reaction('<:developer:785191301321719828>')
       except:
         pass
-  if message.guild is None:
-    embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description=message.content)
-    embed.set_author(name=message.author, icon_url=message.author.avatar_url)
-    embed.set_footer(text=message.author.id)
-    await client.get_channel(790287251343015986).send(embed=embed)
+  elif (message.guild is None or message.guild.id == dm_guild.id) and message.author.id != 665120789913403422:
+        if not message.guild is None and message.guild.id == dm_guild.id and '--a' in message.content:
+            await message.channel.edit(category=dm_guild.categories[1])
+        else:            
+            embed = discord.Embed(colour=0x2f3136, description=message.content)
+            dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+            dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+            if len(message.attachments) > 0:
+                urls, k = '', 0
+                for i in message.attachments:
+                    k += 1
+                    urls += f'**[Вложение {k}]({i.proxy_url})**\n'
+                embed.add_field(name='Прикреплённые файлы:', value=urls)
+            try:
+                if message.guild is None:
+                    for i in dm_guild.channels:
+                        if str(message.author.id) == i.name:
+                            dm_chn = i
+                            break
+                    else:
+                        dm_chn = await dm_guild.create_text_channel(name=message.author.id, category=dm_guild.categories[0], reason=f'Новое обращение от {message.author}.')
+                    await dm_chn.send(embed=embed.set_author(name=f'{message.author.name} (Member)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
+                    await dm_chn.edit(category=dm_guild.categories[0], position=1)
+                elif message.guild.id == dm_guild.id:
+                    if not message.channel.category is None and message.channel.category.id in [dm_guild.categories[0].id, dm_guild.categories[1].id]:
+                        dm_chn = await client.fetch_user(int(message.channel.name))
+                        if message.content.startswith('--s'):
+                            embed.description = message.content.replace('--s', '')
+                            await dm_chn.send(embed=embed.set_author(name=f'Agent (Support Team)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
+                        elif message.author.id in admins:
+                            await dm_chn.send(embed=embed.set_author(name=f'{message.author.name} (Administrator)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
+                        else:
+                            await dm_chn.send(embed=embed.set_author(name=f'{message.author.name} (Support Team)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
+                        await message.channel.edit(category=dm_guild.categories[0], position=1)
+            except:
+                embed.description = f'Приветствую, {message.author.name}.\n\nДанное сообщение является системным.\n\nНам очень жаль, но Ваше сообщенние не было доставлено получателю. Вероятнее всего, причиной этого являются закрытые личные сообщения с пользователям.\n\nС уважением,\nKC | System Info.'
+                await message.channel.send(embed=embed.set_author(name=f'Catalog (System)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
   elif '.gg' in message.content and message.channel.category.id == 604636579545219073 and message.channel.id != 699306241981415424 and not message.author.id in admins and not 816386551222763561 in [role.id for role in message.author.roles]:
     await message.delete()
     my_mute.delete_one({'id':message.author.id})
