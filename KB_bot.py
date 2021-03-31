@@ -128,22 +128,22 @@ async def on_ready():
   
   #for cards_img
   global crown; global dev; global bag22; global medal; global medal_chat; global allia; global help22; global rm; global ngl2; global att22; global id22; global bg22; global cotz; global candy; global heart22; global support
-  crown = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/784811138671575121/owner.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-  dev = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785183136362659880/developer.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-  bag22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807343608868110406/review.png', stream = True).content)).convert('RGBA')
-  medal = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/814131510361587762/medal.png', stream = True).content)).convert('RGBA')
-  medal_chat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/817425102671970304/333333.png', stream = True).content)).convert('RGBA')
-  allia = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807310152801845358/-3.png', stream = True).content)).convert('RGBA')
-  help22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/799910232079466537/helper_1.png', stream = True).content)).convert('RGBA')
-  rm = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/796115970003173436/rm.png', stream = True).content)).convert('RGBA')
-  ngl2 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/822793093857148938/-11.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
-  att22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/807346321487953970/review.png', stream = True).content)).convert('RGBA')
-  id22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/824420601309167676/-12.png', stream = True).content)).convert('RGBA')
-  bg22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119556178935848/rm.png', stream = True).content)).convert('RGBA')
-  cotz = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/822793098361831456/444.png', stream = True).content)).convert('RGBA')
-  candy = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797119577951436810/rm.png', stream = True).content)).convert('RGBA')
-  heart22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/806296162889891890/review.png', stream = True).content)).convert('RGBA')
-  support = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/817425097752707072/-1.png', stream = True).content)).convert('RGBA')
+  crown = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  dev = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  bag22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  medal = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  medal_chat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  allia = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  help22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  rm = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  ngl2 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+  att22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  id22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  bg22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  cotz = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  candy = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  heart22 = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
+  support = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
 
   global ticket_key
   for i in await client.get_channel(816385807958802522).history(limit=100).flatten():
@@ -1997,7 +1997,7 @@ async def badges(message):
     msg = await message.channel.send(embed=embeds[0])
     page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=True, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
     await page.start()
-    await message.channel.send(embed=embed)
+    await message.channel.send(content=':boar:')
 
 @client.command()
 async def info(message, id = None):
@@ -2214,13 +2214,13 @@ async def info(message, id = None):
 
           if 688654966675603491 in b or 622501656591990784 in b or 622501691107049502 in b or 769916590686732319 in b:
             if 688654966675603491 in b:
-              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015500712509490/6.png', stream = True).content)).convert('RGBA')
+              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
             elif 622501656591990784 in b:
-              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015502381187092/34.png', stream = True).content)).convert('RGBA')
+              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
             elif 622501691107049502 in b:
-              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015503648784424/41.png', stream = True).content)).convert('RGBA')
+              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
             elif 769916590686732319 in b:
-              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/811015504348708914/52.png', stream = True).content)).convert('RGBA')
+              znpart = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/826924998358204476/1.png', stream = True).content)).convert('RGBA')
             prioritet += 1
             response.paste(znpart, (ppz[prioritet], 205), znpart)
             net_zn += 1
@@ -2266,7 +2266,7 @@ async def info(message, id = None):
             idraw.text((100 , 102), f'{member.top_role.name}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
 
           if net_zn == 0:
-            idraw.text((365 , 200), f'У вас пока нет ни одного значка ;(', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+            idraw.text((365 , 200), f'У вас пока нет ни одного кабанчика ;(', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
 
           response.save('user_card.png')
           await message.channel.send(file = discord.File(fp = 'user_card.png'))
