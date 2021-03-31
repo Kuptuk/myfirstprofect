@@ -2016,7 +2016,7 @@ async def info(message, id = None):
           avatar = Image.open(io.BytesIO(avatar.content))
           avatar = avatar.convert('RGBA')
 
-          aktiv = requests.get(f'http://185.244.172.127/stats?user={mid}').text
+          aktiv = requests.get(f'http://catalogserverov.ml/stats?user={mid}').text
 
           b = [role.id for role in member.roles]
           if 608994688078184478 in b and list(message.message.content)[-1] != '-':
