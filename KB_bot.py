@@ -2056,6 +2056,8 @@ async def info(message, id = None):
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/823590216929116220/card_rezort.png', stream = True)
             elif mid == 722394482515116072:
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/821772686224916480/goffit.png', stream = True)
+            elif mid == 394757049893912577:
+              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True)
             elif mid in [414119169504575509, 562561140786331650]:
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/819962677312225290/catalog_card1.png', stream = True)
             else:
@@ -2265,7 +2267,7 @@ async def info(message, id = None):
             net_zn += 1
 
           if mid == 394757049893912577:
-            fat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/827269724689399818/card_fatal2_1.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
+            fat = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True).content)).convert('RGBA').resize((37, 37), Image.ANTIALIAS)
             response.paste(fat, (54, 100), fat)   
           elif mid == 713780299024039936:
             ang = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/797940366254800906/rm.png', stream = True).content)).convert('RGBA')
@@ -2273,9 +2275,6 @@ async def info(message, id = None):
           elif mid == 357518684723478540:
             mox = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/803224903620362260/review.png', stream = True).content)).convert('RGBA')
             response.paste(mox, (54, 100), mox)
-          elif mid == 722394482515116072:
-            gof = Image.open(io.BytesIO(requests.get('https://cdn.discordapp.com/attachments/682929799991132207/803001131185733632/review.png', stream = True).content)).convert('RGBA')
-            response.paste(gof, (54, 100), gof)
           elif mid == 420506181627412501:
             rez = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/682929799991132207/806622139972583485/review.png', stream = True).content)).convert('RGBA')
             response.paste(rez, (54, 100), rez)
