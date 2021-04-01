@@ -2057,7 +2057,7 @@ async def info(message, id = None):
             elif mid == 722394482515116072:
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/821772686224916480/goffit.png', stream = True)
             elif mid == 394757049893912577:
-              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/785202689532755988/fatal.png', stream = True)
+              response = requests.get('https://media.discordapp.net/attachments/689800301468713106/827269724689399818/card_fatal2_1.png', stream = True)
             elif mid in [414119169504575509, 562561140786331650]:
               response = requests.get('https://media.discordapp.net/attachments/689800301468713106/819962677312225290/catalog_card1.png', stream = True)
             else:
