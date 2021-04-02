@@ -877,7 +877,7 @@ async def team(message,kl=None):
   a = '```md\n' + '\n'.join([i.name for i in message.guild.get_role(686618397668147220).members]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([i.mention for i in message.guild.get_role(686618397668147220).members])
   embed.add_field(name=f"```Дизайнеры: [0]```",value=('**[Наброски](https://discord.com/channels/604636579545219072/686621337153699929)**\nОтсутствует.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Дизайнеры: [{len([i.name for i in message.guild.get_role(686618397668147220).members])}]```",value=(f'**[Наброски](https://discord.com/channels/604636579545219072/686621337153699929)**\n{a}'))
   
-  a = '```md\n' + '\n'.join([message.guild.get_member(i).name for i in admins]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([f'<@{i}>' for i in admins])
+  a = '```md\n' + '\n'.join([str(await client.fetch_user(i))[:-5] for i in admins]).replace(message.author.name,f'#{message.author.name}') + '```' if kl == '-' else '\n'.join([f'<@{i}>' for i in admins])
   embed.add_field(name=f"```Администраторы: [0]```",value=('Отсутствуют.')) if a == '```md\n```' or a == '' else embed.add_field(name=f"```Администраторы: [{len(admins)}]```",value=(a))
   embeds.append(embed)
   
