@@ -1830,7 +1830,7 @@ async def Email(message, arg=None, komy=None):
     elif komy is None:
       await message.channel.send('```css\n[Вы не указали получателя.]```')
     elif arg == 'pms':        
-      aktiv = requests.get(f'https://catalogserverov.ml/stats/pm/all').text.split('{')[-1].split('}')[0].replace('"','').split(',')
+      aktiv = requests.get(f'https://api.catalogserverov.ml/v1/stats/pm/all').text.split('{')[-1].split('}')[0].replace('"','').split(',')
       s, k = 'Доброго времени суток.<br><br>Актуальная информация касательно статистики отдела партнёрства находится ниже.<br><br>Статистика отдела партнёрства за последние 2 дня с момента отчёта:<br>', 1
       for i in aktiv:
         s += f"{k}. {await client.fetch_user(int(i.split(':')[0]))} [{i.split(':')[0]}] — {i.split(':')[1]}<br>"
@@ -2073,7 +2073,7 @@ async def info(message, id = None):
           avatar = Image.open(io.BytesIO(avatar.content))
           avatar = avatar.convert('RGBA')
 
-          aktiv = requests.get(f'http://catalogserverov.ml/stats?user={mid}').text
+          aktiv = requests.get(f'https://api.catalogserverov.ml/v1/stats?user={mid}').text
 
           b = [role.id for role in member.roles]
           if message.author.id == 394757049893912577 and 'png' in message.message.content:
