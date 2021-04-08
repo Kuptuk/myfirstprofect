@@ -969,7 +969,7 @@ async def pms(message):
       embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000, title='Статистика работы отдела партнёрства:')
       for i in [i.id for i in message.guild.get_role(608600358570295307).members]:
         try:
-          aktiv = requests.get(f'http://185.244.172.127/stats/pm/list?user={i}').text.split('||')
+          aktiv = requests.get(f'https://api.catalogserverov.ml/v1/stats/pm/list?user={i}').text.split('||')
           a1, a2 = aktiv[0].split('|'), aktiv[1].split('|')
           key = 'md\n#' if message.author.id == i else 'py\n'
           key2 = '#' if message.author.id == i else ''
