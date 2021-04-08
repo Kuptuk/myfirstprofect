@@ -161,6 +161,24 @@ async def on_ready():
       pass
   else:
     ticket_key = 0
+  global ideas_key
+    for i in await client.get_channel(cs.ideas_id).history(limit=100).flatten():
+        try:
+            ideas_key = int(i.embeds[0].title.split('№')[1])
+            break
+        except:
+            pass
+    else:
+        ideas_key = 0
+    global problems_key
+    for i in await client.get_channel(cs.problems_id).history(limit=100).flatten():
+        try:
+            problems_key = int(i.embeds[0].title.split('№')[1])
+            break
+        except:
+            pass
+    else:
+        problems_key = 0
 
   await client.get_channel(728932829026844672).send('```css\n[Данные обновлены, бот перезапущен].```')
     
@@ -1617,86 +1635,289 @@ async def bl(message):
     msg = await message.channel.send(embed=embeds[0])
     page = Paginator(client, msg, only=message.author, use_more=False, embeds=embeds)
     await page.start()
+                   
+@client.command()
+async def notify(message, *, txt=None):
+    result = ''
+    if [i for i in my_not.find({'id':message.author.id})] == []:
+        my_not.insert_one({'id':message.author.id, 'p':True, 'i':True})
+    if txt is None:
+        result += '```md\n#Ваши персональные настройки уведомлений:```\n'
+        a = my_not.find({'id':message.author.id})[0]
+        if a['i']:
+            result += '<:notify:829402470383353897> Вы будете получать уведомления в случае изменения статуса ваших идей.\n'
+        else:
+            result += '<:not_notify:829455038757339136> Вы не будете получать уведомления в случае изменения статуса ваших идей.\n'
+        if a['p']:
+            result += '<:notify:829402470383353897> Вы будете получать уведомления в случае изменения статуса ваших вопросов.\n'
+        else:
+            result += '<:not_notify:829455038757339136> Вы не будете получать уведомления в случае изменения статуса ваших вопросов.\n'
+        result += '\n```yaml\nСписок доступных аргументов для данной команды:```\n`i+` — включить уведомления для идей.\n`i-` — выключить уведомления для идей.\n\n`p+` — включить уведомления для вопросов.\n`p-` — выключить уведомления для вопросов.'
+    else:
+        if not 'i+' in txt and not 'i-' in txt and not 'p+' in txt and not 'p-' in txt:
+            result = 'Заданы несуществующие аргументы.\nСписок доступных аргументов для данной команды: `i+`, `i-`, `p+`, `p-`.'
+        else:
+            if 'i+' in txt and 'i-' in txt:
+                result += 'Аргументы `i+` и `i-` противоречат друг другу.\n'
+            elif 'i+' in txt:
+                my_not.update_one({"id":message.author.id},{"$set":{"i":True}})
+                result += '<:notify:829402470383353897> Вы будете получать уведомления в случае изменения статуса ваших идей.\n'
+            elif 'i-' in txt:
+                my_not.update_one({"id":message.author.id},{"$set":{"i":False}})
+                result += '<:not_notify:829455038757339136> Вы не будете получать уведомления в случае изменения статуса ваших идей.\n'
+            if 'p+' in txt and 'p-' in txt:
+                result += 'Аргументы `p+` и `p-` противоречат друг другу.\n'
+            elif 'p+' in txt:
+                my_not.update_one({"id":message.author.id},{"$set":{"p":True}})
+                result += '<:notify:829402470383353897> Вы будете получать уведомления в случае изменения статуса ваших вопросов.\n'
+            elif 'p-' in txt:
+                my_not.update_one({"id":message.author.id},{"$set":{"p":False}})
+                result += '<:not_notify:829455038757339136> Вы не будете получать уведомления в случае изменения статуса ваших вопросов.\n'
+    await message.channel.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description=f'**{result}**').set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url))
                         
 @client.command()
 async def suggest(message, *, txt=None):
-    if message.channel.id != 678666229661171724:
-      embed = discord.Embed(description='**[Канал для предложений](https://discord.com/channels/604636579545219072/678666229661171724)**')
-      await message.channel.send(embed=embed)
-    elif txt is None:
-      await message.message.delete()
+    await message.message.delete()
+    if message.channel.id == cs.ideas_id:
+        if not txt is None:
+            if [i for i in my_not.find({'id':message.author.id})] == []:
+                my_not.insert_one({'id':message.author.id, 'p':True, 'i':True})
+            global ideas_key; ideas_key += 1
+            embed = discord.Embed(title=f'Предложение №{ideas_key}', colour=0x2f3136, description=txt)
+            embed.set_author(name=f'{message.author} | {message.author.id}', icon_url=message.author.avatar_url)
+            embed.add_field(name='Оценки данной идеи:', value='Пока отсутствуют.', inline=False)
+            dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+            dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+            embed.set_footer(text=f'{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3')
+            msg = await message.channel.send(embed=embed)
+            if my_not.find({'id':message.author.id})[0]['i']:
+                try:
+                    await message.author.send(embed=discord.Embed(colour=0x310000, timestamp=datetime.datetime.utcnow(), description=f'Благодарим за вашу оставленную **[идею]({msg.jump_url})**!\nНаша администрация постарается как можно быстрее дать на неё свой ответ.\n\nНеправильно сформулировали идею? У вас есть возможность её отредактировать до первого оставленного ответа:\n`K.esuggest <номер_оставленной_идеи> <новый_текст>`.\nНапример: `K.esuggest {ideas_key} {txt} + печенек админам :).`\n\nНе желаете получать уведомления в личные сообщения об изменениях статуса идеи? Используйте `K.notify i-` для отключения оповещений.\n`Примечание:` все команды можно прописывать **[здесь](https://discord.com/channels/604636579545219072/712638398132650095)**.').set_footer(text='С уважением,\nКоманда Каталога', icon_url=message.guild.icon_url))
+                except:
+                    pass
     else:
-      my_cursor = my_col.find()
-      for item in my_cursor:
-          if item['id'] == message.author.id:
-            await message.message.delete()
-            embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=discord.Colour(0x310000),description=f'Ваше сообщение в канале <#678666229661171724> следующего содержания: `{message.message.content}` было удалено, т.к. вы были занесены в чёрный список предложений.')
-            embed.set_footer(text='С уважением, Команда Каталога!',icon_url=message.guild.icon_url)
-            await message.author.send(embed=embed)
-            break
-      else:
-        await message.message.delete()
-        embed=discord.Embed(title=f'Предложение №{str(my_collection.find()[0]["Number"])}',description=txt)
-        embed.set_author(name=message.author, icon_url=message.author.avatar_url)
-        a = await message.channel.send(embed=embed)
-        my_collection2.insert_one({"id":message.author.id, "Num":my_collection.find()[0]["Number"], "text":txt, "msg_id":a.id})
-        my_collection.update_one({"idd":1}, {"$inc": {"Number": 1}})
-      
-@client.command()
-async def approve(message, num=None, arg=None, *, txt=None):
-  if message.author.id in admins:
-    await message.message.delete()
-    my_cursor = my_collection2.find()
-    color = discord.Colour.red() if arg == '-' else discord.Colour.green()
-    mb = '[Отклонено]' if arg == '-' else '[Принято]'
-    for item in my_cursor:
-      if item["Num"] == int(num):
-        user = await client.fetch_user(item['id'])
-        who = 'владельца сервера' if message.author.id == 414119169504575509 else 'администратора'
-        embed = discord.Embed(colour=color,title=f'Предложение №{num} {mb}',description=item["text"])
-        embed.set_author(name=user, icon_url=user.avatar_url)
-        embed.add_field(name=f'Ответ от {who} {message.author.name}', value=txt)
-        embed.set_footer(text=f'Ответ дан {str(str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(".")[0])}',icon_url=message.author.avatar_url)
-        msg = await client.get_channel(678666229661171724).fetch_message(item['msg_id'])
-        await msg.edit(embed=embed)
-        break
-                
-@client.command()
-async def answer(message, num=None, *, txt=None):
-  if message.author.id in admins or 816386551222763561 in [role.id for role in message.author.roles]:
-    await message.message.delete()
-    my_cursor = my_cp2.find()
-    for item in my_cursor:
-      if item["Num"] == int(num):
-        user = await client.fetch_user(item['id'])
-        who = f'администратора {message.author.name} <:developer:785191301321719828>' if message.author.id in admins else f'Support Team {message.author.name} <:Support:816800431249555498>'
-        embed = discord.Embed(colour=discord.Colour.green(),title=f'Вопрос №{num} решён',description=item["text"])
-        embed.set_author(name=f'{user} | {user.id}', icon_url=user.avatar_url)
-        embed.add_field(name=f'Ответ от {who}', value=txt)
-        sp = ['key', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-        a = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split()[0].split('-')
-        embed.set_footer(text=f'Вопрос решён {a[2]} {sp[int(a[1])]} {a[0]} года в {str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split()[1].split(".")[0]}.\nID: {message.author.id}',icon_url=message.author.avatar_url)
-        msg = await client.get_channel(740651083533254717).fetch_message(item['msg_id'])
-        if message.author.id in admins:
-          await msg.edit(embed=embed)
-        elif str(msg.created_at).split()[0] == str(datetime.datetime.utcnow()).split()[0]:
-          await msg.edit(embed=embed)
-        break
+        await message.channel.send(embed=discord.Embed(colour=0x310000, description=f'**[Канал для предложений](https://discord.com/channels/604636579545219072/{cs.ideas_id})**'))
 
 @client.command()
-async def problem(message, *, quest=None):
-    if message.channel.id != 740651083533254717:
-      embed = discord.Embed(description='**[Канал для вопросов](https://discord.com/channels/604636579545219072/740651083533254717)**')
-      await message.channel.send(embed=embed)
-    elif quest is None:
-      await message.message.delete()
+async def esuggest(message, num=None, *, txt=None):
+    await message.message.delete()
+    if message.channel.id == cs.ideas_id and not num is None and not txt is None:
+        for i in await client.get_channel(cs.ideas_id).history(limit=100).flatten():
+            try:
+                if i.embeds[0].title.split('№')[1] == num and i.embeds[0].author.name.split('| ')[1] == str(message.author.id) and len(i.embeds[0].fields) == 1 and 'Пока отсутствуют.' in i.embeds[0].fields[-1].value:
+                    embed = i.embeds[0]
+                    embed.description = txt
+                    dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+                    dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+                    embed.set_footer(text=f'{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3')
+                    await i.edit(embed=embed)
+                    break
+            except:
+                pass
+
+@client.command()
+async def approve(message, num=None, *, txt=None):
+    await message.message.delete()
+    b = [role.id for role in message.author.roles]
+    if message.channel.id == cs.ideas_id and not num is None and not txt is None and (608994688078184478 in b or message.author.id in admins):
+        for i in await client.get_channel(cs.ideas_id).history(limit=100).flatten():
+            try:
+                if i.embeds[0].title.split('№')[1] == num and not '<:owner:784812161959854120>' in i.embeds[0].fields[-1].name:
+                    k = -1
+                    for j in i.embeds[0].fields:
+                        try:
+                            k += 1
+                            if j.name.split('| ')[1] == str(message.author.id):
+                                embed = i.embeds[0]
+                                embed.set_field_at(index=k, name=j.name, value=txt, inline=False)
+                                dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+                                dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+                                embed.set_footer(text=f'{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3')
+                                await i.edit(embed=embed)
+                                break
+                        except:
+                            pass
+                    else:
+                        if len(i.embeds[0].fields) < 10:
+                            zn = '<:developer:785191301321719828>' if message.author.id in admins else '<:moderator:827468511894700054>' if 677397817966198788 in b else '<:Support:816800431249555498>' if 816386551222763561 in b else '<:kk:788850405157240833>'
+                            embed = i.embeds[0]
+                            field_value = embed.fields[-1].value
+                            embed.remove_field(-1)
+                            embed.add_field(name=f'{zn} Рецензия от {message.author} | {message.author.id}', value=txt, inline=False)
+                            embed.add_field(name='Оценки данной идеи:', value=field_value, inline=False)
+                            dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+                            dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+                            embed.set_footer(text=f'{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3')
+                            await i.edit(embed=embed)
+                            break
+            except:
+                pass
+
+@client.command()
+async def approve_h22(message, num=None, arg=None, *, txt=None):
+    await message.message.delete()
+    if message.author.id == 414119169504575509:
+        color = 0xcc0605 if arg == '-' else 0x123524 if arg == '+' else 0x002137
+        for i in await client.get_channel(cs.ideas_id).history(limit=100).flatten():
+            try:
+                if i.embeds[0].title.split('№')[1] == num:
+                    if [i for i in my_not.find({'id':int(i.embeds[0].author.name.split('| ')[1])})] == []:
+                        my_not.insert_one({'id':int(i.embeds[0].author.name.split('| ')[1]), 'p':True, 'i':True})
+                    embed = i.embeds[0]
+                    embed.colour = color
+                    dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+                    dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+                    embed.set_footer(text=f'{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3')
+                    if '<:owner:784812161959854120>' in embed.fields[-1].name:
+                        embed.remove_field(-1)
+                    else:
+                        if my_not.find({'id':int(i.embeds[0].author.name.split('| ')[1])})[0]['i']:
+                            try:
+                                mem = await client.fetch_user(i.embeds[0].author.name.split('| ')[1])
+                                await mem.send(embed=discord.Embed(colour=0x310000, timestamp=datetime.datetime.utcnow(), description=f'Вы получили ответ на **[оставленную идею]({i.jump_url})** от владельца сервера Helen22.\n\nНе желаете получать уведомления в личные сообщения об изменениях статуса идеи? Используйте `K.notify i-` для отключения оповещений.\n`Примечание:` все команды можно прописывать **[здесь](https://discord.com/channels/604636579545219072/712638398132650095)**.').set_footer(text='С уважением,\nКоманда Каталога', icon_url=message.guild.icon_url))
+                            except:
+                                pass
+                    embed.add_field(name='<:owner:784812161959854120> Итоговое решение по предложению от владельца сервера Helen22:', value=txt, inline=False)
+                    await i.edit(embed=embed)
+                    break
+            except:
+                pass
+
+@client.command()
+async def rate(message, num=None, mark=None):
+    await message.message.delete()
+    b = [role.id for role in message.author.roles]
+    if message.channel.id == cs.ideas_id and not num is None and not mark is None and (608994688078184478 in b or message.author.id in admins) and mark in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']:
+        for i in await client.get_channel(cs.ideas_id).history(limit=100).flatten():
+            try:
+                if i.embeds[0].title.split('№')[1] == num and not '<:owner:784812161959854120>' in i.embeds[0].fields[-1].name:
+                    zn = '<:developer:785191301321719828>' if message.author.id in admins else '<:moderator:827468511894700054>' if 677397817966198788 in b else '<:Support:816800431249555498>' if 816386551222763561 in b else '<:kk:788850405157240833>'
+                    embed = i.embeds[0]
+                    if str(message.author.id) in embed.fields[-1].value:
+                        txt = embed.fields[-1].value.split('\n')
+                        k = -1
+                        for j in txt:
+                            k += 1
+                            if str(message.author.id) in j:
+                                txt[k] = f'{zn} <@{message.author.id}> — {mark}'
+                                txt = '\n'.join(txt)
+                                break
+                    elif embed.fields[-1].value.count('\n') < 11:
+                        if embed.fields[-1].value.count('\n') == 0:
+                            txt = f'{zn} <@{message.author.id}> — {mark}'
+                        else:
+                            txt = f'{zn} <@{message.author.id}> — {mark}\n{embed.fields[-1].value}'
+                    if txt.count('\n') < 6:
+                        txt = txt.replace('\n**Среднее значение: `пока недоступно`.**\n❗ **Для подсчёта среднего значения необходимо минимум 5 оценок.**', '') + '\n**Среднее значение: `пока недоступно`.**\n❗ **Для подсчёта среднего значения необходимо минимум 5 оценок.**'
+                    else:
+                        avg = 0; k = 0; txt = '\n'.join(txt.split('\n')[:-2])
+                        for j in txt.split('\n'):
+                            avg += int(j.split(' ')[-1])
+                            k += 1
+                        avg /= k
+                        if avg < 7.0:
+                            txt += f'\n**Среднее значение: `{"%.2f" % avg}`**\n❗ **Для передачи идеи владельцу сервера необходимо минимум `7.0`.**'
+                        else:
+                            txt += f'\n**Среднее значение: `{"%.2f" % avg}`**\n<:Check_from_Helen22:760820919265656842> **Идея передана владельцу сервера на рассмотрение.**'
+                    dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+                    dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+                    embed.set_footer(text=f'{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3')
+                    embed.remove_field(-1)
+                    embed.add_field(name='Оценки данной идеи:', value=txt, inline=False)
+                    await i.edit(embed=embed)
+                    break
+            except:
+                pass
+
+@client.command()
+async def problem(message, *, txt=None):
+    await message.message.delete()
+    if message.channel.id == cs.problems_id:
+        if not txt is None:
+            if [i for i in my_not.find({'id':message.author.id})] == []:
+                my_not.insert_one({'id':message.author.id, 'p':True, 'i':True})
+            global problems_key; problems_key += 1
+            embed = discord.Embed(title=f'Вопрос №{problems_key}', colour=0x2f3136, description=txt)
+            embed.set_author(name=f'{message.author} | {message.author.id}', icon_url=message.author.avatar_url)
+            dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+            dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+            embed.set_footer(text=f'{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3')
+            msg = await message.channel.send(embed=embed)
+            if my_not.find({'id':message.author.id})[0]['p']:
+                try:
+                    await message.author.send(embed=discord.Embed(colour=0x310000, timestamp=datetime.datetime.utcnow(), description=f'Благодарим за ваш **[вопрос]({msg.jump_url})**!\nНаш состав Support Team постарается как можно быстрее дать на него свой ответ.\n\nНеправильно сформулировали вопрос? У вас есть возможность его отредактировать до первого оставленного ответа:\n`K.eproblem <номер_оставленного_вопроса> <новый_текст_вопроса>`.\nНапример: `K.eproblem {problems_key} {txt} + печенек админам? :).`\n\nНе желаете получать уведомления в личные сообщения об изменениях статуса вопроса? Используйте `K.notify p-` для отключения оповещений.\n`Примечание:` все команды можно прописывать **[здесь](https://discord.com/channels/604636579545219072/712638398132650095)**.').set_footer(text='С уважением,\nКоманда Каталога', icon_url=message.guild.icon_url))
+                except:
+                    pass
     else:
-        await message.message.delete()
-        embed=discord.Embed(title=f'Вопрос №{str(my_cp.find()[0]["Number"])}',description=quest)
-        embed.set_author(name=f'{message.author} | {message.author.id}', icon_url=message.author.avatar_url)
-        a = await message.channel.send(embed=embed)
-        my_cp2.insert_one({"id":message.author.id, "Num":my_cp.find()[0]["Number"], "text":quest, "msg_id":a.id})
-        my_cp.update_one({"Number":my_cp.find()[0]["Number"]},{"$set":{"Number":my_cp.find()[0]["Number"] + 1}})
+        await message.channel.send(embed=discord.Embed(colour=0x310000, description=f'**[Канал для вопросов](https://discord.com/channels/604636579545219072/{cs.problems_id})**'))
+
+@client.command()
+async def eproblem(message, num=None, *, txt=None):
+    await message.message.delete()
+    if message.channel.id == cs.problems_id and not num is None and not txt is None:
+        for i in await client.get_channel(cs.problems_id).history(limit=100).flatten():
+            try:
+                if i.embeds[0].title.split('№')[1] == num and i.embeds[0].author.name.split('| ')[1] == str(message.author.id) and len(i.embeds[0].fields) == 0:
+                    embed = i.embeds[0]
+                    embed.description = txt
+                    dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+                    dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+                    embed.set_footer(text=f'{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3')
+                    await i.edit(embed=embed)
+                    break
+            except:
+                pass
+
+@client.command()
+async def answer(message, num=None, *, txt=None):
+    await message.message.delete()
+    b = [role.id for role in message.author.roles]
+    if message.channel.id == cs.problems_id and not num is None and not txt is None and (816386551222763561 in b or message.author.id in admins):
+        for i in await client.get_channel(cs.problems_id).history(limit=100).flatten():
+            if str(i.created_at).split()[0] == str(datetime.datetime.utcnow()).split()[0] or message.author.id in admins:
+                try:
+                    if i.embeds[0].title.split('№')[1] == num:
+                        if [i for i in my_not.find({'id':int(i.embeds[0].author.name.split('| ')[1])})] == []:
+                            my_not.insert_one({'id':int(i.embeds[0].author.name.split('| ')[1]), 'p':True, 'i':True})
+                        k = -1
+                        for j in i.embeds[0].fields:
+                            try:
+                                k += 1
+                                if j.name.split('| ')[1] == str(message.author.id):
+                                    embed = i.embeds[0]
+                                    embed.colour = 0x123524
+                                    embed.set_field_at(index=k, name=j.name, value=txt, inline=False)
+                                    dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+                                    dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+                                    embed.set_footer(text=f'{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3')
+                                    await i.edit(embed=embed)
+                                    break
+                            except:
+                                pass
+                        else:
+                            if len(i.embeds[0].fields) < 3 or message.author.id in admins:
+                                zn = '<:developer:785191301321719828>' if message.author.id in admins else '<:Support:816800431249555498>'
+                                kto = 'администратора' if message.author.id in admins else 'Support Team'
+                                kto2 = 'Ответ' if len(i.embeds[0].fields) == 0 else 'Дополнение'
+                                embed = i.embeds[0]
+                                embed.colour = 0x123524
+                                embed.add_field(name=f'{zn} {kto2} от {kto} {message.author} | {message.author.id}', value=txt, inline=False)
+                                dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+                                dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+                                embed.set_footer(text=f'{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3')
+                                await i.edit(embed=embed)
+                                if my_not.find({'id':int(i.embeds[0].author.name.split('| ')[1])})[0]['p']:
+                                    try:
+                                        mem = await client.fetch_user(i.embeds[0].author.name.split('| ')[1])
+                                        if kto2 == 'Ответ':
+                                            await mem.send(embed=discord.Embed(colour=0x310000, timestamp=datetime.datetime.utcnow(), description=f'Вы получили ответ на свой **[вопрос]({i.jump_url})** от {kto} `{message.author.name}`.\n\nНе желаете получать уведомления в личные сообщения об изменениях статуса идеи? Используйте `K.notify p-` для отключения оповещений.\n`Примечание:` все команды можно прописывать **[здесь](https://discord.com/channels/604636579545219072/712638398132650095)**.').set_footer(text='С уважением,\nКоманда Каталога', icon_url=message.guild.icon_url))
+                                        elif kto2 == 'Дополнение':
+                                            await mem.send(embed=discord.Embed(colour=0x310000, timestamp=datetime.datetime.utcnow(), description=f'Вы получили дополнительный ответ на свой **[вопрос]({i.jump_url})** от {kto} `{message.author.name}`.\n\nНе желаете получать уведомления в личные сообщения об изменениях статуса идеи? Используйте `K.notify p-` для отключения оповещений.\n`Примечание:` все команды можно прописывать **[здесь](https://discord.com/channels/604636579545219072/712638398132650095)**.').set_footer(text='С уважением,\nКоманда Каталога', icon_url=message.guild.icon_url))
+                                    except:
+                                        pass
+                                break
+                except:
+                    pass
                             
 @client.command()
 async def ticket(message, id=None, arg=None, *, txt=None):
