@@ -51,6 +51,8 @@ my_warn_kol_md = my_client.Catalog.warn_kol_md
 my_feb = my_client.feb.feb
 my_feb2 = my_client.feb.feb2
 
+my_not = my_client.Catalog.notifications
+
 client = commands.Bot(command_prefix = "!!", intents = discord.Intents.all())
 client.remove_command("help")
 
