@@ -164,23 +164,23 @@ async def on_ready():
   else:
     ticket_key = 0
   global ideas_key
-    for i in await client.get_channel(cs.ideas_id).history(limit=100).flatten():
-        try:
-            ideas_key = int(i.embeds[0].title.split('№')[1])
-            break
-        except:
-            pass
-    else:
-        ideas_key = 0
-    global problems_key
-    for i in await client.get_channel(cs.problems_id).history(limit=100).flatten():
-        try:
-            problems_key = int(i.embeds[0].title.split('№')[1])
-            break
-        except:
-            pass
-    else:
-        problems_key = 0
+  for i in await client.get_channel(cs.ideas_id).history(limit=100).flatten():
+      try:
+          ideas_key = int(i.embeds[0].title.split('№')[1])
+          break
+      except:
+          pass
+  else:
+      ideas_key = 0
+  global problems_key
+  for i in await client.get_channel(cs.problems_id).history(limit=100).flatten():
+      try:
+          problems_key = int(i.embeds[0].title.split('№')[1])
+          break
+      except:
+          pass
+  else:
+      problems_key = 0
 
   await client.get_channel(728932829026844672).send('```css\n[Данные обновлены, бот перезапущен].```')
     
