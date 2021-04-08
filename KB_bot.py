@@ -56,7 +56,7 @@ my_not = my_client.Catalog.notifications
 client = commands.Bot(command_prefix = "!!", intents = discord.Intents.all())
 client.remove_command("help")
 
-admins = [562561140786331650,414119169504575509,529044574660853761]
+admins = [562561140786331650,529044574660853761]
 id_chn_jb = cs.id_chn_jb
 
 @client.event
