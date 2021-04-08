@@ -614,7 +614,7 @@ async def on_raw_reaction_add(payload):
                   await client.get_channel(id_chn_jb).send(embed=embeds[0])
               else:
                   msg = await client.get_channel(id_chn_jb).send(embed=embeds[0])
-                  page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=True, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=mods.get(payload.message_id)[4], use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
+                  page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=False, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=mods.get(payload.message_id)[4], use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
                   await page.start()
                                                                                     
 @client.event
@@ -955,7 +955,7 @@ async def team(message,kl=None):
   embeds.append(embed)
   
   msg = await message.channel.send(embed=embeds[0])
-  page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=True, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
+  page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=False, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
   await page.start()
 
 @client.command()
@@ -1306,7 +1306,7 @@ async def warns(message, id=None):
       await message.channel.send(embed=embeds[0])
     else:
       msg = await message.channel.send(embed=embeds[0])
-      page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=True, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
+      page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=False, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
       await page.start()
       
 @client.command()
@@ -2082,7 +2082,7 @@ async def badges(message):
     embeds.append(discord.Embed(colour=0x310000,timestamp=datetime.datetime.utcnow(),title=':clipboard: Обозначение значков', description='**Значки ивентов:**\n🍬 Выдаётся в новогоднюю ночь 2021 года за найденные пасхалки. Существует до 2022 года.\n❤️ Победителю ивента на день влюблённых. Существует до конца мая 2021 года.').set_thumbnail(url=message.guild.icon_url))
     embeds.append(discord.Embed(colour=0x310000,timestamp=datetime.datetime.utcnow(),title=':clipboard: Обозначение значков', description='**Примечания:**\n• Значков всего без учёта кастомных: `22`.\n• Кастомный значок возможен в случае больших заслуг перед Каталогом, а так же за 2 ваших буста.\n• Значки выдаются автоматизированной системой. Это значит, что нет необходимости выпрашивать их у администрации сервера.').set_thumbnail(url=message.guild.icon_url))
     msg = await message.channel.send(embed=embeds[0])
-    page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=True, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
+    page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=False, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
     await page.start()
 
 @client.command()
