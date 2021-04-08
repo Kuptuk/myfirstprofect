@@ -51,7 +51,7 @@ my_warn_kol_md = my_client.Catalog.warn_kol_md
 my_feb = my_client.feb.feb
 my_feb2 = my_client.feb.feb2
 
-client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
+client = commands.Bot(command_prefix = "!!", intents = discord.Intents.all())
 client.remove_command("help")
 
 admins = [562561140786331650,414119169504575509,529044574660853761]
@@ -748,17 +748,17 @@ async def ev(ctx, *, txt):
 async def help(message):
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов v1.0.2', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.emoji emoji|ID` — информация об эмодзи (только нашего сервера).\n`K.suggest текст` — предложить свою идею.\n`K.info @user|ID` — информация о пользователе.\n`K.badges` — обозначение значков.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера [@упоминаниями].\n`K.team -` — состав Команды сервера [текстом].\n`K.problem` — задать вопрос администрации сервера.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.emoji emoji|ID` — информация об эмодзи (только нашего сервера).\n`K.bug <суть_бага>` — сообщить о баге разработчику.\n\n`K.notify` — настройки оповещений.\n\n`K.suggest текст` — предложить свою идею.\n`K.esuggest <номер> <новый_текст>` — отредактировать свою идею, если на неё не дан ответ.\n\n`K.problem` — задать вопрос поддержке сервера.\n`K.eproblem <номер_вопроса> <новый текст>` — отредактировать свой вопрос, если на него ещё не дан ответ.\n\n`K.info @user|ID` — информация о пользователе.\n`K.badges` — обозначение значков.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера [@упоминаниями].\n`K.team -` — состав Команды сервера [текстом].\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     
-    embed2 = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов v1.0.2', description=f"**Страница 2. Команды для состава:**\n\n`K.staff` — административные команды.\n`K.moder` — команды для модераторов.\n`K.op` — команды для главы отдела партнёрства.\n`K.pm` — команды для пиар-менеджера.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed2 = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"**Страница 2. Команды для состава:**\n\n`K.staff` — административные команды.\n`K.moder` — команды для модераторов.\n`K.support` — команды для Support Team.\n`K.op` — команды для главы отдела партнёрства.\n`K.pm` — команды для пиар-менеджера.\n`K.kk` — команды для всего персонала.\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
     embed2.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed2.set_thumbnail(url=message.guild.icon_url)
     
     embeds = [embed,embed2]
     msg = await message.channel.send(embed=embeds[0])
-    page = Paginator(client, msg, only=message.author, use_more=False, embeds=embeds)
+    page = Paginator(client, msg, footer=False, timeout=3600, use_exit=True, delete_message=False, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
     await page.start()
 
 @client.command()
@@ -772,7 +772,7 @@ async def op(message):
 @client.command()
 async def pm(message):
   if 608600358570295307 in [role.id for role in message.author.roles] or message.author.id in admins:
-    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&608600358570295307>:**\n\n`K.addbl <URL> <причина>` — добавить сервер в чёрный список. Вложение обязательно!\n`K.bl` — просмотреть чёрный список серверов каталога.\n`K.np +/- @user|ID` — выдать/снять пользователю роль партнёра первого уровня.\n`K.rebukes` — просмотреть свои выговоры.\n`K.pms` — статистика работы пиар-менеджеров.")
+    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&608600358570295307>:**\n\n`K.addbl <URL> <причина>` — добавить сервер в чёрный список. Вложение обязательно!\n`K.bl` — просмотреть чёрный список серверов каталога.\n`K.np +/- @user|ID` — выдать/снять пользователю роль партнёра первого уровня.\n`K.pms` — статистика работы пиар-менеджеров.")
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
@@ -997,10 +997,37 @@ async def staff(message):
 async def moder(message):
     b = [role.id for role in message.author.roles]
     if 800474182474268734 in b or 677397817966198788 in b or 765212719380037663 in b or message.author.id in admins:
-      embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&677397817966198788>:**\n\n`K.ban @user|ID причина` — забанить пользователя.\n`K.unban @user|ID причина` — разбанить пользователя.\n\n`K.warn @user|ID причина` — выдать предупреждение пользователю.\n`K.warns @user|ID` — просмотреть предупреждения пользователя.\n`K.unwarn <Номер_случая>` — снять предупреждение по номеру случая.\n\n`K.mute @user|ID time причина` — замутить человека на time часов.\n`K.unmute @user|ID` — размутить человека.\n`K.rebukes` — просмотреть свои выговоры.")
+      embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&677397817966198788>:**\n\n`K.ban @user|ID причина` — забанить пользователя.\n`K.unban @user|ID причина` — разбанить пользователя.\n\n`K.warn @user|ID причина` — выдать предупреждение пользователю.\n`K.warns @user|ID` — просмотреть предупреждения пользователя.\n`K.unwarn <Номер_случая>` — снять предупреждение по номеру случая.\n\n`K.mute @user|ID time причина` — замутить человека на time часов.\n`K.unmute @user|ID` — размутить человека.\n\n`K.active @user|ID <+/-> <причина>` — выдать/забрать роль активного участника соответственно.")
       embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
       embed.set_thumbnail(url=message.guild.icon_url)
       await message.channel.send(embed=embed)
+      
+@client.command()
+async def kk(message):
+  if 608994688078184478 in [role.id for role in message.author.roles] or message.author.id in admins:
+    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&608994688078184478>:**\n\n`K.rebukes` — посмотреть свои выговоры.\n\n`K.rate <номер_идеи> <оценка_[1..10]>` — дать свою оценку на оставленную идею (от 1 до 10)\n`K.approve <номер_идеи> <рецензия>` — оставить рецензию на идею.\n`Примечание:` 2 данных команды работают лишь в канале **[предложений](https://discord.com/channels/604636579545219072/678666229661171724)**.")
+    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+    embed.set_thumbnail(url=message.guild.icon_url)
+    await message.channel.send(embed=embed)
+
+@client.command()
+async def support(message):
+    b = [role.id for role in message.author.roles]
+    if 816386551222763561 in b or message.author.id in admins:
+      embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&816386551222763561>:**\n\n`K.active @user|ID <+/-> <причина>` — выдать/забрать роль активного участника соответственно.\n`K.answer <номер_вопроса> <ответ>` — дать ответ на вопрос пользователя.")
+      embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
+      embed.set_thumbnail(url=message.guild.icon_url)
+      await message.channel.send(embed=embed)
+      
+@client.command()
+async def bug(message, *, txt=None):
+    if txt is None:
+        await message.channel.send(embed=discord.Embed(colour=0x2f3136, description='```yaml\nПожалуйста, опишите суть проблемы.```'))
+    else:
+        dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+        dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+        await client.get_channel(829738150230360083).send(embed=discord.Embed(colour=0x2f3136, description=txt).set_author(name=f'{message.author.name} (Member)\n{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
+        await message.channel.send(embed=discord.Embed(colour=0x2f3136, description='```yaml\nСпасибо, что помогаете делать бота лучше <3```'))
       
 @client.command()
 async def cont(message, *, url=None):
