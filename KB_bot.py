@@ -684,7 +684,7 @@ async def ping(message):
                                                                                     
 @client.command()
 async def dm(message, id = None, *, urls = None):
-    if message.author.id in admins:
+    if message.author.id in admins or message.author.id == 571006178444836875:
         if id is None:
             await message.channel.send(embed=discord.Embed(colour=0x2f3136, description='Вы не указали пользователя.'))
         elif id == '-u':
