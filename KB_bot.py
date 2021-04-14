@@ -1033,7 +1033,7 @@ async def kk(message):
   if message.channel.id != 642190411867226112 and not message.author.id in admins:
     await message.channel.send(embed=discord.Embed(colour=0x310000,description='<:kk:788850405157240833> Данная команда действует только в **[служебной](https://discord.com/channels/604636579545219072/642190411867226112)**.'))
   elif 608994688078184478 in [role.id for role in message.author.roles] or message.author.id in admins:
-    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="<:kk:788850405157240833> **Команды для <@&608994688078184478>:**\n\n`K.rebukes` — посмотреть свои выговоры.\n\n`K.rate_stats` — статистика неоценённых идей и тех, что отправлены владельцу сервера.\n`Примечание:` проверяются последние 100 идей.\n`K.rate <номер_идеи> <оценка_[1..10]>` — дать свою оценку на оставленную идею (от 1 до 10)\n`K.approve <номер_идеи> <рецензия>` — оставить рецензию на идею.\n`Примечание:` 2 данных команды работают лишь в канале **[предложений](https://discord.com/channels/604636579545219072/678666229661171724)**.")
+    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="<:kk:788850405157240833> **Команды для <@&608994688078184478>:**\n\n`K.rebukes` — посмотреть свои выговоры.\n\n`K.rate_stats` — статистика неоценённых идей и тех, что отправлены владельцу сервера.\n`Примечание:` проверяются последние 50 идей.\n`K.rate <номер_идеи> <оценка_[1..10]>` — дать свою оценку на оставленную идею (от 1 до 10)\n`K.approve <номер_идеи> <рецензия>` — оставить рецензию на идею.\n`Примечание:` 2 данных команды работают лишь в канале **[предложений](https://discord.com/channels/604636579545219072/678666229661171724)**.")
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
@@ -1691,7 +1691,7 @@ async def rate_stats(message):
     b = [role.id for role in message.author.roles]
     if 608994688078184478 in b or 816386551222763561 in b or 757890413838467133 in b or message.author.id in admins:
         mas, mas2, embeds = [], [], []
-        his = await client.get_channel(cs.ideas_id).history(limit=100).flatten()
+        his = await client.get_channel(cs.ideas_id).history(limit=50).flatten()
         for i in his[::-1]:
             try:
                 if i.embeds[0].fields[-1].name == 'Оценки данной идеи:':
