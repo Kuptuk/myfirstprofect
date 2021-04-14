@@ -1696,9 +1696,9 @@ async def rate_stats(message):
             try:
                 if i.embeds[0].fields[-1].name == 'Оценки данной идеи:':
                     if not str(message.author.id) in i.embeds[0].fields[-1].value:
-                        mas.append(f'**[Идея №{i.embeds[0].title.split('№')[-1]}]({i.jump_url})**')
+                        mas.append(f'**[Идея №{i.embeds[0].title.split("№")[-1]}]({i.jump_url})**')
                     if 'Идея передана' in i.embeds[0].fields[-1].value:
-                        mas2.append(f'**[Идея №{i.embeds[0].title.split('№')[-1]}]({i.jump_url})**')
+                        mas2.append(f'**[Идея №{i.embeds[0].title.split("№")[-1]}]({i.jump_url})**')
             except:
                 pass
         embed = discord.Embed(colour=0x310000, timestamp=datetime.datetime.utcnow())
