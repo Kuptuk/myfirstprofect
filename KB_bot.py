@@ -232,7 +232,7 @@ async def on_message(message):
             except:
                 embed.description = f'Приветствую, {message.author.name}.\n\nДанное сообщение является системным.\n\nНам очень жаль, но Ваше сообщенние не было доставлено получателю. Вероятнее всего, причиной этого являются закрытые личные сообщения с пользователям.\n\nС уважением,\nKC | System Info.'
                 await message.channel.send(embed=embed.set_author(name=f'Catalog (System)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
-  elif '.gg' in message.content and message.channel.category.id == 604636579545219073 and message.channel.id != 699306241981415424 and not message.author.id in admins and not 816386551222763561 in [role.id for role in message.author.roles]:
+  elif ('.gg' in message.content or '/invite/' in message.content) and message.channel.category.id == 604636579545219073 and message.channel.id != 699306241981415424 and not message.author.id in admins and not 816386551222763561 in [role.id for role in message.author.roles]:
     await message.delete()
     my_mute.delete_one({'id':message.author.id})
     my_mute.insert_one({"id":message.author.id, "data":datetime.datetime.utcnow() + datetime.timedelta(hours=99999)})
@@ -242,13 +242,14 @@ async def on_message(message):
     await message.author.remove_roles(message.guild.get_role(648271372585533441),reason=f'Автомодерация: время мута истекло.')
     await message.author.add_roles(message.guild.get_role(648271372585533441),reason=f'Автомодерация: был заткнут навсегда.')
   elif message.channel.id == 740651083533254717:
-    if "K.problem" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins and message.author.id != 665120789913403422 and not 816386551222763561 in [role.id for role in message.author.roles]:
+    if not message.content.split()[0] in ["K.problem", "K.eproblem"] and message.author.id != 656029229749764126 and not message.author.id in admins and message.author.id != 665120789913403422 and not 816386551222763561 in [role.id for role in message.author.roles]:
       await message.delete()
       embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=discord.Colour(0x310000),description=f'Ваше сообщение в канале <#740651083533254717> следующего содержания: `{message.content}` было удалено по причине оффтопа.\nПросьба ознакомиться с **[закреплённым информационным сообщением](https://discord.com/channels/604636579545219072/740651083533254717/744485922258681896).**')
       embed.set_footer(text='С уважением, Команда Каталога!',icon_url=message.guild.icon_url)
       await message.author.send(embed=embed)
   elif message.channel.id == 678666229661171724:
-    if "K.suggest" != message.content.split()[0] and message.author.id != 656029229749764126 and not message.author.id in admins and message.author.id != 665120789913403422 and not 608994688078184478 in [role.id for role in message.author.roles]:
+    b = [role.id for role in message.author.roles]
+    if not message.content.split()[0] in ["K.suggest", "K.esuggest"] and message.author.id != 656029229749764126 and not message.author.id in admins and message.author.id != 665120789913403422 and not (608994688078184478 in b or 816386551222763561 in b or 757890413838467133 in b):
       await message.delete()
       embed = discord.Embed(timestamp=datetime.datetime.utcnow(),colour=discord.Colour(0x310000),description=f'Ваше сообщение в канале <#678666229661171724> следующего содержания: `{message.content}` было удалено по причине оффтопа.\nПросьба ознакомиться с **[закреплённым информационным сообщением](https://discord.com/channels/604636579545219072/678666229661171724/732206889110339655).**')
       embed.set_footer(text='С уважением, Команда Каталога!',icon_url=message.guild.icon_url)
