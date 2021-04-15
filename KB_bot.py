@@ -1691,7 +1691,7 @@ async def rate_stats(message):
     b = [role.id for role in message.author.roles]
     if 608994688078184478 in b or 816386551222763561 in b or 757890413838467133 in b or message.author.id in admins:
         mas, mas2, embeds = [], [], []
-        his = await client.get_channel(cs.ideas_id).history(limit=100).flatten()
+        his = await client.get_channel(cs.ideas_id).history(limit=200).flatten()
         for i in his[::-1]:
             try:
                 if i.embeds[0].fields[-1].name == 'Оценки данной идеи:':
@@ -1713,10 +1713,16 @@ async def rate_stats(message):
                 result = '\n'.join(mas[k:k+9])
                 embed.add_field(name=cs.rim[ch], value=result)
                 k += 9
+                if ch == 2:
+                    ch = -1
+                    embeds.append(embed)
+                    embed = discord.Embed(colour=0x310000, timestamp=datetime.datetime.utcnow())
+                    embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
             if len(mas) % 9 > 0:
                 result = '\n'.join(mas[k:k+9])
                 embed.add_field(name=cs.rim[ch+1], value=result)
-        embeds.append(embed)
+        if ch != -1:
+            embeds.append(embed)
 
         embed = discord.Embed(colour=0x310000, timestamp=datetime.datetime.utcnow())
         embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
@@ -1724,7 +1730,7 @@ async def rate_stats(message):
             embed.description='```yaml\nВладельцем сервера были рассмотрены все отправленные идеи ^^```'
         else:
             k = 0; ch = -1
-            embed.description = f'**Владельцу отправлены следующие идеи на рассмотрение `[{len(mas2)}]`:**'
+            embed.description = f'<:owner:784812161959854120> **Владельцу отправлены следующие идеи на рассмотрение `[{len(mas2)}]`:**'
             for i in range(len(mas2)//9):
                 ch += 1
                 result = '\n'.join(mas2[k:k+9])
@@ -1735,7 +1741,7 @@ async def rate_stats(message):
                 embed.add_field(name=cs.rim[ch+1], value=result)
         embeds.append(embed)
         msg = await message.channel.send(embed=embeds[0])
-        page = Paginator(client, msg, footer=False, timeout=3600, use_exit=True, delete_message=False, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
+        page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=False, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
         await page.start()
                         
 @client.command()
