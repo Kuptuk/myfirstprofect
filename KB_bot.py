@@ -61,7 +61,6 @@ id_chn_jb = cs.id_chn_jb
 
 @client.event
 async def on_ready():
-  await client.change_presence(status=discord.Status.dnd,activity=discord.Streaming(url='https://www.twitch.tv/catalogserverov',name=f"K.help | {str(datetime.datetime.utcnow()+datetime.timedelta(hours=3)).split()[1].split('.')[0][0:5]} [{len(client.get_guild(604636579545219072).members)}]"))
   msg = await client.get_channel(742757799645413378).history(limit=200).flatten()
   b = []
   for i in msg:
@@ -183,6 +182,8 @@ async def on_ready():
       problems_key = 0
 
   await client.get_channel(728932829026844672).send('```css\n[Данные обновлены, бот перезапущен].```')
+  await client.change_presence(status=discord.Status.dnd,activity=discord.Streaming(url='https://www.twitch.tv/catalogserverov',name=f"K.help | {str(datetime.datetime.utcnow()+datetime.timedelta(hours=3)).split()[1].split('.')[0][0:5]} [{len(client.get_guild(604636579545219072).members)}]"))
+
     
 @client.event
 async def on_message(message):
@@ -1705,6 +1706,7 @@ async def rate_stats(message):
         embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
         if mas == []:
             embed.description='```yaml\nВау, вы оценили все возможные предложения, спасибо <3```'
+            embeds.append(embed)
         else:
             k = 0; ch = -1
             embed.description = f'**Оцените следующие идеи `[{len(mas)}]`:**'
