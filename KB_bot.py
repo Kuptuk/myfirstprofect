@@ -1721,8 +1721,8 @@ async def rate_stats(message):
             if len(mas) % 9 > 0:
                 result = '\n'.join(mas[k:k+9])
                 embed.add_field(name=cs.rim[ch+1], value=result)
-        if ch != -1:
-            embeds.append(embed)
+            if ch != -1:
+                embeds.append(embed)
 
         embed = discord.Embed(colour=0x310000, timestamp=datetime.datetime.utcnow())
         embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
