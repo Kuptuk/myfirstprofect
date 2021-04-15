@@ -787,7 +787,7 @@ async def op(message):
   if message.channel.id != 642190411867226112 and not message.author.id in admins:
     await message.channel.send(embed=discord.Embed(colour=0x310000,description='<:kk:788850405157240833> Данная команда действует только в **[служебной](https://discord.com/channels/604636579545219072/642190411867226112)**.'))
   elif 686639786672652363 in [role.id for role in message.author.roles] or message.author.id in admins:
-    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&686639786672652363>:**\n\n`K.modstats date1 date2` — показать статистику отдела партнёрства с date1 по date2.\n`K.apm @user|+/-` — выдать или забрать роли пиар-менеджера соответственно.\n`K.removebl <№случая>` — исключить сервер из чёрного списка по номеру случая.\n`K.rebuke @user|ID reason` — выдать выговор.\n`K.unrebuke №случая` — снять выговор.\n`K.rebukes @user|ID` — просмотреть выговоры.")
+    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="<:kk:788850405157240833> **Команды для <@&686639786672652363>:**\n\n`K.modstats date1 date2` — показать статистику отдела партнёрства с date1 по date2.\n`K.apm @user|+/-` — выдать или забрать роли пиар-менеджера соответственно.\n`K.removebl <№случая>` — исключить сервер из чёрного списка по номеру случая.\n`K.rebuke @user|ID reason` — выдать выговор.\n`K.unrebuke №случая` — снять выговор.\n`K.rebukes @user|ID` — просмотреть выговоры.")
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
@@ -797,7 +797,7 @@ async def pm(message):
   if message.channel.id != 642190411867226112 and not message.author.id in admins:
     await message.channel.send(embed=discord.Embed(colour=0x310000,description='<:kk:788850405157240833> Данная команда действует только в **[служебной](https://discord.com/channels/604636579545219072/642190411867226112)**.'))
   elif 608600358570295307 in [role.id for role in message.author.roles] or message.author.id in admins:
-    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="**Команды для <@&608600358570295307>:**\n\n`K.addbl <URL> <причина>` — добавить сервер в чёрный список. Вложение обязательно!\n`K.bl` — просмотреть чёрный список серверов каталога.\n`K.np +/- @user|ID` — выдать/снять пользователю роль партнёра первого уровня.\n`K.pms` — статистика работы пиар-менеджеров.")
+    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="<:kk:788850405157240833> **Команды для <@&608600358570295307>:**\n\n`K.addbl <URL> <причина>` — добавить сервер в чёрный список. Вложение обязательно!\n`K.bl` — просмотреть чёрный список серверов каталога.\n`K.np +/- @user|ID` — выдать/снять пользователю роль партнёра первого уровня.\n`K.pms` — статистика работы пиар-менеджеров.")
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
@@ -1033,7 +1033,7 @@ async def kk(message):
   if message.channel.id != 642190411867226112 and not message.author.id in admins:
     await message.channel.send(embed=discord.Embed(colour=0x310000,description='<:kk:788850405157240833> Данная команда действует только в **[служебной](https://discord.com/channels/604636579545219072/642190411867226112)**.'))
   elif 608994688078184478 in [role.id for role in message.author.roles] or message.author.id in admins:
-    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="<:kk:788850405157240833> **Команды для <@&608994688078184478>:**\n\n`K.rebukes` — посмотреть свои выговоры.\n\n`K.rate_stats` — статистика неоценённых идей и тех, что отправлены владельцу сервера.\n`Примечание:` проверяются последние 50 идей.\n`K.rate <номер_идеи> <оценка_[1..10]>` — дать свою оценку на оставленную идею (от 1 до 10)\n`K.approve <номер_идеи> <рецензия>` — оставить рецензию на идею.\n`Примечание:` 2 данных команды работают лишь в канале **[предложений](https://discord.com/channels/604636579545219072/678666229661171724)**.")
+    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="<:kk:788850405157240833> **Команды для <@&608994688078184478>:**\n\n`K.rebukes` — посмотреть свои выговоры.\n\n`K.rate_stats` — статистика неоценённых идей и тех, что отправлены владельцу сервера.\n`Примечание:` проверяются последние 200 идей.\n`K.rate <номер_идеи> <оценка_[1..10]>` — дать свою оценку на оставленную идею (от 1 до 10)\n`K.approve <номер_идеи> <рецензия>` — оставить рецензию на идею.\n`Примечание:` 2 данных команды работают лишь в канале **[предложений](https://discord.com/channels/604636579545219072/678666229661171724)**.")
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
