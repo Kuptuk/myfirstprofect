@@ -1723,6 +1723,8 @@ async def rate_stats(message):
             if len(mas) % 9 > 0:
                 result = '\n'.join(mas[k:k+9])
                 embed.add_field(name=cs.rim[ch+1], value=result)
+                if ch == -1 and k == 0:
+                    embeds.append(embed)
             if ch != -1:
                 embeds.append(embed)
 
