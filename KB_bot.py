@@ -2594,7 +2594,7 @@ async def info(message, id = None):
           elif not member.premium_since is None:
             boost = Image.open(io.BytesIO(requests.get('https://media.discordapp.net/attachments/689800301468713106/797122464026198066/rm.png', stream = True).content)).convert('RGBA')
             response.paste(boost, (54, 100), boost)
-          if not member.premium_since is None or message.author.id == 602043590398705665:
+          if not member.premium_since is None or mid == 602043590398705665:
             idraw.text((100 , 102), f'{member.top_role.name}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
 
           response.save('user_card.png')
