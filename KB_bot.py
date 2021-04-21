@@ -796,7 +796,7 @@ async def ev(ctx, *, txt):
 async def help(message):
     msg = await client.get_channel(690827050033872937).history(limit=20).flatten()
     msg = msg[0].content.replace("[","").replace("]","").replace("'","").split(', ')
-    embed = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.emoji emoji|ID` — информация об эмодзи (только нашего сервера).\n`K.bug <суть_бага>` — сообщить о баге разработчику.\n\n`K.notify` — настройки оповещений.\n\n`K.suggest текст` — предложить свою идею.\n`K.esuggest <номер> <новый_текст>` — отредактировать свою идею, если на неё не дан ответ.\n\n`K.problem` — задать вопрос поддержке сервера.\n`K.eproblem <номер_вопроса> <новый текст>` — отредактировать свой вопрос, если на него ещё не дан ответ.\n\n`K.info @user|ID` — информация о пользователе.\n`K.badges` — обозначение значков.\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера [@упоминаниями].\n`K.team -` — состав Команды сервера [текстом].\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
+    embed = discord.Embed(colour=discord.Colour(0x310000),title='Меню Каталог Серверов', description=f"**Страница 1. Команды для всех пользователей:**\n\n`K.help` — помощь.\n`K.avatar @user|ID` — аватар пользователя.\n`K.emoji emoji|ID` — информация об эмодзи (только нашего сервера).\n`K.bug <суть_бага>` — сообщить о баге разработчику.\n\n`K.notify` — настройки оповещений.\n\n`K.suggest текст` — предложить свою идею.\n`K.esuggest <номер> <новый_текст>` — отредактировать свою идею, если на неё не дан ответ.\n\n`K.problem` — задать вопрос поддержке сервера.\n`K.eproblem <номер_вопроса> <новый текст>` — отредактировать свой вопрос, если на него ещё не дан ответ.\n\n`K.info @user|ID` — информация о пользователе.\n`K.pm_info @user|ID` — статистика определённого пиар-менеджера.\n`K.badges` — обозначение значков.\n\n`K.server` — информация о сервере.\n`K.stats` — статистика сервера.\n`K.team` — состав Команды сервера [@упоминаниями].\n`K.team -` — состав Команды сервера [текстом].\n\n[Случайный партнёр]({msg[random.randint(0,len(msg)-1)]})",timestamp=datetime.datetime.utcnow())
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     
@@ -824,7 +824,7 @@ async def pm(message):
   if message.channel.id != 642190411867226112 and not message.author.id in admins:
     await message.channel.send(embed=discord.Embed(colour=0x310000,description='<:kk:788850405157240833> Данная команда действует только в **[служебной](https://discord.com/channels/604636579545219072/642190411867226112)**.'))
   elif 608600358570295307 in [role.id for role in message.author.roles] or message.author.id in admins:
-    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="<:kk:788850405157240833> **Команды для <@&608600358570295307>:**\n\n`K.addbl <URL> <причина>` — добавить сервер в чёрный список. Вложение обязательно!\n`K.bl` — просмотреть чёрный список серверов каталога.\n`K.np +/- @user|ID` — выдать/снять пользователю роль партнёра первого уровня.\n`K.pms` — статистика работы пиар-менеджеров.")
+    embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="<:kk:788850405157240833> **Команды для <@&608600358570295307>:**\n\n`K.addbl <URL> <причина>` — добавить сервер в чёрный список. Вложение обязательно!\n`K.bl` — просмотреть чёрный список серверов каталога.\n`K.np +/- @user|ID` — выдать/снять пользователю роль партнёра первого уровня.\n`K.perms` — настройки разрешений команды `K.pm_info`.\n\n`K.v <url> <что_поправить>` — создать запрос на ссылку-публикацию сервера партнёра, в которой имеются недочёты.\n`K.v --gop <ссылки + что не так>` — отправить запрос, содержащий несколько ссылок, напрямую \"как есть\" Главе отдела партнёртва.\n`K.a <номер> <комментарий>` — оставить комментарий к запросу, который оставлен конкретно вам.")
     embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
     embed.set_thumbnail(url=message.guild.icon_url)
     await message.channel.send(embed=embed)
@@ -1010,7 +1010,7 @@ async def team(message,kl=None):
   page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=False, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=message.author, use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
   await page.start()
 
-@client.command()
+"""@client.command()
 async def pms(message):
   global date_pms
   if 608600358570295307 in [role.id for role in message.author.roles] or message.author.id in admins:
@@ -1035,7 +1035,7 @@ async def pms(message):
       await msg.edit(embed=embed)
     else:
       otkat = f'Минут до отката команды: ~{int((180-(time.time()-date_pms))//60)}' if (180-(time.time()-date_pms))//60 != 0 else f'Секунд до отката команды: ~{int(180-(time.time()-date_pms))}'
-      await message.channel.send(embed=discord.Embed(colour=0x310000,description=f'```css\n[Данная команда имеет общую задержку в 3 минуты.]```\n```md\n#{otkat}```'))
+      await message.channel.send(embed=discord.Embed(colour=0x310000,description=f'```css\n[Данная команда имеет общую задержку в 3 минуты.]```\n```md\n#{otkat}```'))"""
   
 @client.command()
 async def staff(message):
