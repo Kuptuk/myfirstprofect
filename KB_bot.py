@@ -2569,7 +2569,7 @@ async def pm_info(message, id=None):
       flag = False
   if flag and not message.author.id in admins:
     if not 608600358570295307 in [role.id for role in member.roles]:
-      await message.channel.send('```diff\n- Пользователь не является пиар-менеджером.```')
+      await message.channel.send('```diff\n- Пользователь не является пиар-менеджером.```') if member != message.author else await message.channel.send('```diff\n- Вы не являетесь пиар-менеджером.```')
       flag = False
     else:
       if not 608600358570295307 in [role.id for role in message.author.roles]:
