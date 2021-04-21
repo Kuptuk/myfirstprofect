@@ -53,6 +53,8 @@ my_feb2 = my_client.feb.feb2
 
 my_not = my_client.Catalog.notifications
 
+my_perms = my_client.Catalog.perms
+
 client = commands.Bot(command_prefix = "K.", intents = discord.Intents.all())
 client.remove_command("help")
 
@@ -75,6 +77,7 @@ async def on_ready():
   global date_pms; date_pms = time.time() - 180
   global active_kd; active_kd = time.time() - 300
   global np_kd; np_kd = {}
+  global perms_kd; perms_kd = {}
                                                                                     
   global mods; mods = {}
   global mods2; mods2 = {}
@@ -2410,6 +2413,82 @@ async def reload(message):
         msgs = await client.get_channel(764191031318937674).fetch_message(764191228933046361); msgs = msgs.content
         feedback = await client.get_channel(764191031318937674).fetch_message(827263853184286740); feedback = feedback.content
         await message.channel.send('Reload Complete.')
+        
+@client.command()
+async def pm_info(message, id=None):
+  flag = True
+  if id is None or id == '-':
+    member = message.author
+  else: 
+    try:
+      member = client.get_guild(604636579545219072).get_member(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
+    except:
+      await message.channel.send('```diff\n- Пользователя не существует или он отсутствует на сервере.```')
+      flag = False
+  if flag and not message.author.id in admins:
+    if not 608600358570295307 in [role.id for role in member.roles]:
+      await message.channel.send('```diff\n- Пользователь не является пиар-менеджером.```')
+      flag = False
+    else:
+      if not 608600358570295307 in [role.id for role in message.author.roles]:
+        a = my_perms.find({'id':member.id})[0]
+        if not a['users']:
+          await message.channel.send(f'```diff\n- Вы не можете просмотреть профиль {member.name}, так как он(а) отключил данную возможнотсть для пользователей.```')
+          flag = False
+      else:
+        if [i for i in my_perms.find({'id':message.author.id})] == []:
+          my_perms.insert_one({'id':message.author.id, 'users':True, 'pms':True})
+        if [i for i in my_perms.find({'id':member.id})] == []:
+          my_perms.insert_one({'id':member.id, 'users':True, 'pms':True})
+        if message.author != member:
+          a = my_perms.find({'id':message.author.id})[0]
+          b = my_perms.find({'id':member.id})[0]
+          if not a['pms']:
+            await message.channel.send('```diff\n- Вы не можете просматривать профили коллег, так как запретили им просматривать свой.```')
+            flag = False
+          elif not b['pms']:
+            await message.channel.send(f'```diff\n- Вы не можете просмотреть профиль {member.name}, так как он(а) отключил данную возможнотсть для коллег.```')
+            flag = False
+            
+  if flag:
+    mid = member.id
+    if cards.get(mid) and not message.message.content.endswith('-'):
+      response = requests.get(cards.get(mid), stream = True)
+    else:
+      response = requests.get('https://media.discordapp.net/attachments/689800301468713106/834480251458945034/3214123.png', stream = True)
+    
+    response = Image.open(io.BytesIO(response.content))
+    idraw = ImageDraw.Draw(response)
+    color = (255, 255, 255)
+    
+    avatar = Image.open(io.BytesIO(requests.get(member.avatar_url, stream = True).content)).convert('RGBA').resize((212, 212), Image.ANTIALIAS)
+    response.paste(avatar, (118, 169))
+    idraw.text((400, 150), unicodedata.normalize('NFKD', str(member)).encode('utf-8', 'ignore').decode('utf-8'), color, font = ImageFont.truetype(r'./Gothic.ttf', size = 35))
+    
+    mst = str(member.status)
+    if statuts.get(mst):
+      st = Image.open(io.BytesIO(requests.get(statuts.get(mst), stream = True).content)).convert('RGBA')
+      response.paste(st, (360, 155), st)
+    else:
+      st = Image.open(io.BytesIO(requests.get(statuts.get(member.is_on_mobile()).get(mst), stream = True).content)).convert('RGBA')
+      response.paste(st, (360, statuts.get(member.is_on_mobile()).get('y')), st)
+    
+    aktiv = requests.get(f'https://api.catalogserverov.ml/v1/stats/pm/list?user={mid}').text.split('||')
+    a1, a2 = aktiv[0].split('|'), aktiv[1].split('|')
+    idraw.text((140 , 400), f'За сегодня: {a1[0]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+    idraw.text((365 , 210), f'За 24 часа от текущего момента: {a2[0]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+    idraw.text((365 , 250), f'В течение текущей недели: {a1[1]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+    idraw.text((365 , 290), f'За 1 неделю от текущего момента: {a2[2]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+    idraw.text((365 , 330), f'В течение текущего месяца: {a1[3]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+    idraw.text((365 , 370), f'За 1 месяц от текущего момента: {a2[3]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+    idraw.text((365 , 410), f'От последнего отчёта до отчёта: {a1[2]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+    idraw.text((120 , 430), f'За всё время: {a1[4]}', color, font = ImageFont.truetype(r'./Gothic.ttf', size = 25))
+
+    if str(mid) in rm22:
+      response.paste(rm, (300, 170), rm)
+
+    response.save('pm_card.png')
+    await message.channel.send(file = discord.File(fp = 'pm_card.png'))
                                
 @client.command()
 async def badges(message):
