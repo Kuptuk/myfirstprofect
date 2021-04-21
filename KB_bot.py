@@ -2415,6 +2415,53 @@ async def reload(message):
         await message.channel.send('Reload Complete.')
         
 @client.command()
+async def perms(message, *, txt=None):
+  if message.author.id in admins or 608600358570295307 in [role.id for role in message.author.roles]:
+    result = ''
+    if [i for i in my_perms.find({'id':message.author.id})] == []:
+        my_perms.insert_one({'id':message.author.id, 'users':True, 'pms':True})
+    if txt is None:
+        result += '```md\n#Ваши персональные настройки разрешений:```\n'
+        a = my_perms.find({'id':message.author.id})[0]
+        if a['users']:
+            result += '<:yes:819642494479368273> Все пользователи смогут просматривать ваш профиль пиар-менеджера.\n'
+        else:
+            result += '<:otkaz:819631424789413969> Все пользователи не смогут просматривать ваш профиль пиар-менеджера.\n'
+        if a['pms']:
+            result += '<:yes:819642494479368273> Вы разрешаете просматривать свой профиль пиар-менеджера коллегам, а также можете просматривать их профили.\n'
+        else:
+            result += '<:otkaz:819631424789413969> Вы запрещаете просматривать свой профиль пиар-менеджера коллегам, а также не можете просматривать их профили.\n'
+        result += '\n```yaml\nСписок доступных аргументов для данной команды:```\n`u+` — разрешить пользователям просматривать ваш профиль пиар-менеджера.\n`u-` — запретить пользователям просматривать ваш профиль пиар-менеджера.\n\n`pm+` — разрешить коллегам просматривать ваш профиль пиар-менеджера и иметь возможность просматривать их профили.\n`pm-` — запретить коллегам просматривать ваш профиль пиар-менеджера и отключить возможность просматривать их профили.'
+        await message.channel.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description=f'**{result}**').set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url))
+    else:
+        global perms_kd
+        if perms_kd.get(message.author.id) is None or time.time() - perms_kd.get(message.author.id) >= 3600:
+          if not 'u+' in txt and not 'u-' in txt and not 'pm+' in txt and not 'pm-' in txt:
+              result = 'Заданы несуществующие аргументы.\nСписок доступных аргументов для данной команды: `u+`, `u-`, `pm+`, `pm-`.'
+          else:
+              if 'u+' in txt and 'u-' in txt:
+                  result += 'Аргументы `u+` и `u-` противоречат друг другу.\n'
+              elif 'u+' in txt:
+                  my_perms.update_one({"id":message.author.id},{"$set":{"users":True}})
+                  result += '<:yes:819642494479368273> Все пользователи смогут просматривать ваш профиль пиар-менеджера.\n'
+              elif 'u-' in txt:
+                  my_perms.update_one({"id":message.author.id},{"$set":{"users":False}})
+                  result += '<:otkaz:819631424789413969> Все пользователи не смогут просматривать ваш профиль пиар-менеджера.\n'
+              if 'pm+' in txt and 'pm-' in txt:
+                  result += 'Аргументы `pm+` и `pm-` противоречат друг другу.\n'
+              elif 'pm+' in txt:
+                  my_perms.update_one({"id":message.author.id},{"$set":{"pms":True}})
+                  result += '<:yes:819642494479368273> Вы разрешили просматривать свой профиль пиар-менеджера коллегам, а также получили возможность просматривать их профили.\n'
+              elif 'pm-' in txt:
+                  my_perms.update_one({"id":message.author.id},{"$set":{"pms":False}})
+                  result += '<:otkaz:819631424789413969> Вы запретили просматривать свой профиль пиар-менеджера коллегам, а также потеряли возможность просматривать их профили.\n'
+          perms_kd.update({message.author.id:time.time()})
+          await message.channel.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description=f'**{result}**').set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url))
+        else:
+            otkat = f'Минут до отката команды: ~{int((3600-(time.time()-perms_kd.get(message.author.id)))//60)}' if (3600-(time.time()-perms_kd.get(message.author.id)))//60 != 0 else f'Секунд до отката команды: ~{int(3600-(time.time()-perms_kd.get(message.author.id)))}'
+            await message.channel.send(embed=discord.Embed(colour=0x310000,description=f'```css\n[Данная команда имеет пользовательскую задержку в 1 час.]```\n```md\n#{otkat}```'))
+                               
+@client.command()
 async def pm_info(message, id=None):
   flag = True
   if id is None or id == '-':
