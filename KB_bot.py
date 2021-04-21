@@ -183,6 +183,15 @@ async def on_ready():
           pass
   else:
       problems_key = 0
+  global va_key
+  for i in await client.get_channel(cs.v_adm_id).history(limit=200).flatten():
+    try:
+      va_key = int(i.embeds[0].title.split('№')[-1])
+      break
+    except:
+      pass
+  else:
+    va_key = 0
 
   await client.get_channel(728932829026844672).send('```css\n[Данные обновлены, бот перезапущен].```')
   await client.change_presence(status=discord.Status.dnd,activity=discord.Streaming(url='https://www.twitch.tv/catalogserverov',name=f"K.help | {str(datetime.datetime.utcnow()+datetime.timedelta(hours=3)).split()[1].split('.')[0][0:5]} [{len(client.get_guild(604636579545219072).members)}]"))
@@ -199,6 +208,8 @@ async def on_message(message):
         await message.add_reaction('<:developer:785191301321719828>')
       except:
         pass
+  elif message.channel.id == cs.v_adm_id and message.author.id == 656029229749764126:
+    await message.add_reaction('<:yes:819642494479368273>')
   elif (message.guild is None or message.guild.id == dm_guild.id) and message.author.id != 656029229749764126:
         if not message.guild is None and message.guild.id == dm_guild.id and '--a' in message.content:
             await message.channel.edit(category=dm_guild.categories[1])
@@ -641,6 +652,18 @@ async def on_raw_reaction_add(payload):
                   msg = await client.get_channel(id_chn_jb).send(embed=embeds[0])
                   page = Paginator(client, msg, timeout=3600, use_exit=True, delete_message=False, reactions=['<:back:820233427411927071>', '<:go:820233452522569732>'], only=mods.get(payload.message_id)[4], use_more=False, exit_reaction=['<:stop:820233391726133279>'], embeds=embeds)
                   await page.start()
+  elif payload.channel_id == cs.v_adm_id and payload.emoji.id == 819642494479368273:
+    msg = await client.get_channel(payload.channel_id).fetch_message(payload.message_id)
+    if str(payload.user_id) in msg.content or 686639786672652363 in [role.id for role in gg.get_member(payload.user_id).roles]:
+      embed = msg.embeds[0]
+      embed.colour = 0x234a36
+      embed.remove_field(-1)
+      dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+      dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+      pp = await client.fetch_user(payload.user_id)
+      embed.set_footer(text=f'Ответ от {pp} получен | {dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3', icon_url=pp.avatar_url)
+      await msg.edit(content=f'<@{payload.user_id}>',embed=embed.add_field(name='```Статус запроса:```', value='\✔️ Рассмотрен.', inline=False))
+      await msg.clear_reactions()
                                                                                     
 @client.event
 async def on_raw_reaction_remove(payload):
@@ -2104,6 +2127,78 @@ async def tanswer(message, num=None, *, txt=None):
             break
         except:
           pass
+                         
+@client.command()
+async def v(message, url=None, *, txt=None):
+  if message.author.id in admins or 608600358570295307 in [role.id for role in message.author.roles]:
+    if url is None:
+        await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Не указана ссылка на сообщение, в котором найдены недочёты.**'))
+    elif txt is None:
+        await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Не указано описание недочётов.**'))
+    else:
+      try:
+        if url != '--gop' and not client.get_channel(int(url.split('/')[-2])).category.id in [747813531495301161, 642102626070036500, 747807222247063642, 642085815597400065, 642104779270782986]:
+          await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Ссылка не принадлежит сообщению из категорий партнёрства.**'))
+        else:
+          try:
+            msg = await client.get_channel(int(url.split('/')[-2])).fetch_message(url.split('/')[-1]) if url != '--gop' else None
+            try:
+              if url != '--gop' and 608600358570295307 in [role.id for role in msg.author.roles]:
+                pp = msg.author
+              else:
+                pp = message.guild.get_role(686639786672652363).members[0]
+            except:
+              pp = message.guild.get_role(686639786672652363).members[0]
+            if pp == 'message.author': #заглушка
+              await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Вы не можете создать запрос самому себе.**'))
+            else:
+              global va_key; va_key += 1
+              embed = discord.Embed(colour=0x70392f, title=f'Запрос №{va_key}')
+              embed.description = f'**[{txt}]({url})**' if url != '--gop' else txt
+              embed.set_author(name=f'Запрос от {message.author}', icon_url=message.author.avatar_url)
+              dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+              dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+              embed.set_footer(text=f'Ожидание ответа от {pp} | {dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3', icon_url=pp.avatar_url)
+              if len(message.message.attachments) > 0:
+                urls, k = '', 0
+                for i in message.message.attachments:
+                  k += 1
+                  urls += f'**[Вложение {k}]({i.proxy_url})**\n'
+                embed.add_field(name='```Прикреплённые файлы:```', value=urls)
+              embed.add_field(name='```Статус запроса:```', value='❗ Не начинал рассматриваться.', inline=False)
+              zapr = await client.get_channel(cs.v_adm_id).send(content=f'{pp.mention}\n**`Нажмите на реакцию, если меры по запросу приняты.`**', embed=embed)
+              await message.channel.send(embed=discord.Embed(colour=0x277ecd, description=f'**[Запрос]({zapr.jump_url}) для {pp.mention} успешно создан.**'))
+          except:
+            await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Возникла ошибка в ссылке.**'))
+      except:
+        await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Возникла ошибка в ссылке.**'))
+
+@client.command()
+async def a(message, num=None, *, txt=None):
+  if message.author.id in admins or 608600358570295307 in [role.id for role in message.author.roles]:
+    if num is None:
+      await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Отсутствует номер запроса.**'))
+    elif txt is None:
+      await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Отсутствует текст-комментарий на запрос.**'))
+    else:
+      for i in await client.get_channel(cs.v_adm_id).history(limit=200).flatten():
+        try:
+          if i.embeds[0].title.split('№')[-1] == num:
+            if str(message.author.id) in i.content:
+              st = i.embeds[0].fields[-1].value
+              embed = i.embeds[0]
+              embed.clear_fields()
+              embed.add_field(name='```Комментарий:```', value=txt, inline=False)
+              embed.add_field(name='```Статус запроса:```', value=st, inline=False)
+              await i.edit(embed=embed)
+              await message.channel.send(embed=discord.Embed(colour=0x277ecd, description=f'**Вы оставили комментарий на [запрос №{num}]({i.jump_url}).**'))
+            else:
+              await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Запрос не принадлежит вам.**'))
+            break
+        except:
+          pass
+      else:
+        await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Комментарий на запрос не был оставлен.**'))
 
 @client.command()
 async def active(message, id=None, arg=None, *, reason=None):
