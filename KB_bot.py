@@ -2165,6 +2165,8 @@ async def v(message, url=None, *, txt=None):
                   k += 1
                   urls += f'**[Вложение {k}]({i.proxy_url})**\n'
                 embed.add_field(name='```Прикреплённые файлы:```', value=urls)
+              else:
+                embed.add_field(name='```Прикреплённые файлы:```', value='Отсутствуют.')
               embed.add_field(name='```Статус запроса:```', value='❗ Не начинал рассматриваться.', inline=False)
               zapr = await client.get_channel(cs.v_adm_id).send(content=f'{pp.mention}\n**`Нажмите на реакцию, если меры по запросу приняты.`**', embed=embed)
               await message.channel.send(embed=discord.Embed(colour=0x277ecd, description=f'**[Запрос]({zapr.jump_url}) для {pp.mention} успешно создан.**'))
@@ -2186,9 +2188,11 @@ async def a(message, num=None, *, txt=None):
           if i.embeds[0].title.split('№')[-1] == num:
             if str(message.author.id) in i.content:
               st = i.embeds[0].fields[-1].value
+              vloj = i.embeds[0].fields[-2].value
               embed = i.embeds[0]
               embed.clear_fields()
               embed.add_field(name='```Комментарий:```', value=txt, inline=False)
+              embed.add_field(name='```Прикреплённые файлы:```', value=vloj, inline=False)
               embed.add_field(name='```Статус запроса:```', value=st, inline=False)
               await i.edit(embed=embed)
               await message.channel.send(embed=discord.Embed(colour=0x277ecd, description=f'**Вы оставили комментарий на [запрос №{num}]({i.jump_url}).**'))
