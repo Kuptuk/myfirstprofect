@@ -2577,6 +2577,8 @@ async def pm_info(message, id=None):
       flag = False
     else:
       if not 608600358570295307 in [role.id for role in message.author.roles]:
+        if [i for i in my_perms.find({'id':member.id})] == []:
+          my_perms.insert_one({'id':member.id, 'users':True, 'pms':True})
         a = my_perms.find({'id':member.id})[0]
         if not a['users']:
           await message.channel.send(f'```diff\n- Вы не можете просмотреть профиль {member.name}, так как он(а) отключил данную возможнотсть для пользователей.```')
