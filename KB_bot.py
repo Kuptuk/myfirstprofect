@@ -2203,6 +2203,30 @@ async def a(message, num=None, *, txt=None):
           pass
       else:
         await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Комментарий на запрос не был оставлен.**'))
+                         
+@client.command()
+async def va_notify(message):
+  if message.author.id in admins:
+    await message.message.delete()
+    d, alls, sumno = {}, 0, 0
+    for i in await client.get_channel(cs.v_adm_id).history(limit=1000).flatten():
+      if i.author.id == 656029229749764126:
+        alls += 1
+        if i.content.count('\n') != 0:
+          try:
+            if 608600358570295307 in [role.id for role in message.guild.get_member(int(i.content.split('\n')[0].replace('!', '').replace('<', '').replace('>', '').replace('@', ''))).roles]:
+              d.update({i.content.split('\n')[0]:d.setdefault(i.content.split('\n')[0], 0) + 1})
+            else:
+              sumno += 1
+          except:
+            pass
+      else:
+        break
+    result, sum = '```diff\n- Пожалуйста, дайте ответы на все адресованные вам запросы.```', 0
+    for key, value in d.items():
+      result += '\n' + f'{key} **`{value}`**'
+      sum += value
+    await message.channel.send(f'{result}\nКоличество запросов, по которым производился поиск: **`{alls}`**, из них без ответа: **`{sum}`**\n❗ Количество запросов, которые были пропущены ввиду того, что пиар-менеджер, которому подали запрос, на данный момент не на должности: **`{sumno}`**')
 
 @client.command()
 async def active(message, id=None, arg=None, *, reason=None):
