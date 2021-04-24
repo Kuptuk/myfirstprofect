@@ -1222,11 +1222,16 @@ async def np(message, arg=None, id=None):
             avr = False
           if not avr:
             await member.add_roles(message.guild.get_role(688654966675603491),reason=f'{message.author.name}: Новый партнёр.')
-            embed.description = f'Пользователю {member} `[{member.id}]` успешна выдана роль <@&688654966675603491>.'
+            try:
+                await member.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, title='Спасибо за сотрудничество 🤝', description='❗ При выходе с нашего сервера, партнёрство с тобой будет автоматически __разорвано__ без предупреждений.\n**[Краткий гид по серверу (клик)](https://discord.com/channels/604636579545219072/642171728273080330/699328361436020797)**.').set_footer(text='С наилучшими пожеланиями,\nКоманда Каталога ^^', icon_url=message.guild.icon_url))
+                ls = '`ЛС: Доставлено.`'
+            except:
+                ls = '`ЛС: Не доставлено.`'
+            embed.description = f'<:yes:819642494479368273> Роль <@&688654966675603491> успешно выдана.\n{ls}\n```py\nMember: {member}\nID: {member.id}```'
           else:
-            embed.description = f'Роль партнёра первого уровня не была добавлена, т.к. пользователь {member} `[{member.id}]` уже имеет роль {avr}.'
+            embed.description = f'<:otkaz:819631424789413969> Роль не была добавлена, т.к. уже имеется роль {avr}.\n```py\nMember: {member}\nID: {member.id}```'
           kolvo = dk.get(member.id) if dk.get(member.id) is not None else 0
-          embed.description += f'\n\n**`Публикаций:` {kolvo}**'
+          embed.description += f'**`Публикаций:` {kolvo}**'
           if d.get(member.id) is not None:
             datet = d.get(member.id).split('.')[0].split()[0].split('-')
             datet2 = d.get(member.id).split('.')[0].split()[1]
@@ -1239,10 +1244,18 @@ async def np(message, arg=None, id=None):
           if np_kd.get(message.author.id) is None or time.time() - np_kd.get(message.author.id) >= 600:
             if 688654966675603491 in [role.id for role in member.roles]:
               await member.remove_roles(message.guild.get_role(688654966675603491),reason=f'{message.author.name}: Партнёрство разорвано.')
-              embed.description = f'С пользователя {member} `[{member.id}]` успешна снята роль <@&688654966675603491>.'
+              embed.description = f'<:yes:819642494479368273> Роль <@&688654966675603491> снята.\n```py\nMember: {member}\nID: {member.id}```'
               np_kd.update({message.author.id:time.time()})
             else:
-              embed.description = f'Роль партнёра первого уровня не была снята, т.к. у пользователя {member} `[{member.id}]` она отсутствует.'
+              embed.description = f'<:otkaz:819631424789413969> Роль <@&688654966675603491> отсутствует.\n```py\nMember: {member}\nID: {member.id}```'
+            kolvo = dk.get(member.id) if dk.get(member.id) is not None else 0
+            embed.description += f'**`Публикаций:` {kolvo}**'
+            if d.get(member.id) is not None:
+              datet = d.get(member.id).split('.')[0].split()[0].split('-')
+              datet2 = d.get(member.id).split('.')[0].split()[1]
+              embed.description += f'\n**[Последняя публикация]({d_url.get(member.id)})**: {datet[2]} {sp[int(datet[1])]} {datet[0]} года в {datet2}'
+            else:
+              embed.description += f'\n**[Последняя публикация]({d_url.get(member.id)})**: неизвестно.'
             await message.channel.send(embed=embed)
           else:
             otkat = f'Минут до отката команды: ~{int((600-(time.time()-np_kd.get(message.author.id)))//60)}' if (600-(time.time()-np_kd.get(message.author.id)))//60 != 0 else f'Секунд до отката команды: ~{int(600-(time.time()-np_kd.get(message.author.id)))}'
