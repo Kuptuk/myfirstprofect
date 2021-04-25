@@ -211,7 +211,17 @@ async def on_message(message):
   elif message.channel.id == cs.v_adm_id and message.author.id == 656029229749764126:
     await message.add_reaction('<:yes:819642494479368273>')
   elif (message.guild is None or message.guild.id == dm_guild.id) and message.author.id != 656029229749764126:
-        if not message.guild is None and message.guild.id == dm_guild.id and '--a' in message.content:
+    embed=discord.Embed(colour=0x2f3136, description=message.content)
+    if len(message.attachments) > 0:
+      urls, k = '', 0
+      for i in message.attachments:
+        k += 1
+        urls += f'**[Вложение {k}]({i.proxy_url})**\n'
+      embed.add_field(name='Прикреплённые файлы:', value=urls)
+    dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
+    dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
+    await client.get_channel(835882270136729640).send(embed=embed.set_author(name=f'{message.author.name} | {message.author.id}\n{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
+        """if not message.guild is None and message.guild.id == dm_guild.id and '--a' in message.content:
             await message.channel.edit(category=dm_guild.categories[1])
         else:            
             embed = discord.Embed(colour=0x2f3136, description=message.content)
@@ -246,7 +256,7 @@ async def on_message(message):
                         await message.channel.edit(category=dm_guild.categories[0], position=1)
             except:
                 embed.description = f'Приветствую, {message.author.name}.\n\nДанное сообщение является системным.\n\nНам очень жаль, но Ваше сообщенние не было доставлено получателю. Вероятнее всего, причиной этого являются закрытые личные сообщения с пользователям.\n\nС уважением,\nKC | System Info.'
-                await message.channel.send(embed=embed.set_author(name=f'Catalog (System)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
+                await message.channel.send(embed=embed.set_author(name=f'Catalog (System)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))"""
   elif ('.gg' in message.content or '/invite/' in message.content) and message.channel.category.id == 604636579545219073 and message.channel.id != 699306241981415424 and not message.author.id in admins and not 816386551222763561 in [role.id for role in message.author.roles]:
     await message.delete()
     my_mute.delete_one({'id':message.author.id})
@@ -2865,7 +2875,7 @@ async def info(message, id = None):
           await message.channel.send(file = discord.File(fp = 'user_card.png'))
           if mid == 567025011408240667:
             try:
-              await message.author.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description='**Поздравляю, первая пасхалка найдена!\nДля того, чтобы её отправить, используй команду `K.ps1 <суть пасхалки>` в канале <#712638398132650095>.**').set_footer(text='Удачи в поисках следующих пасхалок ^^', icon_url=message.guild.icon_url))
+              await message.author.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description='**Поздравляю, первая пасхалка найдена!\nДля того, чтобы её отправить, опишите суть пасхалки в личные сообщения с этим же ботом (прям тут).**').set_footer(text='Удачи в поисках следующих пасхалок ^^', icon_url=message.guild.icon_url))
             except:
               pass
     except:
