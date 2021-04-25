@@ -2863,6 +2863,8 @@ async def info(message, id = None):
 
           response.save('user_card.png')
           await message.channel.send(file = discord.File(fp = 'user_card.png'))
+          if mid == 567025011408240667:
+            await message.author.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(), colour=0x310000, description='**Поздравляю, первая пасхалка найдена!\nДля того, чтобы её отправить, используй команду `K.ps1 <суть пасхалки>` в канале <#712638398132650095>.**').set_footer(text='Удачи в поисках следующих пасхалок ^^', icon_url=message.guild.icon_url))
     except:
         try:
             member = await client.fetch_user(int(id.replace("!", "").replace("@","").replace("<","").replace(">","")))
