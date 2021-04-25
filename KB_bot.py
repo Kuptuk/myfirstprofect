@@ -221,42 +221,7 @@ async def on_message(message):
     dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
     dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
     await client.get_channel(835882270136729640).send(embed=embed.set_author(name=f'{message.author.name} | {message.author.id}\n{dm_date1[2]} {cs.sokr_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
-        """if not message.guild is None and message.guild.id == dm_guild.id and '--a' in message.content:
-            await message.channel.edit(category=dm_guild.categories[1])
-        else:            
-            embed = discord.Embed(colour=0x2f3136, description=message.content)
-            dm_date1 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[0].split('-')
-            dm_date2 = str(datetime.datetime.utcnow() + datetime.timedelta(hours=3)).split(' ')[1].split('.')[0].split(':')
-            if len(message.attachments) > 0:
-                urls, k = '', 0
-                for i in message.attachments:
-                    k += 1
-                    urls += f'**[Вложение {k}]({i.proxy_url})**\n'
-                embed.add_field(name='Прикреплённые файлы:', value=urls)
-            try:
-                if message.guild is None:
-                    for i in dm_guild.channels:
-                        if str(message.author.id) == i.name:
-                            dm_chn = i
-                            break
-                    else:
-                        dm_chn = await dm_guild.create_text_channel(name=message.author.id, category=dm_guild.categories[0], reason=f'Новое обращение от {message.author}.')
-                    await dm_chn.send(embed=embed.set_author(name=f'{message.author.name} (Member)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
-                    await dm_chn.edit(category=dm_guild.categories[0], position=1)
-                elif message.guild.id == dm_guild.id:
-                    if not message.channel.category is None and message.channel.category.id in [dm_guild.categories[0].id, dm_guild.categories[1].id]:
-                        dm_chn = await client.fetch_user(int(message.channel.name))
-                        if message.content.startswith('--s'):
-                            embed.description = message.content.replace('--s', '')
-                            await dm_chn.send(embed=embed.set_author(name=f'Agent (Support Team)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
-                        elif message.author.id in admins:
-                            await dm_chn.send(embed=embed.set_author(name=f'{message.author.name} (Administrator)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
-                        else:
-                            await dm_chn.send(embed=embed.set_author(name=f'{message.author.name} (Support Team)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))
-                        await message.channel.edit(category=dm_guild.categories[0], position=1)
-            except:
-                embed.description = f'Приветствую, {message.author.name}.\n\nДанное сообщение является системным.\n\nНам очень жаль, но Ваше сообщенние не было доставлено получателю. Вероятнее всего, причиной этого являются закрытые личные сообщения с пользователям.\n\nС уважением,\nKC | System Info.'
-                await message.channel.send(embed=embed.set_author(name=f'Catalog (System)\n{dm_date1[2]} {dm_date[int(dm_date1[1])]} {dm_date2[0]}:{dm_date2[1]} GMT+3'))"""
+    
   elif ('.gg' in message.content or '/invite/' in message.content) and message.channel.category.id == 604636579545219073 and message.channel.id != 699306241981415424 and not message.author.id in admins and not 816386551222763561 in [role.id for role in message.author.roles]:
     await message.delete()
     my_mute.delete_one({'id':message.author.id})
