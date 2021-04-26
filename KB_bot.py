@@ -749,7 +749,8 @@ async def ev(ctx, *, txt):
             'guild': ctx.guild,
             'message': ctx.message,
             'datetime': datetime,
-            'db': my_client
+            'db': my_client,
+            'random': random
         }
 
         stdout = io.StringIO()
