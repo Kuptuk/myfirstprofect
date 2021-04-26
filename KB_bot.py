@@ -1042,7 +1042,7 @@ async def kk(message):
 
 @client.command()
 async def support(message):
-    await message.channel.send('<:Xromec222:796724192849428491>')
+    await message.channel.send('<:xromec222:799550765316177930>')
     """if message.channel.id != 642190411867226112 and not message.author.id in admins:
         await message.channel.send(embed=discord.Embed(colour=0x310000,description='<:Support:816800431249555498> Данная команда действует только в **[служебной](https://discord.com/channels/604636579545219072/642190411867226112)**.'))
     elif 816386551222763561 in [role.id for role in message.author.roles] or message.author.id in admins:
