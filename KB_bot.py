@@ -1855,7 +1855,7 @@ async def approve_h22(message, num=None, arg=None, *, txt=None):
     await message.message.delete()
     if message.author.id == 414119169504575509:
         color = 0xcc0605 if arg == '-' else 0x123524 if arg == '+' else 0x002137
-        for i in await client.get_channel(cs.ideas_id).history(limit=100).flatten():
+        for i in await client.get_channel(cs.ideas_id).history(limit=500).flatten():
             try:
                 if i.embeds[0].title.split('№')[-1] == num:
                     if [i for i in my_not.find({'id':int(i.embeds[0].author.name.split('| ')[-1])})] == []:
