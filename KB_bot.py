@@ -1042,13 +1042,14 @@ async def kk(message):
 
 @client.command()
 async def support(message):
-    if message.channel.id != 642190411867226112 and not message.author.id in admins:
+    await message.channel.send('<:Xromec222:796724192849428491>')
+    """if message.channel.id != 642190411867226112 and not message.author.id in admins:
         await message.channel.send(embed=discord.Embed(colour=0x310000,description='<:Support:816800431249555498> Данная команда действует только в **[служебной](https://discord.com/channels/604636579545219072/642190411867226112)**.'))
     elif 816386551222763561 in [role.id for role in message.author.roles] or message.author.id in admins:
       embed=discord.Embed(colour=discord.Colour(0x310000),timestamp=datetime.datetime.utcnow(),description="<:Support:816800431249555498> **Команды для <@&816386551222763561>:**\n\n`K.active @user|ID <+/-> <причина>` — выдать/забрать роль активного участника соответственно.\n`K.answer <номер_вопроса> <ответ>` — дать ответ на вопрос пользователя.\n`K.ticket` — посмотреть список доступных аргументов.\n`K.ticket @user|ID <аргумент_вышестоящего> <мотив>` — создать тикет вышестоящему, где `@user|ID` - пользователь, который нуждается в помощи.")
       embed.set_footer(text=f'По запросу {message.author.name}',icon_url=message.author.avatar_url)
       embed.set_thumbnail(url=message.guild.icon_url)
-      await message.channel.send(embed=embed)
+      await message.channel.send(embed=embed)"""
       
 @client.command()
 async def bug(message, *, txt=None):
