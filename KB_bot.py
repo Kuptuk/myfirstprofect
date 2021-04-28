@@ -1172,7 +1172,7 @@ async def modstats(message,data1=None,data2=None):
 @client.command()
 async def np(message, arg=None, id=None):
   b = [role.id for role in message.author.roles]
-  if message.author.id in admins or 686621891230040077 in b:
+  if message.author.id in admins or 608600358570295307 in b:
     if arg is None:
       await message.channel.send('```css\nВы не указали аргумент.```')
     elif arg != '+' and arg != '-':
