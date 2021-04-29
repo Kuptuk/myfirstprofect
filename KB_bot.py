@@ -2137,7 +2137,8 @@ async def tanswer(message, num=None, *, txt=None):
                          
 @client.command()
 async def v(message, url=None, *, txt=None):
-  if message.author.id in admins or 608600358570295307 in [role.id for role in message.author.roles]:
+  b = [role.id for role in message.author.roles]
+  if message.author.id in admins or 608600358570295307 in b or 677397817966198788 in b or 608994688078184478 in b:
     if url is None:
         await message.channel.send(embed=discord.Embed(colour=0x277ecd, description='**Не указана ссылка на сообщение, в котором найдены недочёты.**'))
     elif txt is None:
