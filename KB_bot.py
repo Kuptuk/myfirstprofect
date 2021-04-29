@@ -2321,7 +2321,7 @@ async def ibans(message):
 @client.command()
 async def Email(message, arg=None, komy=None):
   await message.message.delete()
-  if message.author.id in admins or 800474182474268734 in [role.id for role in message.author.roles]:
+  if message.author.id in admins or 800474182474268734 in [role.id for role in message.author.roles] or message.author.id == 357518684723478540:
     if arg is None:
       await message.channel.send('```css\n[Вы не указали аргумент отправки.]```')
     elif komy is None:
