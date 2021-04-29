@@ -1081,6 +1081,23 @@ async def cont(message, *, url=None):
           await message.author.send(embed=discord.Embed(timestamp=datetime.datetime.utcnow(),colour=0x310000, description=a).set_footer(text='С уважением, Ваш персональный помощник ^^', icon_url=message.guild.icon_url), file = discord.File(fp = f'{message.author}.txt'))
         except:
           await message.channel.send(embed=discord.Embed(colour=0x310000, description='**Возникла ошибка в ссылке.**'))
+          
+@client.command()
+async def cont_ch(message, chn=None):
+  await message.message.delete()
+  if message.author.id in admins:
+    if chn is None:
+      await message.channel.send(embed=discord.Embed(colour=0x310000, description='**Отсутствует канал.**'))
+    else:
+      chn = message.guild.get_channel(int(chn.replace('<', '').replace('>', '').replace('#', '')))
+      f = open(f'{message.author}.txt', 'w', encoding='utf-8')
+      for i in (await chn.history(limit=100).flatten())[::-1]:
+        try:
+          f.write(i.content)
+        except:
+          pass
+      f.close()
+      await message.author.send(file = discord.File(fp = f'{message.author}.txt'))
         
 @client.command()
 async def say(message,id,*,text):
